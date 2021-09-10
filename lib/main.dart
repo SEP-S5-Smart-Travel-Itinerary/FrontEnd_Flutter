@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_flutter/services/local_notification_manager.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,10 +16,15 @@ import 'screens/home_screen.dart';
 import 'screens/attraction_screen.dart';
 import 'main_screen.dart';
 
+import 'services/location.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().init();
 
   runApp(MyApp());
 }

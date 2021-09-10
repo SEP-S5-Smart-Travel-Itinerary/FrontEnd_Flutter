@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'location_data.g.dart';
+// part 'location_data.g.dart';
 
 enum Types { attraction, restuarant, hotel }
 
