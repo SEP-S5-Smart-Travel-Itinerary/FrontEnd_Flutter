@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/services/local_notification_manager.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/location_card_large.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
 import 'places_screen.dart';
 
+import 'package:frontend_flutter/services/location.dart';
+
 class Home extends StatelessWidget {
+  NotificationService _notificationService = NotificationService();
   @override
   Widget build(BuildContext context) {
     // final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
@@ -61,6 +65,19 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
+
+              //Notification Trigger
+
+              // RaisedButton(
+              //   child: Text('Show Notification'),
+              //   padding: const EdgeInsets.all(10),
+              //   onPressed: () async {
+              //     await _notificationService.scheduleNotifications(
+              //         title: "New Timing",
+              //         body: "Fun not",
+              //         time: DateTime.parse("2021-09-10 00:21:00"));
+              //   },
+              // ),
 
               //Recommended Locations Section
 
