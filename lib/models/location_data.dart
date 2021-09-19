@@ -19,7 +19,7 @@ class LocationData {
   String description;
 
   @HiveField(4)
-  double Longitude;
+  double longitude;
 
   @HiveField(5)
   double latitude;
@@ -37,7 +37,7 @@ class LocationData {
       required this.name,
       this.type = Types.attraction,
       required this.description,
-      required this.Longitude,
+      required this.longitude,
       required this.latitude,
       this.ratings = 0.0,
       this.fee = 0.0,

@@ -7,9 +7,27 @@ class ReviewSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _kTabPages = <Widget>[
-      const Center(child: Icon(Icons.alarm, size: 64.0, color: Colors.cyan)),
-      const Center(child: Icon(Icons.alarm, size: 64.0, color: Colors.cyan)),
-      const Center(child: Icon(Icons.forum, size: 64.0, color: Colors.blue)),
+      const Center(
+        child: LocationCard(
+          title: 'Victorial Park of Nuwara Eliya',
+          location: 'Nuwara Eliya',
+          rating: 4,
+        ),
+      ),
+      const Center(
+        child: LocationCard(
+          title: 'Victorial Park of Nuwara Eliya',
+          location: 'Nuwara Eliya',
+          rating: 4,
+        ),
+      ),
+      const Center(
+        child: LocationCard(
+          title: 'Victorial Park of Nuwara Eliya',
+          location: 'Nuwara Eliya',
+          rating: 4,
+        ),
+      ),
     ];
 
     final _kTabs = <Tab>[
