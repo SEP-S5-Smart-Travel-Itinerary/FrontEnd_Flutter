@@ -49,8 +49,8 @@ class _TravelPlanState extends State<TravelPlan> {
               Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  // builder: (BuildContext context) => FullScreenDialog(),
-                  builder: (BuildContext context) => AddFriendsDialog(),
+                  builder: (BuildContext context) => FullScreenDialog(),
+                  // builder: (BuildContext context) => AddFriendsDialog(),
                   fullscreenDialog: true,
                 ),
               );

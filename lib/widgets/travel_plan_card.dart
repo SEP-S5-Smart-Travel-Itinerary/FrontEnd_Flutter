@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
-import 'package:frontend_flutter/widgets/travel_plan_view.dart';
+import 'package:frontend_flutter/screens/travel_plan_view.dart';
 
 class TravelCard extends StatelessWidget {
   final String imageUrl;

@@ -6,13 +6,15 @@ class RoundedButton extends StatelessWidget {
   final Color color;
   final Color fontColor;
   final Color borderColor;
+  final double height;
 
   const RoundedButton(
       {required this.text,
       this.onPressed,
       required this.color,
       this.fontColor = Colors.white,
-      this.borderColor = Colors.transparent});
+      this.borderColor = Colors.transparent,
+      this.height = 100});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class RoundedButton extends StatelessWidget {
       children: <Widget>[
         Positioned.fill(
           child: Container(
-            height: 100,
+            height: height,
             decoration: BoxDecoration(
                 color: this.color,
                 borderRadius: BorderRadius.circular(25),
@@ -41,7 +43,7 @@ class RoundedButton extends StatelessWidget {
             primary: Colors.white,
             textStyle: const TextStyle(fontSize: 18),
           ),
-          onPressed: () {},
+          onPressed: () => onPressed!(),
           child: SizedBox(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

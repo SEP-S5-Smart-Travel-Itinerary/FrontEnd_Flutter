@@ -15,8 +15,10 @@ import 'screens/get_started_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/attraction_screen.dart';
 import 'main_screen.dart';
-
+import 'screens/travel_plans_screen.dart';
 import 'services/location.dart';
+
+import 'screens/travel_plan_view.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,11 +35,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => AppData(),
-      child: MaterialApp(
-        theme: ThemeData(fontFamily: 'Roboto'),
-        home: MainScreen(),
-      ),
-    );
+        create: (context) => AppData(),
+        child: MaterialApp(
+          theme: ThemeData(fontFamily: 'Roboto'),
+          home: MainScreen(),
+          // home: Attraction()
+          // home: TravelPlan()),
+          // home: TravelPlanView(),
+        ));
   }
 }

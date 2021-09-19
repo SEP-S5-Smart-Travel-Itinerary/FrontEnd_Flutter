@@ -5,7 +5,7 @@ import 'screens/home_screen.dart';
 import 'screens/bookmarks_screen.dart';
 import 'screens/notifications_screen.dart';
 import 'screens/settings_screen.dart';
-import 'screens/travel_plan_screen.dart';
+import 'screens/travel_plans_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
