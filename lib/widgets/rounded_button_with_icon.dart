@@ -43,7 +43,7 @@ class LoginButton extends StatelessWidget {
             primary: Colors.white,
             textStyle: const TextStyle(fontSize: 18),
           ),
-          onPressed: () {},
+          onPressed: () => onPressed!(),
           child: SizedBox(
             child: Row(
               children: [

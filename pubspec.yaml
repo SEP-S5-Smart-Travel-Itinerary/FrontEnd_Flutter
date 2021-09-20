@@ -57,6 +57,14 @@ dependencies:
 
   fluttertoast: ^8.0.8
 
+  flutter_keyboard_visibility: ^5.0.3
+
+  firebase_core: ^1.6.0
+  firebase_auth: ^3.1.1
+  google_sign_in: ^5.1.0
+  
+  http: ^0.13.3
+
 
 
 

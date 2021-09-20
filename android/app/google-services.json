@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "383751781772",
+    "project_id": "sep-star-trips",
+    "storage_bucket": "sep-star-trips.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383751781772:android:08e6bfa1741721b257eaa9",
+        "android_client_info": {
+          "package_name": "com.example.frontend_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383751781772-ck3hj65d2s0a3p20764esvc2o081lbm3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.frontend_flutter",
+            "certificate_hash": "2c2d0c35fc0c0ad6b4cc2c904094044a7f8bdd67"
+          }
+        },
+        {
+          "client_id": "383751781772-107lsbmbemorigispssle9gf6lra4to3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQr8guux0RFiY_0eW56erMRn3nvhq_kQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383751781772-107lsbmbemorigispssle9gf6lra4to3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

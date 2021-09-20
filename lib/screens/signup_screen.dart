@@ -3,6 +3,11 @@ import 'package:frontend_flutter/assets/colors.dart';
 import '../widgets/rounded_button_with_icon.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/assets/font_size.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import '../services/authentication_service.dart';
+
+import 'signin_screen.dart';
+import '../main_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -10,15 +15,22 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController? _emailController;
-  TextEditingController? _passwordController;
-  // final _emailController = TextEditingController();
-  // final _passwordController = TextEditingController();
+  bool _isKeyboardOpen = false;
+  String email = "";
+  String password = "";
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   void initState() {
     super.initState();
-    _emailController = TextEditingController(text: "");
-    _passwordController = TextEditingController(text: "");
+
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    keyboardVisibilityController.onChange.listen((bool visible) {
+      if (mounted == true) {
+        setState(() {
+          _isKeyboardOpen = visible;
+        });
+      }
+    });
   }
 
   @override
@@ -31,56 +43,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                      ),
-                      Text(
-                        'Welcome to',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w200,
-                            fontSize: 20,
-                            color: PrimaryColor),
-                      ),
-                      Logo(logoSize: LoginScreenLogoSize),
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          'Lorem Ipsum is abcdedffdfd simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy ',
-                          style: TextStyle(color: PrimaryColor),
-                          textAlign: TextAlign.center,
+                _isKeyboardOpen
+                    ? Container(
+                        height: 1,
+                      )
+                    : Container(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.1,
+                            ),
+                            Text(
+                              'Welcome to',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 20,
+                                  color: PrimaryColor),
+                            ),
+                            Logo(logoSize: LoginScreenLogoSize),
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              child: Text(
+                                'Lorem Ipsum is abcdedffdfd simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy ',
+                                style: TextStyle(color: PrimaryColor),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
 
                 // SizedBox(
                 //   height: 15,
                 // ),
                 Column(children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 25, right: 25),
-                    child: Column(children: [
-                      LoginButton(
-                        text: 'Sign up with Google',
-                        imagePath: 'icons/google_icon.png',
-                        color: Colors.white,
-                        fontColor: PrimaryColor,
-                        borderColor: Colors.black.withOpacity(0.2),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      LoginButton(
-                          text: 'Sign up with Facebook',
-                          imagePath: 'icons/facebook_icon.png',
-                          color: Color(0xFF1E4297),
-                          borderColor: Color(0xFF1E4297)),
-                    ]),
-                  ),
+                  _isKeyboardOpen
+                      ? Container(
+                          height: 1,
+                        )
+                      : Container(
+                          padding: EdgeInsets.only(left: 25, right: 25),
+                          child: Column(children: [
+                            LoginButton(
+                              text: 'Sign up with Google',
+                              imagePath: 'icons/google_icon.png',
+                              color: Colors.white,
+                              fontColor: PrimaryColor,
+                              borderColor: Colors.black.withOpacity(0.2),
+                              onPressed: () => signInWithGoogle().whenComplete(
+                                  () => Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => MainScreen()))),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            LoginButton(
+                                text: 'Sign up with Facebook',
+                                imagePath: 'icons/facebook_icon.png',
+                                color: Color(0xFF1E4297),
+                                borderColor: Color(0xFF1E4297)),
+                          ]),
+                        ),
                   SizedBox(
                     height: 15,
                   ),
@@ -103,43 +127,77 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ],
                     ),
-                    child: Column(children: [
-                      TextFormField(
-                        initialValue: '',
-                        // controller: this._emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(25),
+                    child: Form(
+                      key: formkey,
+                      child: Column(children: [
+                        TextFormField(
+                          initialValue: '',
+                          validator: (_val) {
+                            if (_val == "") {
+                              return "Email cannot be empty";
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (val) {
+                            if (mounted == true) {
+                              setState(() {
+                                email = val;
+                              });
+                            }
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(25),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        initialValue: '',
-                        // controller: this._passwordController,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(25),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          initialValue: '',
+                          validator: (_val) {
+                            if (_val == "") {
+                              return "Email cannot be empty";
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (val) {
+                            if (mounted == true) {
+                              setState(() {
+                                password = val;
+                              });
+                            }
+                          },
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(25),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      LoginButton(
-                        text: 'Sign up with Email',
-                        imagePath: 'icons/email_icon.png',
-                        color: Colors.black,
-                      ),
-                    ]),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        LoginButton(
+                          text: 'Sign up with Email',
+                          imagePath: 'icons/email_icon.png',
+                          color: Colors.black,
+                          // onPressed: () => signUp(email, password).whenComplete(
+                          //     () => Navigator.of(context).pushReplacement(
+                          //         MaterialPageRoute(
+                          //             builder: (context) => SignInScreen()))),
+                        ),
+                      ]),
+                    ),
                   ),
 
                   //end of login with email container
@@ -148,10 +206,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 15,
                   ),
 
-                  Text("Already a member ? Sign in here",
-                      style: TextStyle(
-                        color: PrimaryColor,
-                      ))
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => SignInScreen()));
+                    },
+                    child: Text("Already a member ? Sign in here",
+                        style: TextStyle(
+                          color: PrimaryColor,
+                        )),
+                  )
                 ]),
               ],
             ),
