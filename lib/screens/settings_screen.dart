@@ -5,6 +5,9 @@ import 'package:frontend_flutter/assets/colors.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:frontend_flutter/widgets/rounded_button_with_icon.dart';
+import '../services/authentication_service.dart';
+
+import 'signin_screen.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -84,9 +87,13 @@ class _SettingsState extends State<Settings> {
                 height: 15,
               ),
               LoginButton(
-                  text: 'Logout',
-                  imagePath: "icons/logout.png",
-                  color: Colors.red.withOpacity(0.8)),
+                text: 'Logout',
+                imagePath: "icons/logout.png",
+                color: Colors.red.withOpacity(0.8),
+                onPressed: () => signOutUser().whenComplete(() =>
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => SignInScreen()))),
+              ),
               SizedBox(
                 height: 20,
               ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/assets/font_size.dart';
 import 'package:frontend_flutter/widgets/Logo.dart';
+import 'package:frontend_flutter/screens/signin_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class OpeningScreen extends StatefulWidget {
   @override
@@ -12,12 +14,20 @@ class OpeningScreen extends StatefulWidget {
 class _OpeningScreenState extends State<OpeningScreen> {
   @override
   void initState() {
+    Firebase.initializeApp().whenComplete(() {
+      print("completed");
+    });
     super.initState();
     // new Timer(const Duration(seconds: 2), onClose);
   }
 
   @override
   Widget build(BuildContext context) {
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => SignInScreen())));
+
     return Scaffold(
       backgroundColor: SecondayColorBlue,
       body: SafeArea(

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/services/local_notification_manager.dart';
@@ -5,14 +6,25 @@ import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/location_card_large.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
 import 'places_screen.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:frontend_flutter/services/location.dart';
 
 class Home extends StatelessWidget {
-  NotificationService _notificationService = NotificationService();
+  // NotificationService _notificationService = NotificationService();
+
   @override
   Widget build(BuildContext context) {
     // final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+
+    Future _getNearbyPlaces() async {
+      var url = Uri.parse("http://localhost:3001/apiuser/nearbyaccommodations");
+      // print("called");
+      var response = await http
+          .post(url, body: {"latitude": "6.168829", "longitude": "80.179398"});
+      // print(response.body);
+      // print("done");
+    }
 
     return Scaffold(
       //APP BAR
@@ -156,16 +168,34 @@ class Home extends StatelessWidget {
 
               SizedBox(
                 height: 180.0,
-                child: ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 10),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 15,
-                  itemBuilder: (BuildContext context, int index) =>
-                      LocationCardSmall(
-                    locationName: 'Victoria Park',
-                  ),
+                child: FutureBuilder(
+                  future: _getNearbyPlaces(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    return ListView.builder(
+                      physics: ClampingScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(left: 10),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 15,
+                      itemBuilder: (BuildContext context, int index) =>
+                          LocationCardSmall(
+                        locationName: 'Victoria Park',
+                      ),
+                    );
+                  },
+
+                  // child: ListView.builder(
+                  //   physics: ClampingScrollPhysics(),
+                  //   shrinkWrap: true,
+                  //   padding: EdgeInsets.only(left: 10),
+                  //   scrollDirection: Axis.horizontal,
+                  //   itemCount: 15,
+                  //   itemBuilder: (BuildContext context, int index) =>
+                  //       LocationCardSmall(
+                  //     locationName: 'Victoria Park',
+                  //   ),
+                  // ),
                 ),
               ),
 
