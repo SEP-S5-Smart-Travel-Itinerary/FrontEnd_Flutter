@@ -1,30 +1,29 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:frontend_flutter/services/local_notification_manager.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/location_card_large.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
+import 'package:shimmer/shimmer.dart';
 import 'places_screen.dart';
-import 'package:http/http.dart' as http;
 
-import 'package:frontend_flutter/services/location.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
-class Home extends StatelessWidget {
+import 'package:frontend_flutter/controller/location_controller.dart';
+
+class Home extends StatefulWidget {
   // NotificationService _notificationService = NotificationService();
 
   @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
   Widget build(BuildContext context) {
     // final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
-
-    Future _getNearbyPlaces() async {
-      var url = Uri.parse("http://localhost:3001/apiuser/nearbyaccommodations");
-      // print("called");
-      var response = await http
-          .post(url, body: {"latitude": "6.168829", "longitude": "80.179398"});
-      // print(response.body);
-      // print("done");
-    }
 
     return Scaffold(
       //APP BAR
@@ -169,33 +168,47 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: 180.0,
                 child: FutureBuilder(
-                  future: _getNearbyPlaces(),
+                  future: fetchNearbyLocations(),
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    return ListView.builder(
-                      physics: ClampingScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: EdgeInsets.only(left: 10),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 15,
-                      itemBuilder: (BuildContext context, int index) =>
-                          LocationCardSmall(
-                        locationName: 'Victoria Park',
-                      ),
-                    );
-                  },
+                    if (snapshot.hasData) {
+                      List<LocationDataInit> loc_list = snapshot.data;
+                      return ListView.builder(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: loc_list.length,
+                        padding: EdgeInsets.only(left: 10),
+                        scrollDirection: Axis.horizontal,
+                        // itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            LocationCardSmall(
+                          locationName: loc_list[index].name,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text("$snapshot.error");
+                    }
+                    // return Shimmer.fromColors(
+                    //   // enabled: true,
+                    //   baseColor: Colors.grey[400]!,
+                    //   highlightColor: Colors.grey[100]!,
 
-                  // child: ListView.builder(
-                  //   physics: ClampingScrollPhysics(),
-                  //   shrinkWrap: true,
-                  //   padding: EdgeInsets.only(left: 10),
-                  //   scrollDirection: Axis.horizontal,
-                  //   itemCount: 15,
-                  //   itemBuilder: (BuildContext context, int index) =>
-                  //       LocationCardSmall(
-                  //     locationName: 'Victoria Park',
-                  //   ),
-                  // ),
+                    //   child: ListView.separated(
+                    //     scrollDirection: Axis.horizontal,
+                    //     shrinkWrap: true,
+                    //     physics: const ClampingScrollPhysics(),
+                    //     itemCount: 5,
+                    //     itemBuilder: (_, __) => Padding(
+                    //       padding: const EdgeInsets.only(bottom: 4),
+                    //       child: placeHolderRow(),
+                    //     ),
+                    //     separatorBuilder: (_, __) => const SizedBox(height: 2),
+                    //   ),
+                    // );
+
+                    return CircularProgressIndicator();
+                  },
                 ),
               ),
 

@@ -1,7 +1,10 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/services.dart';
+import '../controller/plan_controller.dart';
 
 class FullScreenDialog extends StatefulWidget {
   @override
@@ -10,10 +13,9 @@ class FullScreenDialog extends StatefulWidget {
 
 class _FullScreenDialogState extends State<FullScreenDialog> {
   String? _name;
-  String? _budget;
-  String? _email;
-  String? _password;
-  DateTimeRange? myDateRange;
+  int? _budget;
+  DateTime? _startDate;
+  DateTime? _endDate;
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +60,10 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
                   ),
                 ),
                 onChanged: (String? value) {
-                  this._name = value;
-                  print('name=$_name');
+                  setState(() {
+                    this._name = value;
+                  });
                 },
-                // validator: _validateName,
               ),
 
               const SizedBox(height: 24.0),
@@ -103,9 +105,10 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
                     }
                     return null;
                   },
-                  onSaved: (value) {
+                  onChanged: (value) {
                     setState(() {
-                      myDateRange = value!;
+                      _startDate = value!.start;
+                      _endDate = value.end;
                     });
                   }),
 
@@ -120,9 +123,9 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
               // Budget texfield
               TextFormField(
                 keyboardType: TextInputType.number,
-                // inputFormatters: <TextInputFormatter>[
-                //   FilteringTextInputFormatter.digitsOnly
-                // ],
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
                 cursorColor: PrimaryColor,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.account_balance_wallet_outlined),
@@ -143,9 +146,10 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
                     borderSide: BorderSide(color: PrimaryColor, width: 2),
                   ),
                 ),
-                onChanged: (String? value) {
-                  this._budget = value;
-                  print('name=$_budget');
+                onChanged: (String value) {
+                  setState(() {
+                    this._budget = int.parse(value);
+                  });
                 },
                 // validator: _validateName,
               ),
@@ -181,8 +185,8 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
                   ),
                 ),
                 onChanged: (String? value) {
-                  this._budget = value;
-                  print('name=$_budget');
+                  // this._budget = value;
+                  // print('name=$_budget');
                 },
                 // validator: _validateName,
               ),
@@ -192,7 +196,13 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
               ),
 
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  createItin(_name, _budget, _startDate, _endDate);
+                  // print(_name);
+                  // print(_budget);
+                  // print(_startDate);
+                  // print(_endDate);
+                },
                 child: Container(
                     height: 50,
                     child: Center(

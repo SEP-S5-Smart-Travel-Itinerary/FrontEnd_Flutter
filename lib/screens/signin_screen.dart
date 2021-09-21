@@ -191,14 +191,15 @@ class _SignInScreenState extends State<SignInScreen> {
                           height: 10,
                         ),
                         LoginButton(
-                          text: 'Sign In with Email',
-                          imagePath: 'icons/email_icon.png',
-                          color: Colors.black,
-                          onPressed: () => signin(email, password).whenComplete(
-                              () => Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => MainScreen()))),
-                        ),
+                            text: 'Sign In with Email',
+                            imagePath: 'icons/email_icon.png',
+                            color: Colors.black,
+                            onPressed: () {
+                              signin(email, password).whenComplete(() =>
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => MainScreen())));
+                            }),
                       ]),
                     ),
                   ),
