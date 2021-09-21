@@ -25,7 +25,7 @@ class LocationCardSmall extends StatelessWidget {
             Spacer(),
             Container(
               width: 150,
-              height: 40,
+              height: 60,
               decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(5)),
