@@ -1,5 +1,6 @@
 import 'dart:convert';
 import '../models/location_data_initial.dart';
+import '../models/location_data.dart';
 import 'package:http/http.dart' as http;
 
 // fetch nearby locations
@@ -24,7 +25,7 @@ Future<List<LocationDataInit>> fetchNearbyLocations() async {
 }
 
 // fetch details of a location
-Future<List<LocationDataInit>> fetchDetailsofLocations(String placeId) async {
+Future fetchDetailsofLocations(String placeId) async {
   print("connected to the server");
   print(placeId);
 
@@ -32,16 +33,15 @@ Future<List<LocationDataInit>> fetchDetailsofLocations(String placeId) async {
 
   var response =
       await http.post(url, body: {"place_id": "ChIJY_qDpIV54ToRJ7hkWrfzwAw"});
-  print(response.body);
+  // print(response.body);
   if (response.statusCode == 200) {
     // print(response.body);
     // print("sucess called");
-    List jsonResponse = json.decode(response.body)["data"];
-    //print(jsonResponse);
-    return jsonResponse
-        .map((location) => new LocationDataInit.fromJson(location))
-        .toList();
+    final Map jsonResponse = json.decode(response.body)["data"];
+    print("----------------------------------------");
+
+    return LocationData.fromJson(jsonResponse);
   } else {
-    throw Exception('Failed to load jobs from API');
+    throw Exception('Failed to load location details from API');
   }
 }
