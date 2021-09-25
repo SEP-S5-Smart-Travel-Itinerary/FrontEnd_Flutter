@@ -37,7 +37,7 @@ Future<List<LocationDataInit>> fetchDetailsofLocations(String placeId) async {
     // print(response.body);
     // print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-    // print(jsonResponse);
+    //print(jsonResponse);
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();

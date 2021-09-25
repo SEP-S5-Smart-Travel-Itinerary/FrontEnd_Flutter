@@ -3,6 +3,7 @@ import 'package:frontend_flutter/assets/colors.dart';
 import 'package:date_range_form_field/date_range_form_field.dart';
 import 'package:flutter/services.dart';
 import '../controller/plan_controller.dart';
+import 'add_friends_form.dart';
 
 class FullScreenDialog extends StatefulWidget {
   @override
@@ -196,6 +197,8 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
               ElevatedButton(
                 onPressed: () {
                   createItin(_name, _budget, _startDate, _endDate);
+                  Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => AddFriendsDialog()));
                   // print(_name);
                   // print(_budget);
                   // print(_startDate);
