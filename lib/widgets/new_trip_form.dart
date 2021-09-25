@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:date_range_form_field/date_range_form_field.dart';

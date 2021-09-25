@@ -66,6 +66,7 @@ class TravelPlanAddLocation extends StatelessWidget {
                 itemCount: 15,
                 itemBuilder: (BuildContext context, int index) =>
                     LocationCardSmall(
+                  locationId: 'sdsdsd',
                   locationName: 'Victoria Park',
                 ),
               ),

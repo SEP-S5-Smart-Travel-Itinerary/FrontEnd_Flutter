@@ -182,6 +182,7 @@ class _HomeState extends State<Home> {
                         // itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) =>
                             LocationCardSmall(
+                          locationId: loc_list[index].place_id,
                           locationName: loc_list[index].name,
                         ),
                       );
