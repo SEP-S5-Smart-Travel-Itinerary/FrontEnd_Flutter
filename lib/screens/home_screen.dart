@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/models/location_data_initial.dart';
+import 'package:frontend_flutter/screens/places_screen2.dart';
 import 'package:frontend_flutter/services/local_notification_manager.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/location_card_large.dart';
@@ -108,24 +109,56 @@ class _HomeState extends State<Home> {
                 height: 10,
               ),
 
-              SizedBox(
+              // SizedBox(
+              //   height: 200.0,
+              //   child: ListView.builder(
+              //     physics: ClampingScrollPhysics(),
+              //     shrinkWrap: true,
+              //     padding: EdgeInsets.only(left: 10),
+              //     scrollDirection: Axis.horizontal,
+              //     itemCount: 15,
+              //     itemBuilder: (BuildContext context, int index) =>
+              //         LocationCardLarge(
+              //       locationName: 'Victoria Park',
+              //       description:
+              //           "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+              //       rating: 4,
+              //     ),
+              //   ),
+              // ),
+                 SizedBox(
                 height: 200.0,
-                child: ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(left: 10),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 15,
-                  itemBuilder: (BuildContext context, int index) =>
-                      LocationCardLarge(
-                    locationName: 'Victoria Park',
-                    description:
+                child: FutureBuilder(
+                  future: fetchAttractionsByCategory(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      List<LocationDataInit> loc_list = snapshot.data;
+                      return ListView.builder(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: loc_list.length,
+                        padding: EdgeInsets.only(left: 10),
+                        scrollDirection: Axis.horizontal,
+                        // itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            LocationCardLarge(
+                          locationName: loc_list[index].name,
+                          description:
                         "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                    rating: 4,
-                  ),
+                            rating: 4,
+                          // rating: loc_list[index].rating,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text("$snapshot.error");
+                    }
+
+                    return CircularProgressIndicator();
+                  },
                 ),
               ),
-
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: ElevatedButton(
@@ -133,7 +166,7 @@ class _HomeState extends State<Home> {
                       ElevatedButton.styleFrom(primary: SecondaryColorDarkGrey),
                   onPressed: () {
                     Navigator.push(
-                        context, PlaceSreen(title: 'Recommended Locations'));
+                        context, PlaceScreen(title: 'Recommended Locations'));
                   },
                   child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -168,7 +201,7 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 180.0,
                 child: FutureBuilder(
-                  future: fetchNearbyLocations(),
+                  future: fetchNearbyAttractions(),
                   builder:
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
@@ -220,7 +253,7 @@ class _HomeState extends State<Home> {
                       ElevatedButton.styleFrom(primary: SecondaryColorDarkGrey),
                   onPressed: () {
                     Navigator.push(
-                        context, PlaceSreen(title: 'Nearby Locations'));
+                        context, PlaceScreen2(title: 'Nearby Locations'));
                   },
                   child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 5),
