@@ -197,6 +197,7 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
               ElevatedButton(
                 onPressed: () {
                   createItin(_name, _budget, _startDate, _endDate);
+                  
                   Navigator.push(
         context, new MaterialPageRoute(builder: (context) => AddFriendsDialog()));
                   // print(_name);

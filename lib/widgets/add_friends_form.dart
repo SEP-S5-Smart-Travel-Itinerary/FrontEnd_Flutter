@@ -90,8 +90,12 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
               ),
               TextButton(
                   onPressed: () {
-                    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
+                    getPalnDetails().then((value) =>
+                     Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+        //             Navigator.push(
+        // context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
                   },
                   child: Text(
                     'Go to the Plan',
