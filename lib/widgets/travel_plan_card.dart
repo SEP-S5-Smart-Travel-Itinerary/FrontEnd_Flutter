@@ -63,11 +63,11 @@ class TravelCard extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        startDate + ' - ' + endDate,
-                        style: TextStyle(
-                            fontSize: 13, color: SecondaryColorDarkGrey),
-                      ),
+                      // Text(
+                      //   startDate + ' - ' + endDate,
+                      //   style: TextStyle(
+                      //       fontSize: 13, color: SecondaryColorDarkGrey),
+                      // ),
                       Spacer(),
                       Row(
                         children: [
@@ -78,11 +78,11 @@ class TravelCard extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            locations.toString() + ' ' + 'Locations',
-                            style: TextStyle(
-                                fontSize: 12, color: SecondaryColorDarkGrey),
-                          )
+                          // Text(
+                          //   locations.toString() + ' ' + 'Locations',
+                          //   style: TextStyle(
+                          //       fontSize: 12, color: SecondaryColorDarkGrey),
+                          // )
                         ],
                       ),
                     ],
