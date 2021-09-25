@@ -28,7 +28,7 @@ class _TravelPlanState extends State<TravelPlan> {
           if (snapshot.hasData) {
             
             List<PlanDetailInit> locList = snapshot.data;
-            print(locList[0].name);
+            print(locList[0].plan_id);
             return ListView.builder(
               physics: ClampingScrollPhysics(),
               shrinkWrap: true,
@@ -39,6 +39,7 @@ class _TravelPlanState extends State<TravelPlan> {
               itemBuilder: (BuildContext context, int index) =>
                   TravelCard(
                     title: locList[index].name,
+                    plan_id:locList[index].plan_id,
                 //imageUrl:"",
               ),
             );
