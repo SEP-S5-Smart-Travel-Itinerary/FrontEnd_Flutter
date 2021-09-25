@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/plan_controller.dart';
+import 'package:frontend_flutter/models/travel_plan.dart';
 import '../widgets/travel_plan_view_location_card.dart';
 import '../widgets/travel_plan_transport_card.dart';
 import '../widgets/travel_plan_add_location.dart';
@@ -397,7 +398,7 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
   );
 }
 
-// Edit travel budget
+// Delete plan
 Container _buildBottomSheetDeletePlan(BuildContext context) {
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
@@ -426,6 +427,12 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               text: "Delete Travel Plan",
               color: Color(0xffC75151),
               height: 150,
+               onPressed: () {
+                  deletePlan(globals.createplan_id).then((value) =>
+                     Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+                },
             ),
             SizedBox(
               height: 20,
@@ -434,6 +441,12 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               text: "Cancel",
               color: SecondaryColorDarkGrey,
               height: 150,
+               onPressed: () {
+  
+                Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()));
+                     
+                },
             ),
           ],
         ),

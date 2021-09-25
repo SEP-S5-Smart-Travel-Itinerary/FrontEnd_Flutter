@@ -122,3 +122,12 @@ Future changeName(String? new_name,String? plan_id) async {
     globals.Name=new_name!;
   
 }
+//------------------------------------------------------------------------------------
+//delete plan
+Future deletePlan(String? plan_id) async {
+  var url = Uri.parse("http://localhost:3000/itinerary/deleteitin");
+
+  var response = await http
+      .post(url, body: {"plan_id":plan_id});
+  
+}
