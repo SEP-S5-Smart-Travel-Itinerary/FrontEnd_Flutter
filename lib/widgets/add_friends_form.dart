@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/controller/plan_controller.dart';
+import 'package:frontend_flutter/screens/travel_plan_view.dart';
 
 class AddFriendsDialog extends StatefulWidget {
   @override
@@ -8,6 +10,7 @@ class AddFriendsDialog extends StatefulWidget {
 
 class _AddFriendsDialogState extends State<AddFriendsDialog> {
   List<String> _friends = [];
+  String? _name;
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +56,14 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
                     borderSide: BorderSide(color: PrimaryColor, width: 2),
                   ),
                 ),
-                // onChanged: (String? value) {
-                //   this._budget = value;
-                //   print('name=$_budget');
-                // },
+                onChanged: (String? value) {
+                  setState(() {
+                    this._name = value;
+                   
+                  });
+                   
+                },
+                
                 // validator: _validateName,
               ),
 
@@ -65,7 +72,11 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
               ),
 
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _friends.add(_name!);
+                    print(_friends);
+                    Addfriends(_friends);
+                },
                 child: Container(
                     height: 50,
                     child: Center(
@@ -78,9 +89,12 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
                 ),
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
+                  },
                   child: Text(
-                    'Continue without trip mates',
+                    'Go to the Plan',
                     style: TextStyle(color: PrimaryColor),
                   ))
             ],
