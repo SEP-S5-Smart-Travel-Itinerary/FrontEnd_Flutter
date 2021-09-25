@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           theme: ThemeData(fontFamily: 'Roboto'),
           home: OpeningScreen(),
-          // home: Attraction()
+          // home: UserPreference()
           // home: TravelPlan()),
           // home: TravelPlanView(),
         ));

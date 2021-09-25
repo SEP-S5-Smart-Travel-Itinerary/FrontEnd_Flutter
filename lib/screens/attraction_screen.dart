@@ -7,40 +7,39 @@ import 'dart:async';
 import 'package:frontend_flutter/widgets/review_section.dart';
 import '../controller/location_controller.dart';
 
-class Attraction extends StatelessWidget {
+class Attraction extends StatefulWidget {
   final String locationId;
   final String name;
   final String imageLink;
   final String description;
 
   const Attraction(
-      {required this.locationId,
+      {this.locationId = "ChIJY_qDpIV54ToRJ7hkWrfzwAw",
       required this.name,
       this.imageLink =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       this.description =
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."});
 
-  // Completer<GoogleMapController> _controller = Completer();
+  @override
+  State<Attraction> createState() => _AttractionState();
+}
 
-  // static final CameraPosition _kGooglePlex = CameraPosition(
-  //   target: LatLng(37.42796133580664, -122.085749655962),
-  //   zoom: 14.4746,
-  // );
-
-  // static final CameraPosition _kLake = CameraPosition(
-  //     bearing: 192.8334901395799,
-  //     target: LatLng(37.43296265331129, -122.08832357078792),
-  //     tilt: 59.440717697143555,
-  //     zoom: 19.151926040649414);
+class _AttractionState extends State<Attraction> {
+  @override
+  void initState() {
+    super.initState();
+    fetchDetailsofLocations(widget.locationId);
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
       // SliverAppBar is declared in Scaffold.body, in slivers of a
       // CustomScrollView.
       body: FutureBuilder(
-        future: fetchDetailsofLocations(locationId),
+        // future: _future,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          print(snapshot.data.name);
           if (snapshot.hasData) {
             CustomScrollView(
               slivers: <Widget>[
@@ -48,7 +47,7 @@ class Attraction extends StatelessWidget {
                   backgroundColor: PrimaryColor,
                   pinned: true,
                   snap: true,
-                  title: Text(this.name),
+                  title: Text(snapshot.data.name),
                   floating: true,
                   expandedHeight: 230.0,
                   leading: Icon(Icons.arrow_back_outlined),
@@ -62,7 +61,7 @@ class Attraction extends StatelessWidget {
                       //   ),
                       // ),
                       background: Image.network(
-                    this.imageLink,
+                    this.widget.imageLink,
                     fit: BoxFit.cover,
                   )),
                 ),
@@ -80,7 +79,7 @@ class Attraction extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 17, vertical: 10),
                           child: Text(
-                            this.description,
+                            this.widget.description,
                             style:
                                 TextStyle(color: Colors.black.withOpacity(0.7)),
                           )),

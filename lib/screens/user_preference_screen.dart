@@ -3,6 +3,8 @@ import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/assets/font_size.dart';
 import 'package:frontend_flutter/widgets/rounded_button_without_icon.dart';
+import '../controller/user_controller.dart';
+import '../main_screen.dart';
 
 class UserPreference extends StatefulWidget {
   @override
@@ -11,25 +13,17 @@ class UserPreference extends StatefulWidget {
 
 class _UserPreferenceState extends State<UserPreference> {
   List<String> options = [
-    'News',
-    'Entertainment',
-    'Entertainment',
-    'Entertainment',
-    'Entertainment',
-    'Politics',
-    'Politics',
-    'Politics',
-    'Politics',
-    'Politics',
-    'Politics'
-        'Automotive',
-    'Sports',
-    'Education',
-    'Fashion',
-    'Travel',
+    'Point of interest',
+    'Town square',
+    'Place of worship',
+    'Natural feature',
+    'Locality',
+    'Landmark',
+    'Health',
     'Food',
-    'Tech',
-    'Science',
+    'Neighborhood',
+    'Country',
+    'Continent',
   ];
 
   List<String> selectedChoices = [];
@@ -47,7 +41,7 @@ class _UserPreferenceState extends State<UserPreference> {
               selectedChoices.contains(item)
                   ? selectedChoices.remove(item)
                   : selectedChoices.add(item);
-              print(selectedChoices);
+              // print(selectedChoices);
             });
           },
         ),
@@ -106,7 +100,14 @@ class _UserPreferenceState extends State<UserPreference> {
                   SizedBox(
                     height: 15,
                   ),
-                  RoundedButton(text: "Next   >", color: PrimaryColor)
+                  RoundedButton(
+                    text: "Next   >",
+                    color: PrimaryColor,
+                    onPressed: () => addPreferences(selectedChoices)
+                        .whenComplete(() => Navigator.of(context)
+                            .pushReplacement(MaterialPageRoute(
+                                builder: (context) => MainScreen()))),
+                  )
                 ]),
               ],
             ),
