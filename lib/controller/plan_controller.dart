@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:frontend_flutter/models/plandetail_init.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/plan_data_init.dart';
@@ -60,4 +61,19 @@ Future<PlanDataInit> Addfriends(List<String> friends) async {
   } else {
     throw Exception('Failed to create itin.');
   }
+}
+
+Future<List<PlanDetailInit>> getPalns() async {
+  //print("gajk");
+  var url = Uri.parse("http://localhost:3000/itinerary/getallitin");
+
+  var response = await http
+      .post(url, body: {"user_id": "malithi_abc@gmail.com"});
+    //print(response.body);
+    List jsonResponse = json.decode(response.body)["message"];
+    //print(jsonResponse);
+    return jsonResponse
+        .map((location) => new PlanDetailInit.fromJson(location))
+        .toList();
+  
 }
