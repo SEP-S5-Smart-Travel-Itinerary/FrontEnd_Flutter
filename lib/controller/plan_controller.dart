@@ -6,7 +6,7 @@ import '../models/plan_data_init.dart';
 Future<PlanDataInit> createItin(
     String? name, int? budget, DateTime? startDate, DateTime? endDate) async {
   final response = await http.post(
-    Uri.parse('http://localhost:3001/itinerary/createitin'),
+    Uri.parse('http://localhost:3000/itinerary/createitin'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
