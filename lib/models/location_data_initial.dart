@@ -17,7 +17,7 @@ class LocationDataInit {
         name: json['name'],
         type: json['type'],
         rating: json['rating'],
-        place_id: json['name'],
+        place_id: json['place_id'],
         imagelink: json['imagelink']);
   }
 }

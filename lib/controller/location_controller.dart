@@ -30,7 +30,7 @@ Future<List<LocationDataInit>> fetchNearbyRestaurants() async {
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-    // print(jsonResponse);
+
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();
@@ -137,15 +137,14 @@ Future fetchDetailsofLocations(String placeId) async {
 
   var url = Uri.parse("http://localhost:3000/apiuser/details");
 
-  var response =
-      await http.post(url, body: {"place_id": "ChIJY_qDpIV54ToRJ7hkWrfzwAw"});
+  var response = await http.post(url, body: {"place_id": placeId});
   // print(response.body);
   if (response.statusCode == 200) {
     // print(response.body);
     // print("sucess called");
     final Map jsonResponse = json.decode(response.body)["data"];
     print("----------------------------------------");
-
+    print(jsonResponse[0]["imagelink"][0]["html_attributions"][0]);
     return LocationData.fromJson(jsonResponse);
   } else {
     throw Exception('Failed to load location details from API');
