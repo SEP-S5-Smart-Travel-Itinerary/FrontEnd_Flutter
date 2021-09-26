@@ -1,13 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/models/location_data_initial.dart';
 import './location_card_small.dart';
+import 'package:http/http.dart' as http;
 
-class TravelPlanAddLocation extends StatelessWidget {
-  final String searchQuery;
-  // final double distance;
+import 'add_location.dart';
 
-  const TravelPlanAddLocation({required this.searchQuery});
+class TravelPlanAddLocation extends StatefulWidget {
+  //const TravelPlanAddLocation({ Key? key }) : super(key: key);
 
+  @override
+  _TravelPlanAddLocationState createState() => _TravelPlanAddLocationState();
+}
+
+class _TravelPlanAddLocationState extends State<TravelPlanAddLocation> {
+  List predictions = [];
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -46,34 +55,77 @@ class TravelPlanAddLocation extends StatelessWidget {
                       BorderSide(color: SecondaryColorDarkGrey, width: 2),
                 ),
               ),
-              // onChanged: (String? value) {
-              //   this._budget = value;
-              //   print('name=$_budget');
-              // },
-              // validator: _validateName,
+              onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    autoCompleteSearch(value);
+                  } else {
+                    if (predictions.length > 0 && mounted) {
+                      setState(() {
+                        predictions = [];
+                      });
+                    }
+                  }
+                },
             ),
-            Text(
-              "Recommended Places",
-              style: TextStyle(
-                  fontWeight: FontWeight.w100, color: SecondaryColorDarkGrey),
-            ),
-            SizedBox(
-              height: 120.0,
-              child: ListView.builder(
-                physics: ClampingScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int index) =>
-                    LocationCardSmall(
-                  locationId: 'sdsdsd',
-                  locationName: 'Victoria Park',
+            Expanded(
+                child: ListView.builder(
+                  itemCount: predictions.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: CircleAvatar(
+                        child: Icon(
+                          Icons.pin_drop,
+                          color: Colors.white,
+                        ),
+                      ),
+                      title: Text(predictions[index]),
+                      onTap: () {
+                        Navigator.push(
+                        context, planPlaceScreen2(title: predictions[index]));
+                      },
+                    );
+                  },
                 ),
               ),
-            )
+            // Text(
+            //   "Recommended Places",
+            //   style: TextStyle(
+            //       fontWeight: FontWeight.w100, color: SecondaryColorDarkGrey),
+            // ),
+            // SizedBox(
+            //   height: 120.0,
+            //   child: ListView.builder(
+            //     physics: ClampingScrollPhysics(),
+            //     shrinkWrap: true,
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: 15,
+            //     itemBuilder: (BuildContext context, int index) =>
+            //         LocationCardSmall(
+            //       locationId: 'sdsdsd',
+            //       locationName: 'Victoria Park',
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),
     );
   }
+  void autoCompleteSearch(String value) async {
+    var url = Uri.parse("http://localhost:3000/apiuser/auto");
+
+  var response = await http
+      .post(url, body: {"place": value});
+    print("sucess called");
+    //List jsonResponse = json.decode(response.body)["data"];
+    // print(jsonResponse);
+    setState(() {
+        predictions = json.decode(response.body)["data"];
+        print (predictions);
+      });
+  
+  }
+
+  // ignore: non_constant_identifier_names
+  
 }
