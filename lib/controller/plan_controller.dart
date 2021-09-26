@@ -131,3 +131,16 @@ Future deletePlan(String? plan_id) async {
       .post(url, body: {"plan_id":plan_id});
   
 }
+//-------------------------------------------------------------------------------------------------
+//edit budget
+Future editBudget(int new_budget,String? plan_id) async {
+  print("gajk");
+  var url = Uri.parse("http://localhost:3000/itinerary/editbudget");
+
+  var response = await http
+      .post(url, body: {"new_budget": new_budget,"plan_id":plan_id});
+    //print(response.body);
+    globals.InitialBudget=new_budget;
+  
+}
+//--------------------------------------------------------------------------------

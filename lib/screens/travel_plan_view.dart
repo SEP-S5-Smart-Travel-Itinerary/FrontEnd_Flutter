@@ -298,7 +298,7 @@ Container _buildBottomSheet(BuildContext context) {
     ),
   );
 }
-
+//change plan name
 Container _buildBottomSheetChangeName(BuildContext context) {
   String? _name;
   return Container(
@@ -359,6 +359,7 @@ Container _buildBottomSheetChangeName(BuildContext context) {
 
 // Edit travel budget
 Container _buildBottomSheetChangeBudget(BuildContext context) {
+  int _newBudget=0;
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
     decoration: BoxDecoration(
@@ -382,6 +383,9 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
                   ),
                 ),
               ),
+              onChanged: (String value) {
+                    _newBudget = int.parse(value);
+              },
             ),
             SizedBox(
               height: 20,
@@ -390,6 +394,14 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
               text: "Change Travel Budget",
               color: PrimaryColor,
               height: 150,
+               onPressed: () {
+                  editBudget( _newBudget, globals.createplan_id).then((value) =>
+                     Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+        //          
+                },
+
             ),
           ],
         ),
@@ -457,6 +469,8 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
 
 // Edit travel dates
 Container _buildBottomSheetChangeDates(BuildContext context) {
+  DateTime? _startDate;
+  DateTime? _endDate;
   return Container(
     height: 350,
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
@@ -501,11 +515,13 @@ Container _buildBottomSheetChangeDates(BuildContext context) {
                   }
                   return null;
                 },
-                onSaved: (value) {
-                  // setState(() {
-                  //   myDateRange = value!;
-                  // });
-                }),
+               
+                // onSaved: (value) {
+                //   // setState(() {
+                //   //   myDateRange = value!;
+                //   // });
+                // }
+                ),
             SizedBox(
               height: 20,
             ),
@@ -513,6 +529,7 @@ Container _buildBottomSheetChangeDates(BuildContext context) {
               text: "Edit Travel Dates",
               color: PrimaryColor,
               height: 150,
+             
             ),
           ],
         ),
