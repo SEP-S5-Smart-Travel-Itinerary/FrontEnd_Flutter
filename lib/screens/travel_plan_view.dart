@@ -15,7 +15,8 @@ class TravelPlanView extends StatefulWidget {
 }
 
 class _TravelPlanViewState extends State<TravelPlanView> {
-  List _listings = [];
+  List _listings = globals.Locations;
+  
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -117,18 +118,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    // Text(
-                                    //   ' / ',
-                                    //   style: TextStyle(
-                                    //       fontWeight: FontWeight.bold,
-                                    //       color: Colors.white),
-                                    // ),
-                                    // Text(
-                                    //   '750',
-                                    //   style: TextStyle(
-                                    //       fontWeight: FontWeight.bold,
-                                    //       color: Colors.white),
-                                    // ),
+                                   
                                   ],
                                 )
                               ],
@@ -192,11 +182,15 @@ class _TravelPlanViewState extends State<TravelPlanView> {
               ),
 
               // plan section
+             
               Container(
+                
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
+                  
                   children: [
                     // travel_plan_location_card.dart
+                    
                     TravelPlanLocationCard(
                       rating: 4,
                       location: 'Nuwara',
@@ -215,6 +209,9 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                   ],
                 ),
               )
+                
+              
+              
             ],
           ),
         ));

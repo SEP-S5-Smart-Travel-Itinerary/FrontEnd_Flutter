@@ -65,7 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             Container(
                               padding: EdgeInsets.all(20),
                               child: Text(
-                                'Lorem Ipsum is abcdedffdfd simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy ',
+                                'MOVE SLOW, BREATH SLOW, WATCH SLOW - THEN YOU WILL SEE MORE, LIVE MORE AND LEARN MORE ',
                                 style: TextStyle(color: PrimaryColor),
                                 textAlign: TextAlign.center,
                               ),

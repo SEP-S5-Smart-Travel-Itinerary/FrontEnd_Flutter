@@ -24,6 +24,10 @@ class _UserPreferenceState extends State<UserPreference> {
     'Neighborhood',
     'Country',
     'Continent',
+    'Museum',
+    'Zoo',
+    'Movie Theatre',
+    'Park'
   ];
 
   List<String> selectedChoices = [];
@@ -75,7 +79,7 @@ class _UserPreferenceState extends State<UserPreference> {
                         height: 20,
                       ),
                       Text(
-                        'Lorem Ipsum is abcdedffdfd simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy ',
+                        '“Travel makes one modest. You see what a tiny place you occupy in the world” – Gustave Flaubert ',
                         style: TextStyle(color: PrimaryColor),
                         textAlign: TextAlign.center,
                       ),

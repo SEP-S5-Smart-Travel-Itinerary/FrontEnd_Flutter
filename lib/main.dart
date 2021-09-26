@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           //home:Home(),
           // home: UserPreference()
           // home: TravelPlan()),
-          // home: TravelPlanView(),
+           //home: TravelPlanView(),
         ));
   }
 }

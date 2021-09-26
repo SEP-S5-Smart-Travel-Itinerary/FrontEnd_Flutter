@@ -8,7 +8,7 @@ class LocationDataInit {
   LocationDataInit(
       {required this.name,
       required this.type,
-      this.rating,
+       this.rating,
       required this.place_id,
       this.imagelink});
 

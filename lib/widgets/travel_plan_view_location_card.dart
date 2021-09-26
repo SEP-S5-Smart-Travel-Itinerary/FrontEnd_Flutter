@@ -47,7 +47,8 @@ class TravelPlanLocationCard extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          'Victoria Park ',
+                          //'Victoria Park ',
+                          this.title,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )
@@ -62,7 +63,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        Text('8.00 A.M - 10.00 A.M'),
+                        //Text('8.00 A.M - 10.00 A.M'),
                       ],
                     )
                   ],
