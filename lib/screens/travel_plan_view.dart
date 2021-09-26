@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/plan_controller.dart';
+import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/travel_plan.dart';
 import '../widgets/travel_plan_view_location_card.dart';
 import '../widgets/travel_plan_transport_card.dart';
@@ -44,7 +45,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
           centerTitle: true,
           elevation: 1.0,
         ),
-        body: Container(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
@@ -196,22 +197,41 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
                   children: [
-                    // travel_plan_location_card.dart
-                    TravelPlanLocationCard(
-                      rating: 4,
-                      location: 'Nuwara',
-                      title: 'location',
-                    ),
-
-                    //travel_plan_transport_card.dart
-                    TravelPlanTransportCard(
+                    TravelPlanAddLocation(searchQuery: "searchQuery"),
+                        FutureBuilder(
+            future: fetchPlanLocationList(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                List<BookDataInit> locList = snapshot.data;
+                //print(locList[0].rating);
+                return ListView.builder(
+                  physics: ClampingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: locList.length,
+                  padding: EdgeInsets.only(left: 10, top: 15),
+                  //scrollDirection: Axis.horizontal,
+                  // itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) => TravelPlanLocationCard(
+                      title: locList[index].name,
+                      location: "", //'Victorial Park of Nuwara Eliya',
+                      rating: locList[index].rating,
+                      id:index+1,
+                      //location: locList[index].place_id,
+                      //imageUrl:"",
+                      ),
+                );
+              } else if (snapshot.hasError) {
+                print(snapshot.error);
+                return Text("$snapshot.error");
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+      TravelPlanTransportCard(
                       time: "5",
                       media: "Car",
                       distance: 100,
                     ),
-
-                    //travel_plan_add_location.dart
-                    TravelPlanAddLocation(searchQuery: "searchQuery")
                   ],
                 ),
               )

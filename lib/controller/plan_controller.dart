@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:frontend_flutter/models/book_init.dart';
+import 'package:frontend_flutter/models/location_data.dart';
+import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:frontend_flutter/models/plandetail_init.dart';
 import 'package:http/http.dart' as http;
 
@@ -169,3 +172,40 @@ Future changeDates(String? plan_id,DateTime? newstartDate, DateTime? newendDate)
     //print(globals.EndDate);
   
 }
+
+Future<LocationData> getLocationdetails(String place_id) async {
+
+  var url = Uri.parse("http://localhost:3000/apiuser/details");
+
+  var response = await http.post(url, body: {"place_id": "ChIJQ9yCmWtZ4joRNu1evW41NTo"});
+  // print(response.body);
+  if (response.statusCode == 200) {
+    // print(response.body);
+    // print("sucess called");
+    final Map jsonResponse = json.decode(response.body)["data"];
+    print("----------------------------------------");
+    // print(jsonResponse);
+    return LocationData.fromJson(jsonResponse);
+  } else {
+    throw Exception('Failed to load location details from API');
+  }
+  
+}
+
+Future<List<BookDataInit>> fetchPlanLocationList() async {
+  //print("gajk");
+  var url = Uri.parse("http://localhost:3000/itinerary/planlocations");
+
+  var response = await http
+      .post(url, body: {"plan_id": globals.createplan_id});
+    //print(response.body);
+    List jsonResponse = json.decode(response.body)["message"];
+    //print(jsonResponse);
+    return jsonResponse
+        .map((location) => new BookDataInit.fromJson(location))
+        .toList();
+  
+}
+
+
+

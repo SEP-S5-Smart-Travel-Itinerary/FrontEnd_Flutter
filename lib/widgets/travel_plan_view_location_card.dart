@@ -9,12 +9,14 @@ class TravelPlanLocationCard extends StatelessWidget {
   final String title;
   final String location;
   final double rating;
+  final int id;
 
   const TravelPlanLocationCard(
       {this.imageUrl =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       required this.title,
       required this.location,
+      required this.id,
       required this.rating});
 
   @override
@@ -39,7 +41,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '1',
+                          id.toString(),
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -47,22 +49,22 @@ class TravelPlanLocationCard extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          'Victoria Park ',
+                          title,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
-                    Row(
-                      children: [Text('Nuwara Eliya, Sri Lanka')],
-                    ),
+                    // Row(
+                    //   children: [Text('Nuwara Eliya, Sri Lanka')],
+                    // ),
                     Row(
                       children: [
                         LocationBadge(bannerType: "attraction"),
                         SizedBox(
                           width: 10,
                         ),
-                        Text('8.00 A.M - 10.00 A.M'),
+                        //Text('8.00 A.M - 10.00 A.M'),
                       ],
                     )
                   ],
