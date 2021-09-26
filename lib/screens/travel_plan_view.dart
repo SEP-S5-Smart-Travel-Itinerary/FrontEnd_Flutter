@@ -197,7 +197,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
                   children: [
-                    TravelPlanAddLocation(searchQuery: "searchQuery"),
+                    TravelPlanAddLocation(),
                         FutureBuilder(
             future: fetchPlanLocationList(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
