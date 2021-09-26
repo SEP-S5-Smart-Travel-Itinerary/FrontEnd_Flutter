@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/controller/plan_controller.dart';
+import 'package:frontend_flutter/models/travel_plan.dart';
 import '../widgets/travel_plan_view_location_card.dart';
 import '../widgets/travel_plan_transport_card.dart';
 import '../widgets/travel_plan_add_location.dart';
 import '../widgets/rounded_button_without_icon.dart';
 import 'package:date_range_form_field/date_range_form_field.dart';
+import 'package:frontend_flutter/controller/globals.dart' as globals;
 
 class TravelPlanView extends StatefulWidget {
   @override
@@ -37,7 +40,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
             )
           ],
           backgroundColor: PrimaryColor,
-          title: Text('Trip to Nuwara ELiya'),
+          title: Text(globals.Name),
           centerTitle: true,
           elevation: 1.0,
         ),
@@ -65,7 +68,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                   width: 10,
                                 ),
                                 Text(
-                                  "09/09",
+                                  globals.startdatestring,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -79,7 +82,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                   ),
                                 ),
                                 Text(
-                                  "09/11",
+                                  globals.enddatestring,
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
@@ -109,23 +112,23 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                 Row(
                                   children: [
                                     Text(
-                                      '250',
+                                      globals.InitialBudget.toString(),
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
-                                    Text(
-                                      ' / ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                    Text(
-                                      '750',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
+                                    // Text(
+                                    //   ' / ',
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.white),
+                                    // ),
+                                    // Text(
+                                    //   '750',
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Colors.white),
+                                    // ),
                                   ],
                                 )
                               ],
@@ -141,7 +144,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                         children: [
                           Container(
                               child: Row(
-                            children: [Text('Nevada  '), Text('Paris')],
+                            //children: [Text('Nevada  '), Text('Paris')],
                           )),
                           Container(
                             padding: EdgeInsets.all(4),
@@ -155,7 +158,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '2',
+                                      globals.TripMates.length.toString(),
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.white,
@@ -297,6 +300,7 @@ Container _buildBottomSheet(BuildContext context) {
 }
 
 Container _buildBottomSheetChangeName(BuildContext context) {
+  String? _name;
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
     decoration: BoxDecoration(
@@ -319,7 +323,12 @@ Container _buildBottomSheetChangeName(BuildContext context) {
                     Radius.circular(5),
                   ),
                 ),
+                
               ),
+              onChanged: (String? value) {
+                    _name = value;
+                
+                },
             ),
             SizedBox(
               height: 20,
@@ -328,6 +337,18 @@ Container _buildBottomSheetChangeName(BuildContext context) {
               text: "Change Plan Name",
               color: PrimaryColor,
               height: 150,
+              onPressed: () {
+                  changeName(_name, globals.createplan_id).then((value) =>
+                     Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+        //           Navigator.push(
+        // context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
+                  // print(_name);
+                  // print(_budget);
+                  // print(_startDate);
+                  // print(_endDate);
+                },
             ),
           ],
         ),
@@ -377,7 +398,7 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
   );
 }
 
-// Edit travel budget
+// Delete plan
 Container _buildBottomSheetDeletePlan(BuildContext context) {
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
@@ -406,6 +427,12 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               text: "Delete Travel Plan",
               color: Color(0xffC75151),
               height: 150,
+               onPressed: () {
+                  deletePlan(globals.createplan_id).then((value) =>
+                     Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+                },
             ),
             SizedBox(
               height: 20,
@@ -414,6 +441,12 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               text: "Cancel",
               color: SecondaryColorDarkGrey,
               height: 150,
+               onPressed: () {
+  
+                Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()));
+                     
+                },
             ),
           ],
         ),

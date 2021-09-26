@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/controller/globals.dart' as globals;
+import 'package:frontend_flutter/controller/plan_controller.dart';
 import 'package:frontend_flutter/screens/travel_plan_view.dart';
 
 class TravelCard extends StatelessWidget {
   final String imageUrl;
   final String title;
+  final String plan_id;
   final int locations;
   final String startDate;
   final String endDate;
@@ -14,6 +17,7 @@ class TravelCard extends StatelessWidget {
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       required this.title,
       this.locations = 0,
+      this.plan_id = '',
       this.startDate = '2022/01/01',
       this.endDate = '2022/12/31'});
 
@@ -21,8 +25,13 @@ class TravelCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => TravelPlanView()));
+        globals.createplan_id=plan_id;
+        getPalnDetails().then((value) =>
+                     Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => TravelPlanView()));
       },
       child: Card(
         elevation: 5,
@@ -63,11 +72,11 @@ class TravelCard extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        startDate + ' - ' + endDate,
-                        style: TextStyle(
-                            fontSize: 13, color: SecondaryColorDarkGrey),
-                      ),
+                      // Text(
+                      //   startDate + ' - ' + endDate,
+                      //   style: TextStyle(
+                      //       fontSize: 13, color: SecondaryColorDarkGrey),
+                      // ),
                       Spacer(),
                       Row(
                         children: [
@@ -78,11 +87,11 @@ class TravelCard extends StatelessWidget {
                           SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            locations.toString() + ' ' + 'Locations',
-                            style: TextStyle(
-                                fontSize: 12, color: SecondaryColorDarkGrey),
-                          )
+                          // Text(
+                          //   locations.toString() + ' ' + 'Locations',
+                          //   style: TextStyle(
+                          //       fontSize: 12, color: SecondaryColorDarkGrey),
+                          // )
                         ],
                       ),
                     ],
