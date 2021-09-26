@@ -133,14 +133,25 @@ Future deletePlan(String? plan_id) async {
 }
 //-------------------------------------------------------------------------------------------------
 //edit budget
-Future editBudget(int new_budget,String? plan_id) async {
-  print("gajk");
-  var url = Uri.parse("http://localhost:3000/itinerary/editbudget");
+Future editBudget(int? new_budget,String? plan_id) async {
+  print(new_budget);
+  //var url = Uri.parse("http://localhost:3000/itinerary/editbudget");
 
-  var response = await http
-      .post(url, body: {"new_budget": new_budget,"plan_id":plan_id});
+  // var response = await http
+  //     .post(url, body: {"new_budget": new_budget,"plan_id":plan_id});
     //print(response.body);
-    globals.InitialBudget=new_budget;
+    final response = await http.post(
+    Uri.parse('http://localhost:3000/itinerary/editbudget'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({
+      "new_budget": new_budget,
+      "plan_id": plan_id,
+    }),
+  );
+    print("hjhjA");
+    globals.InitialBudget=new_budget!;
   
 }
 //--------------------------------------------------------------------------------

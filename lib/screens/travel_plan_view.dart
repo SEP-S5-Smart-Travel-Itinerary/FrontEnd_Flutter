@@ -359,7 +359,7 @@ Container _buildBottomSheetChangeName(BuildContext context) {
 
 // Edit travel budget
 Container _buildBottomSheetChangeBudget(BuildContext context) {
-  int _newBudget=0;
+  int? _budget;
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
     decoration: BoxDecoration(
@@ -384,7 +384,7 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
                 ),
               ),
               onChanged: (String value) {
-                    _newBudget = int.parse(value);
+                    _budget = int.parse(value);
               },
             ),
             SizedBox(
@@ -395,7 +395,8 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
               color: PrimaryColor,
               height: 150,
                onPressed: () {
-                  editBudget( _newBudget, globals.createplan_id).then((value) =>
+                 print(_budget);
+                  editBudget(_budget, globals.createplan_id).then((value) =>
                      Navigator.push(
         context, MaterialPageRoute(builder: (context) => TravelPlanView()))
                      );
