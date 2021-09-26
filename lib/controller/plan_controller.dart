@@ -152,6 +152,9 @@ Future changeDates(String? plan_id,DateTime? newstartDate, DateTime? newendDate)
 
     globals.StartDate=newstartDate;
     globals.EndDate=newendDate;
+    DateFormat dateFormat = DateFormat("MM-dd");
+    globals.startdatestring = dateFormat.format(globals.StartDate);
+    globals.enddatestring = dateFormat.format(globals.EndDate);
     //print(globals.EndDate);
   
 }
