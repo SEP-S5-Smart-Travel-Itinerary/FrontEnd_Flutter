@@ -1,7 +1,7 @@
 class LocationData {
   String? name;
   List<String>? type;
-  int? rating;
+  double? rating;
   String? placeId;
   List<Imagelink>? imagelink;
   double? latitude;
@@ -9,7 +9,7 @@ class LocationData {
   int? reviews;
 
   LocationData(
-      {this.name,
+      {required this.name,
       this.type,
       this.rating,
       this.placeId,

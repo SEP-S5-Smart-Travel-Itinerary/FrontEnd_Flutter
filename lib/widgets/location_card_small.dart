@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_flutter/models/location_data.dart';
 import 'package:frontend_flutter/screens/attraction_screen.dart';
+import '../controller/location_controller.dart';
 
-class LocationCardSmall extends StatelessWidget {
+class LocationCardSmall extends StatefulWidget {
   final String imageUrl;
   final String locationName;
   final String locationId;
@@ -11,14 +13,27 @@ class LocationCardSmall extends StatelessWidget {
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       required this.locationName,
       required this.locationId});
+
+  @override
+  State<LocationCardSmall> createState() => _LocationCardSmallState();
+}
+
+class _LocationCardSmallState extends State<LocationCardSmall> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Attraction(
-                locationId: locationId,
-                name: locationName,
-              ))),
+      onTap: () async {
+        print("widget value" + widget.locationId);
+        LocationData a = await fetchDetailsofLocations(widget.locationId);
+        print("a received succesfully");
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Attraction(
+                      locationId: widget.locationId,
+                      name: a.name,
+                    )));
+      },
       child: Card(
         elevation: 5,
         child: Container(
@@ -28,7 +43,7 @@ class LocationCardSmall extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
-                  image: NetworkImage(imageUrl), fit: BoxFit.cover)),
+                  image: NetworkImage(widget.imageUrl), fit: BoxFit.cover)),
           child: Column(
             children: [
               Spacer(),
@@ -44,7 +59,7 @@ class LocationCardSmall extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      locationName,
+                      widget.locationName,
                       style: TextStyle(color: Colors.white),
                     ),
                   ],

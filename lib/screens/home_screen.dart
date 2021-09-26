@@ -7,6 +7,7 @@ import 'package:frontend_flutter/widgets/location_card_large.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
 import 'package:shimmer/shimmer.dart';
 import 'places_screen.dart';
+import 'search_screen.dart';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -59,6 +60,8 @@ class _HomeState extends State<Home> {
                 height: 70,
                 color: PrimaryColor,
                 child: TextField(
+                  onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchScreen())),
                   style: TextStyle(color: PrimaryColor),
                   cursorColor: PrimaryColor,
                   decoration: InputDecoration(
@@ -184,6 +187,7 @@ class _HomeState extends State<Home> {
                             LocationCardSmall(
                           locationId: loc_list[index].place_id,
                           locationName: loc_list[index].name,
+                          // imageUrl: loc_list[index].imagelink!,
                         ),
                       );
                     } else if (snapshot.hasError) {

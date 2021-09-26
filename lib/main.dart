@@ -38,7 +38,10 @@ class MyApp extends StatelessWidget {
         create: (context) => AppData(),
         child: MaterialApp(
           theme: ThemeData(fontFamily: 'Roboto'),
-          home: OpeningScreen(),
+          home: MainScreen(),
+          // home: Attraction(
+          //   name: "abcd",
+          // ),
           // home: UserPreference()
           // home: TravelPlan()),
           // home: TravelPlanView(),
