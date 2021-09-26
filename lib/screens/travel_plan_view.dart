@@ -515,7 +515,11 @@ Container _buildBottomSheetChangeDates(BuildContext context) {
                   }
                   return null;
                 },
-               
+               onChanged: (value) {
+                      _startDate = value!.start;
+                      _endDate = value.end;
+                    
+                  }
                 // onSaved: (value) {
                 //   // setState(() {
                 //   //   myDateRange = value!;
@@ -529,6 +533,12 @@ Container _buildBottomSheetChangeDates(BuildContext context) {
               text: "Edit Travel Dates",
               color: PrimaryColor,
               height: 150,
+              onPressed: () {
+                  changeDates(globals.createplan_id,_startDate,_endDate).then((value) =>
+                     Navigator.push(
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+                },
              
             ),
           ],

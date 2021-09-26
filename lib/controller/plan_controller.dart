@@ -144,3 +144,14 @@ Future editBudget(int new_budget,String? plan_id) async {
   
 }
 //--------------------------------------------------------------------------------
+Future changeDates(String? plan_id,DateTime? newstartDate, DateTime? newendDate) async {
+  var url = Uri.parse("http://localhost:3000/itinerary/changedates");
+
+  var response = await http
+      .post(url, body: {"plan_id":plan_id,"startDate":newstartDate!.toIso8601String(),"endDate":newendDate!.toIso8601String()});
+
+    globals.StartDate=newstartDate;
+    globals.EndDate=newendDate;
+    //print(globals.EndDate);
+  
+}
