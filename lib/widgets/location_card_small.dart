@@ -32,6 +32,7 @@ class _LocationCardSmallState extends State<LocationCardSmall> {
                 builder: (context) => Attraction(
                       locationId: widget.locationId,
                       name: a.name,
+                      imageLink: widget.imageUrl,
                     )));
       },
       child: Card(

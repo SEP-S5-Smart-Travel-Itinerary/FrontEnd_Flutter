@@ -22,12 +22,10 @@ class Bookmarks extends StatelessWidget {
         centerTitle: true,
         elevation: 1.0,
       ),
-      
       body: FutureBuilder(
         future: fetchBookmarks(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            
             List<BookDataInit> locList = snapshot.data;
             print(locList[0].rating);
             return ListView.builder(
@@ -37,35 +35,34 @@ class Bookmarks extends StatelessWidget {
               padding: EdgeInsets.only(left: 10, top: 15),
               //scrollDirection: Axis.horizontal,
               // itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  LocationCard(
-                    title: locList[index].name, 
-                location: "",//'Victorial Park of Nuwara Eliya',
-                rating: locList[index].rating,
-                //imageUrl:"",
-              ),
+              itemBuilder: (BuildContext context, int index) => LocationCard(
+                  title: locList[index].name,
+                  location: "", //'Victorial Park of Nuwara Eliya',
+                  rating: locList[index].rating,
+                  locationId: locList[index].place_id
+                  //imageUrl:"",
+                  ),
             );
           } else if (snapshot.hasError) {
             print(snapshot.error);
             return Text("$snapshot.error");
           }
-           return CircularProgressIndicator();
+          return CircularProgressIndicator();
         },
       ),
-                    ); 
-      // Builder(
-      //   builder: (BuildContext context) => ListView.builder(
-      //     physics: ClampingScrollPhysics(),
-      //     shrinkWrap: true,
-      //     itemCount: 15,
-      //     padding: EdgeInsets.only(left: 10, top: 15),
-      //     itemBuilder: (BuildContext context, int index) => LocationCard(
-      //       title: 'Victorial Park of Nuwara Eliya',
-      //       location: 'Nuwara Eliya',
-      //       rating: 4,
-      //     ),
-      //   ),
-      // ),
-    
+    );
+    // Builder(
+    //   builder: (BuildContext context) => ListView.builder(
+    //     physics: ClampingScrollPhysics(),
+    //     shrinkWrap: true,
+    //     itemCount: 15,
+    //     padding: EdgeInsets.only(left: 10, top: 15),
+    //     itemBuilder: (BuildContext context, int index) => LocationCard(
+    //       title: 'Victorial Park of Nuwara Eliya',
+    //       location: 'Nuwara Eliya',
+    //       rating: 4,
+    //     ),
+    //   ),
+    // ),
   }
 }
