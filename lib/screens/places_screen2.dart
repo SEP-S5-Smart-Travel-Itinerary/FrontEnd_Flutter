@@ -15,49 +15,49 @@ class PlaceScreen2 extends MaterialPageRoute<void> {
               centerTitle: true,
               elevation: 1.0,
             ),
-          //   body: Builder(
-          //     builder: (BuildContext context) => ListView.builder(
-          //       physics: ClampingScrollPhysics(),
-          //       shrinkWrap: true,
-          //       itemCount: 15,
-          //       padding: EdgeInsets.only(left: 10, top: 20),
-          //       itemBuilder: (BuildContext context, int index) => LocationCard(
-          //         title: 'Victorial Park of Nuwara Eliya',
-          //         location: 'Nuwara Eliya',
-          //         rating: 4,
-          //       ),
-          //     ),
-          //   ),
-          // );
-          body: FutureBuilder(
-                  future: fetchNearbyAttractions(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                    if (snapshot.hasData) {
-                      List<LocationDataInit> loc_list = snapshot.data;
-                      return ListView.builder(
-                        physics: ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: loc_list.length,
-                        padding: EdgeInsets.only(left: 10, top: 20),
-                       // scrollDirection: Axis.horizontal,
-                        // itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            LocationCard(
-                          title: loc_list[index].name,
-                          location: '',
-                          rating: 4,
-                          // rating: loc_list[index].rating,
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      print(snapshot.error);
-                      return Text("$snapshot.error");
-                    }
+            //   body: Builder(
+            //     builder: (BuildContext context) => ListView.builder(
+            //       physics: ClampingScrollPhysics(),
+            //       shrinkWrap: true,
+            //       itemCount: 15,
+            //       padding: EdgeInsets.only(left: 10, top: 20),
+            //       itemBuilder: (BuildContext context, int index) => LocationCard(
+            //         title: 'Victorial Park of Nuwara Eliya',
+            //         location: 'Nuwara Eliya',
+            //         rating: 4,
+            //       ),
+            //     ),
+            //   ),
+            // );
+            body: FutureBuilder(
+              future: fetchNearbyAttractions(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.hasData) {
+                  List<LocationDataInit> loc_list = snapshot.data;
+                  return ListView.builder(
+                    physics: ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: loc_list.length,
+                    padding: EdgeInsets.only(left: 10, top: 20),
+                    // scrollDirection: Axis.horizontal,
+                    // itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        LocationCard(
+                      title: loc_list[index].name,
+                      location: '',
+                      rating: 4,
+                      locationId: loc_list[index].place_id,
+                      // rating: loc_list[index].rating,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  print(snapshot.error);
+                  return Text("$snapshot.error");
+                }
 
-                    return CircularProgressIndicator();
-                  },
-                ),
+                return CircularProgressIndicator();
+              },
+            ),
           );
         });
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/models/location_data.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
 import 'package:frontend_flutter/widgets/upper_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -56,8 +57,7 @@ class _AttractionState extends State<Attraction> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(
-                      image: NetworkImage(
-                          'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80'),
+                      image: NetworkImage(widget.imageLink),
                       fit: BoxFit.cover)),
             ),
 

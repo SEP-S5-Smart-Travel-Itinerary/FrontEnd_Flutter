@@ -12,6 +12,7 @@ class ReviewSection extends StatelessWidget {
           title: 'Victorial Park of Nuwara Eliya',
           location: 'Nuwara Eliya',
           rating: 4,
+          locationId: '232323',
         ),
       ),
       const Center(
@@ -19,6 +20,7 @@ class ReviewSection extends StatelessWidget {
           title: 'Victorial Park of Nuwara Eliya',
           location: 'Nuwara Eliya',
           rating: 4,
+          locationId: '232323',
         ),
       ),
       const Center(
@@ -26,6 +28,7 @@ class ReviewSection extends StatelessWidget {
           title: 'Victorial Park of Nuwara Eliya',
           location: 'Nuwara Eliya',
           rating: 4,
+          locationId: '232323',
         ),
       ),
     ];

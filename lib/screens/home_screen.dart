@@ -129,7 +129,7 @@ class _HomeState extends State<Home> {
               //     ),
               //   ),
               // ),
-                 SizedBox(
+              SizedBox(
                 height: 200.0,
                 child: FutureBuilder(
                   future: fetchAttractionsByCategory(),
@@ -147,9 +147,10 @@ class _HomeState extends State<Home> {
                         itemBuilder: (BuildContext context, int index) =>
                             LocationCardLarge(
                           locationName: loc_list[index].name,
+                          locationId: loc_list[index].place_id,
                           description:
-                        "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                            rating: 4,
+                              "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+                          rating: 4,
                           // rating: loc_list[index].rating,
                         ),
                       );
