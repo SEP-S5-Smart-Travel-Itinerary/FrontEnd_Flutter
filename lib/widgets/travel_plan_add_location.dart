@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/models/location_data_initial.dart';
+import 'package:frontend_flutter/screens/search_screen_for_planing.dart';
 import './location_card_small.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,7 @@ class _TravelPlanAddLocationState extends State<TravelPlanAddLocation> {
       elevation: 5,
       child: Container(
         color: SecondaryColorLightGrey,
-        height: 240,
+        height: 100,
         padding: EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,38 +56,11 @@ class _TravelPlanAddLocationState extends State<TravelPlanAddLocation> {
                       BorderSide(color: SecondaryColorDarkGrey, width: 2),
                 ),
               ),
-              onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    autoCompleteSearch(value);
-                  } else {
-                    if (predictions.length > 0 && mounted) {
-                      setState(() {
-                        predictions = [];
-                      });
-                    }
-                  }
-                },
+              
+              onTap: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchScreenForPlan())),
             ),
-            Expanded(
-                child: ListView.builder(
-                  itemCount: predictions.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        child: Icon(
-                          Icons.pin_drop,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: Text(predictions[index]),
-                      onTap: () {
-                        Navigator.push(
-                        context, planPlaceScreen2(title: predictions[index]));
-                      },
-                    );
-                  },
-                ),
-              ),
+            
             // Text(
             //   "Recommended Places",
             //   style: TextStyle(
