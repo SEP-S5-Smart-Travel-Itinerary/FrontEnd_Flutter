@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'dart:html';
+import 'package:flutter/material.dart';
 import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/location_data.dart';
 import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:frontend_flutter/models/plandetail_init.dart';
+import 'package:frontend_flutter/widgets/add_friends_form.dart';
+import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/plan_data_init.dart';
@@ -27,6 +31,19 @@ Future<PlanDataInit> createItin(
 
   var jsonResponse = json.decode(response.body)["message"];
   globals.createplan_id=jsonResponse["_id"];
+
+//adding planing person
+  var addfds = await http.post(
+    Uri.parse('http://localhost:3000/itinerary/addmembers'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({
+      "members": ["malithi_abc@gmail.com"],
+      "plan_id": globals.createplan_id,
+      
+    }),
+  );
   //getPalnDetails(globals.createplan_id);
   //print(globals.createplan_id);
 
@@ -40,9 +57,23 @@ Future<PlanDataInit> createItin(
   }
 }
 
-Future<PlanDataInit> Addfriends(List<String> friends) async {
-      //print(startDate);
-  final response = await http.post(
+Future Addfriends(List<String> friends) async {
+  //     print(friends[0]);
+  //     var search = await http.post(
+  //   Uri.parse('http://localhost:3000/user/searchUser'),
+  //   headers: <String, String>{
+  //     'Content-Type': 'application/json; charset=UTF-8',
+  //   },
+  //   body: jsonEncode({
+  //     "email": friends[0],
+      
+  //   }),
+  // );
+
+
+  // if (search.statusCode == 200) {
+    print("success");
+    final response = await http.post(
     Uri.parse('http://localhost:3000/itinerary/addmembers'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -54,18 +85,31 @@ Future<PlanDataInit> Addfriends(List<String> friends) async {
     }),
   );
 
-  //var jsonResponse = json.decode(response.body)["message"];
-  //globals.createplan_id=jsonResponse["_id"];
-  //print(jsonResponse["_id"]);
-
-  //print(response);
 
   if (response.statusCode == 200) {
     print("success");
-    return PlanDataInit.fromJson(jsonDecode(response.body));
+    //return PlanDataInit.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create itin.');
   }
+  // } else {
+  //   print("fail");
+  //   throw Exception('Failed to create itin.');
+  // //   Widget build(BuildContext context) {
+  // //   return Material(
+  // //       color: Colors.transparent,
+  // //       child: Text(
+  // //           "Input Member haven't Registered to Star Trips",
+  // //           style: TextStyle(
+  // //             fontFamily: 'custom font', // remove this if don't have custom font
+  // //             fontSize: 20.0, // text size
+  // //             color: Colors.red, // text color
+  // //           ),
+  // //       ),
+  // //     );
+  // // }
+  // }
+     
 }
 
 Future<List<PlanDetailInit>> getPalns() async {
