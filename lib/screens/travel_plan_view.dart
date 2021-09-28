@@ -4,6 +4,7 @@ import 'package:frontend_flutter/controller/plan_controller.dart';
 import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/travel_plan.dart';
 import 'package:frontend_flutter/screens/home_screen.dart';
+import '../main_screen.dart';
 import '../widgets/travel_plan_view_location_card.dart';
 import '../widgets/travel_plan_transport_card.dart';
 import '../widgets/travel_plan_add_location.dart';
@@ -223,7 +224,8 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                 );
               } else if (snapshot.hasError) {
                 print(snapshot.error);
-                return Text("$snapshot.error");
+                //return Text("$snapshot.error");
+                return Text("No Locations");
               }
               return CircularProgressIndicator();
             },
@@ -464,7 +466,7 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
                onPressed: () {
                   deletePlan(globals.createplan_id).then((value) =>
                      Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Home()))
+        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
                      );
                 },
             ),
