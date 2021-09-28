@@ -3,6 +3,7 @@ import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/plan_controller.dart';
 import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/travel_plan.dart';
+import 'package:frontend_flutter/screens/home_screen.dart';
 import '../widgets/travel_plan_view_location_card.dart';
 import '../widgets/travel_plan_transport_card.dart';
 import '../widgets/travel_plan_add_location.dart';
@@ -463,7 +464,7 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
                onPressed: () {
                   deletePlan(globals.createplan_id).then((value) =>
                      Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
+        context, MaterialPageRoute(builder: (context) => Home()))
                      );
                 },
             ),
