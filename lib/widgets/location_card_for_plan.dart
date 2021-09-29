@@ -114,11 +114,9 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
-
       ),
     );
   }

@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
 class LocationDataInit {
   String name;
   List type;
@@ -18,6 +22,8 @@ class LocationDataInit {
         type: json['type'],
         rating: json['rating'],
         place_id: json['place_id'],
-        imagelink: json['imagelink']);
+        imagelink: (json['imagelink'] != null)
+            ? json['imagelink'][0]['photo_reference']
+            : json['imagelink']);
   }
 }

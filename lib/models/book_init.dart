@@ -1,14 +1,14 @@
 class BookDataInit {
   String name;
   List type;
-  double rating;
+  double? rating;
   String place_id;
   Object? imagelink;
 
   BookDataInit(
       {required this.name,
       required this.type,
-      required this.rating,
+      this.rating,
       required this.place_id,
       this.imagelink});
 

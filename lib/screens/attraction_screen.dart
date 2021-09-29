@@ -61,7 +61,7 @@ class _AttractionState extends State<Attraction> {
                       fit: BoxFit.cover)),
             ),
 
-            UpperBar(),
+            UpperBar(location_id: widget.locationId),
             //description
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
