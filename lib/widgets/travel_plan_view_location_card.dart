@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/screens/travel_plan_view.dart';
 import 'package:frontend_flutter/widgets/color_badge.dart';
 import 'package:frontend_flutter/widgets/star_rating_bar.dart';
 import 'package:frontend_flutter/widgets/color_badge.dart';
+import 'package:http/http.dart' as http;
+import 'package:frontend_flutter/controller/globals.dart' as globals;
 
 class TravelPlanLocationCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String location;
+  final String locationId;
   final double rating;
   final int id;
 
@@ -16,6 +20,7 @@ class TravelPlanLocationCard extends StatelessWidget {
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       required this.title,
       required this.location,
+      required this.locationId,
       required this.id,
       required this.rating});
 
@@ -64,7 +69,18 @@ class TravelPlanLocationCard extends StatelessWidget {
                         SizedBox(
                           width: 10,
                         ),
-                        //Text('8.00 A.M - 10.00 A.M'),
+                        TextButton(
+                  onPressed: () {
+                    RemoveLocation(locationId).then((value) =>
+                     Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => TravelPlanView()))
+                     );
+                  },
+                  child: Text(
+                    'Delete location',
+                    style: TextStyle(color: Colors.red),
+                  )),
+                  
                       ],
                     )
                   ],
@@ -109,5 +125,16 @@ class TravelPlanLocationCard extends StatelessWidget {
         ),
       ),
     );
+  }
+  RemoveLocation(String value) async {
+    var url = Uri.parse("http://localhost:3000/itinerary/removelocation");
+
+  var response = await http
+      .post(url, body: {"location_id": value,"plan_id":globals.createplan_id});
+    print("sucess called");
+    //List jsonResponse = json.decode(response.body)["data"];
+    // print(jsonResponse);
+    
+  
   }
 }
