@@ -181,6 +181,8 @@ Future deletePlan(String? plan_id) async {
   var url = Uri.parse("http://localhost:3000/itinerary/deleteitin");
 
   var response = await http.post(url, body: {"plan_id": plan_id});
+
+  globals.Name = "This Plan has been Deleted";
 }
 
 //-------------------------------------------------------------------------------------------------

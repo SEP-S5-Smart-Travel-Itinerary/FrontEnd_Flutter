@@ -223,7 +223,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                               location: "", //'Victorial Park of Nuwara Eliya',
                               rating: 4,
                               id: index + 1,
-                              //location: locList[index].place_id,
+                              locationId: locList[index].place_id,
                               //imageUrl:"",
                             ),
                           );
