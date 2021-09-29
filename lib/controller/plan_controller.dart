@@ -12,10 +12,23 @@ import 'package:http/http.dart' as http;
 import '../models/plan_data_init.dart';
 import 'globals.dart' as globals;
 import 'package:intl/intl.dart';
+import '../services/local_notification_manager.dart';
+
+NotificationService _notificationService = NotificationService();
 
 Future<PlanDataInit> createItin(
     String? name, int? budget, DateTime? startDate, DateTime? endDate) async {
-      //print(startDate);
+  //print(startDate);
+
+  var newDate = new DateTime(
+      startDate!.year, startDate.month, startDate.day, startDate.hour - 6);
+  print(newDate);
+
+  await _notificationService.scheduleNotifications(
+      title: name,
+      body: "Schedule trip begins tomorrow",
+      time: DateTime.parse(newDate.toString()));
+
   final response = await http.post(
     Uri.parse('http://localhost:3000/itinerary/createitin'),
     headers: <String, String>{
@@ -23,14 +36,14 @@ Future<PlanDataInit> createItin(
     },
     body: jsonEncode({
       "Name": name,
-      "startDate": startDate!.toIso8601String(),
+      "startDate": startDate.toIso8601String(),
       "endDate": endDate!.toIso8601String(),
       "initialBud": budget
     }),
   );
 
   var jsonResponse = json.decode(response.body)["message"];
-  globals.createplan_id=jsonResponse["_id"];
+  globals.createplan_id = jsonResponse["_id"];
 
 //adding planing person
   var addfds = await http.post(
@@ -41,7 +54,6 @@ Future<PlanDataInit> createItin(
     body: jsonEncode({
       "members": ["malithi_abc@gmail.com"],
       "plan_id": globals.createplan_id,
-      
     }),
   );
   //getPalnDetails(globals.createplan_id);
@@ -66,14 +78,13 @@ Future Addfriends(List<String> friends) async {
   //   },
   //   body: jsonEncode({
   //     "email": friends[0],
-      
+
   //   }),
   // );
 
-
   // if (search.statusCode == 200) {
-    print("success");
-    final response = await http.post(
+  print("success");
+  final response = await http.post(
     Uri.parse('http://localhost:3000/itinerary/addmembers'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -81,10 +92,8 @@ Future Addfriends(List<String> friends) async {
     body: jsonEncode({
       "members": friends,
       "plan_id": globals.createplan_id,
-      
     }),
   );
-
 
   if (response.statusCode == 200) {
     print("success");
@@ -109,85 +118,81 @@ Future Addfriends(List<String> friends) async {
   // //     );
   // // }
   // }
-     
 }
 
 Future<List<PlanDetailInit>> getPalns() async {
   //print("gajk");
   var url = Uri.parse("http://localhost:3000/itinerary/getallitin");
 
-  var response = await http
-      .post(url, body: {"user_id": "malithi_abc@gmail.com"});
-    //print(response.body);
-    List jsonResponse = json.decode(response.body)["message"];
-    //print(jsonResponse);
-    return jsonResponse
-        .map((location) => new PlanDetailInit.fromJson(location))
-        .toList();
-  
+  var response =
+      await http.post(url, body: {"user_id": "malithi_abc@gmail.com"});
+  //print(response.body);
+  List jsonResponse = json.decode(response.body)["message"];
+  //print(jsonResponse);
+  return jsonResponse
+      .map((location) => new PlanDetailInit.fromJson(location))
+      .toList();
 }
 
 Future getPalnDetails() async {
   //print("gajk");
   var url = Uri.parse("http://localhost:3000/itinerary/alldetails");
 
-  var response = await http
-      .post(url, body: {"plan_id": globals.createplan_id});
-    //print(response.body);
-    var jsonResponse = json.decode(response.body)["message"];
-    globals.InitialBudget=jsonResponse["InitialBudget"];
-    globals.TotalBudget=jsonResponse["TotalBudget"];
-    globals.Locations=jsonResponse["Locations"];
-    globals.Name=jsonResponse["Name"];
-    globals.Transport=jsonResponse["Transport"];
-    globals.TripMates=jsonResponse["TripMates"];
-    globals.StartDate=DateTime.parse(jsonResponse["StartDate"]);
-    globals.EndDate=DateTime.parse(jsonResponse["EndDate"]);
-    print(globals.InitialBudget);
-    print(globals.TotalBudget);
-    print(globals.Locations);
-    print(globals.Name);
-    print(globals.Transport);
-    print(globals.TripMates);
-    print(globals.StartDate);
-    print(globals.EndDate);
+  var response = await http.post(url, body: {"plan_id": globals.createplan_id});
+  //print(response.body);
+  var jsonResponse = json.decode(response.body)["message"];
+  globals.InitialBudget = jsonResponse["InitialBudget"];
+  globals.TotalBudget = jsonResponse["TotalBudget"];
+  globals.Locations = jsonResponse["Locations"];
+  globals.Name = jsonResponse["Name"];
+  globals.Transport = jsonResponse["Transport"];
+  globals.TripMates = jsonResponse["TripMates"];
+  globals.StartDate = DateTime.parse(jsonResponse["StartDate"]);
+  globals.EndDate = DateTime.parse(jsonResponse["EndDate"]);
+  print(globals.InitialBudget);
+  print(globals.TotalBudget);
+  print(globals.Locations);
+  print(globals.Name);
+  print(globals.Transport);
+  print(globals.TripMates);
+  print(globals.StartDate);
+  print(globals.EndDate);
 
-    DateFormat dateFormat = DateFormat("MM/dd");
-    globals.startdatestring = dateFormat.format(globals.StartDate);
-    globals.enddatestring = dateFormat.format(globals.EndDate);
-    print(globals.startdatestring);
-    print(globals.enddatestring);
+  DateFormat dateFormat = DateFormat("MM/dd");
+  globals.startdatestring = dateFormat.format(globals.StartDate);
+  globals.enddatestring = dateFormat.format(globals.EndDate);
+  print(globals.startdatestring);
+  print(globals.enddatestring);
 }
 
-Future changeName(String? new_name,String? plan_id) async {
+Future changeName(String? new_name, String? plan_id) async {
   //print("gajk");
   var url = Uri.parse("http://localhost:3000/itinerary/changeplanname");
 
-  var response = await http
-      .post(url, body: {"new_name": new_name,"plan_id":plan_id});
-    //print(response.body);
-    globals.Name=new_name!;
-  
+  var response =
+      await http.post(url, body: {"new_name": new_name, "plan_id": plan_id});
+  //print(response.body);
+  globals.Name = new_name!;
 }
+
 //------------------------------------------------------------------------------------
 //delete plan
 Future deletePlan(String? plan_id) async {
   var url = Uri.parse("http://localhost:3000/itinerary/deleteitin");
 
-  var response = await http
-      .post(url, body: {"plan_id":plan_id});
-  
+  var response = await http.post(url, body: {"plan_id": plan_id});
 }
+
 //-------------------------------------------------------------------------------------------------
 //edit budget
-Future editBudget(int? new_budget,String? plan_id) async {
+Future editBudget(int? new_budget, String? plan_id) async {
   print(new_budget);
   //var url = Uri.parse("http://localhost:3000/itinerary/editbudget");
 
   // var response = await http
   //     .post(url, body: {"new_budget": new_budget,"plan_id":plan_id});
-    //print(response.body);
-    final response = await http.post(
+  //print(response.body);
+  final response = await http.post(
     Uri.parse('http://localhost:3000/itinerary/editbudget'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -197,31 +202,34 @@ Future editBudget(int? new_budget,String? plan_id) async {
       "plan_id": plan_id,
     }),
   );
-    print("hjhjA");
-    globals.InitialBudget=new_budget!;
-  
+  print("hjhjA");
+  globals.InitialBudget = new_budget!;
 }
+
 //--------------------------------------------------------------------------------
-Future changeDates(String? plan_id,DateTime? newstartDate, DateTime? newendDate) async {
+Future changeDates(
+    String? plan_id, DateTime? newstartDate, DateTime? newendDate) async {
   var url = Uri.parse("http://localhost:3000/itinerary/changedates");
 
-  var response = await http
-      .post(url, body: {"plan_id":plan_id,"startDate":newstartDate!.toIso8601String(),"endDate":newendDate!.toIso8601String()});
+  var response = await http.post(url, body: {
+    "plan_id": plan_id,
+    "startDate": newstartDate!.toIso8601String(),
+    "endDate": newendDate!.toIso8601String()
+  });
 
-    globals.StartDate=newstartDate;
-    globals.EndDate=newendDate;
-    DateFormat dateFormat = DateFormat("MM/dd");
-    globals.startdatestring = dateFormat.format(globals.StartDate);
-    globals.enddatestring = dateFormat.format(globals.EndDate);
-    //print(globals.EndDate);
-  
+  globals.StartDate = newstartDate;
+  globals.EndDate = newendDate;
+  DateFormat dateFormat = DateFormat("MM/dd");
+  globals.startdatestring = dateFormat.format(globals.StartDate);
+  globals.enddatestring = dateFormat.format(globals.EndDate);
+  //print(globals.EndDate);
 }
 
 Future<LocationData> getLocationdetails(String place_id) async {
-
   var url = Uri.parse("http://localhost:3000/apiuser/details");
 
-  var response = await http.post(url, body: {"place_id": "ChIJQ9yCmWtZ4joRNu1evW41NTo"});
+  var response =
+      await http.post(url, body: {"place_id": "ChIJQ9yCmWtZ4joRNu1evW41NTo"});
   // print(response.body);
   if (response.statusCode == 200) {
     // print(response.body);
@@ -233,23 +241,17 @@ Future<LocationData> getLocationdetails(String place_id) async {
   } else {
     throw Exception('Failed to load location details from API');
   }
-  
 }
 
 Future<List<BookDataInit>> fetchPlanLocationList() async {
   //print("gajk");
   var url = Uri.parse("http://localhost:3000/itinerary/planlocations");
 
-  var response = await http
-      .post(url, body: {"plan_id": globals.createplan_id});
-    //print(response.body);
-    List jsonResponse = json.decode(response.body)["message"];
-    //print(jsonResponse);
-    return jsonResponse
-        .map((location) => new BookDataInit.fromJson(location))
-        .toList();
-  
+  var response = await http.post(url, body: {"plan_id": globals.createplan_id});
+  //print(response.body);
+  List jsonResponse = json.decode(response.body)["message"];
+  //print(jsonResponse);
+  return jsonResponse
+      .map((location) => new BookDataInit.fromJson(location))
+      .toList();
 }
-
-
-

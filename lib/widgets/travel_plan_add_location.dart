@@ -56,16 +56,17 @@ class _TravelPlanAddLocationState extends State<TravelPlanAddLocation> {
                       BorderSide(color: SecondaryColorDarkGrey, width: 2),
                 ),
               ),
-              
-              onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchScreenForPlan())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SearchScreenForPlan())),
             ),
-            
-            // Text(
-            //   "Recommended Places",
-            //   style: TextStyle(
-            //       fontWeight: FontWeight.w100, color: SecondaryColorDarkGrey),
-            // ),
+            Text(
+              "Nearby Places",
+              style: TextStyle(
+                  fontWeight: FontWeight.w100, color: SecondaryColorDarkGrey),
+            ),
+
             // SizedBox(
             //   height: 120.0,
             //   child: ListView.builder(
@@ -85,21 +86,20 @@ class _TravelPlanAddLocationState extends State<TravelPlanAddLocation> {
       ),
     );
   }
+
   void autoCompleteSearch(String value) async {
     var url = Uri.parse("http://localhost:3000/apiuser/auto");
 
-  var response = await http
-      .post(url, body: {"place": value});
+    var response = await http.post(url, body: {"place": value});
     print("sucess called");
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
     setState(() {
-        predictions = json.decode(response.body)["data"];
-        print (predictions);
-      });
-  
+      predictions = json.decode(response.body)["data"];
+      print(predictions);
+    });
   }
 
   // ignore: non_constant_identifier_names
-  
+
 }

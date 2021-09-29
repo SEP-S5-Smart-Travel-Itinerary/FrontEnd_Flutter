@@ -12,7 +12,7 @@ Future<List<LocationDataInit>> fetchNearbyAttractions() async {
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-    // print(jsonResponse);
+    print(jsonResponse[0]['imagelink'][0]['photo_reference']);
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();
@@ -89,7 +89,8 @@ Future<List<LocationDataInit>> fetchAttractionsByCategory() async {
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-    // print(jsonResponse);
+    print("---------------recommended locations--------------");
+    print(jsonResponse);
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();
@@ -161,8 +162,7 @@ Future fetchDetailsofLocations(String placeId) async {
 Future<List<LocationDataInit>> fetchLocations(String? name) async {
   var url = Uri.parse("http://localhost:3000/apiuser/locations");
 
-  var response = await http
-      .post(url, body: {"place": name});
+  var response = await http.post(url, body: {"place": name});
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];

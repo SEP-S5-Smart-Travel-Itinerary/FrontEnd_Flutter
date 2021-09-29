@@ -63,7 +63,9 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                       fit: BoxFit.cover)),
             ),
 
-            UpperBar(),
+            UpperBar(
+              location_id: widget.locationId,
+            ),
             //description
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
@@ -71,24 +73,25 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                   this.widget.description,
                   style: TextStyle(color: Colors.black.withOpacity(0.7)),
                 )),
-              ElevatedButton(
-                onPressed: () {
-                  addLocations(widget.locationId,globals.createplan_id).then((value) =>
-                     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
-                     );
-                },
-                child: Container(
-                    height: 50,
-                    child: Center(
-                        child: const Text(
-                      'Add This Location to the plan',
-                      style: TextStyle(fontSize: 18),
-                    ))),
-                style: ElevatedButton.styleFrom(
-                  primary: PrimaryColor,
-                ),
+            ElevatedButton(
+              onPressed: () {
+                addLocations(widget.locationId, globals.createplan_id).then(
+                    (value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TravelPlanView())));
+              },
+              child: Container(
+                  height: 50,
+                  child: Center(
+                      child: const Text(
+                    'Add This Location to the plan',
+                    style: TextStyle(fontSize: 18),
+                  ))),
+              style: ElevatedButton.styleFrom(
+                primary: PrimaryColor,
               ),
+            ),
             // map location section
 
             // Container(
@@ -126,11 +129,11 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
           ],
         ));
   }
-   addLocations(String? location_id,String? plan_id) async {
-  var url = Uri.parse("http://localhost:3000/itinerary/addlocation");
 
-  var response = await http
-      .post(url, body: {"location_id": location_id,"plan_id":plan_id});
-  
-}
+  addLocations(String? location_id, String? plan_id) async {
+    var url = Uri.parse("http://localhost:3000/itinerary/addlocation");
+
+    var response = await http
+        .post(url, body: {"location_id": location_id, "plan_id": plan_id});
+  }
 }

@@ -147,8 +147,8 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                         children: [
                           Container(
                               child: Row(
-                            //children: [Text('Nevada  '), Text('Paris')],
-                          )),
+                                  //children: [Text('Nevada  '), Text('Paris')],
+                                  )),
                           Container(
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
@@ -199,38 +199,43 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 10,
+                    ),
                     TravelPlanAddLocation(),
-                        FutureBuilder(
-            future: fetchPlanLocationList(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                List<BookDataInit> locList = snapshot.data;
-                //print(locList[0].rating);
-                return ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: locList.length,
-                  padding: EdgeInsets.only(left: 10, top: 15),
-                  //scrollDirection: Axis.horizontal,
-                  // itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) => TravelPlanLocationCard(
-                      title: locList[index].name,
-                      location: "", //'Victorial Park of Nuwara Eliya',
-                      rating: locList[index].rating,
-                      id:index+1,
-                      //location: locList[index].place_id,
-                      //imageUrl:"",
-                      ),
-                );
-              } else if (snapshot.hasError) {
-                print(snapshot.error);
-                //return Text("$snapshot.error");
-                return Text("No Locations");
-              }
-              return CircularProgressIndicator();
-            },
-          ),
-      TravelPlanTransportCard(
+                    FutureBuilder(
+                      future: fetchPlanLocationList(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.hasData) {
+                          List<BookDataInit> locList = snapshot.data;
+                          //print(locList[0].rating);
+                          return ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: locList.length,
+                            padding: EdgeInsets.only(left: 10, top: 15),
+                            //scrollDirection: Axis.horizontal,
+                            // itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, int index) =>
+                                TravelPlanLocationCard(
+                              title: locList[index].name,
+                              location: "", //'Victorial Park of Nuwara Eliya',
+                              rating: 4,
+                              id: index + 1,
+                              //location: locList[index].place_id,
+                              //imageUrl:"",
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          print(snapshot.error);
+                          //return Text("$snapshot.error");
+                          return Text("No Locations");
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
+                    TravelPlanTransportCard(
                       time: "5",
                       media: "Car",
                       distance: 100,
@@ -321,6 +326,7 @@ Container _buildBottomSheet(BuildContext context) {
     ),
   );
 }
+
 //change plan name
 Container _buildBottomSheetChangeName(BuildContext context) {
   String? _name;
@@ -346,12 +352,10 @@ Container _buildBottomSheetChangeName(BuildContext context) {
                     Radius.circular(5),
                   ),
                 ),
-                
               ),
               onChanged: (String? value) {
-                    _name = value;
-                
-                },
+                _name = value;
+              },
             ),
             SizedBox(
               height: 20,
@@ -361,17 +365,18 @@ Container _buildBottomSheetChangeName(BuildContext context) {
               color: PrimaryColor,
               height: 150,
               onPressed: () {
-                  changeName(_name, globals.createplan_id).then((value) =>
-                     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
-                     );
-        //           Navigator.push(
-        // context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
-                  // print(_name);
-                  // print(_budget);
-                  // print(_startDate);
-                  // print(_endDate);
-                },
+                changeName(_name, globals.createplan_id).then((value) =>
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TravelPlanView())));
+                //           Navigator.push(
+                // context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
+                // print(_name);
+                // print(_budget);
+                // print(_startDate);
+                // print(_endDate);
+              },
             ),
           ],
         ),
@@ -407,7 +412,7 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
                 ),
               ),
               onChanged: (String value) {
-                    _budget = int.parse(value);
+                _budget = int.parse(value);
               },
             ),
             SizedBox(
@@ -417,15 +422,15 @@ Container _buildBottomSheetChangeBudget(BuildContext context) {
               text: "Change Travel Budget",
               color: PrimaryColor,
               height: 150,
-               onPressed: () {
-                 print(_budget);
-                  editBudget(_budget, globals.createplan_id).then((value) =>
-                     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
-                     );
-        //          
-                },
-
+              onPressed: () {
+                print(_budget);
+                editBudget(_budget, globals.createplan_id).then((value) =>
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TravelPlanView())));
+                //
+              },
             ),
           ],
         ),
@@ -463,12 +468,13 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               text: "Delete Travel Plan",
               color: Color(0xffC75151),
               height: 150,
-               onPressed: () {
-                  deletePlan(globals.createplan_id).then((value) =>
-                     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
-                     );
-                },
+              onPressed: () {
+                deletePlan(globals.createplan_id).then((value) =>
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TravelPlanView())));
+              },
             ),
             SizedBox(
               height: 20,
@@ -477,12 +483,10 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               text: "Cancel",
               color: SecondaryColorDarkGrey,
               height: 150,
-               onPressed: () {
-  
-                Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TravelPlanView()));
-                     
-                },
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => TravelPlanView()));
+              },
             ),
           ],
         ),
@@ -539,11 +543,10 @@ Container _buildBottomSheetChangeDates(BuildContext context) {
                   }
                   return null;
                 },
-               onChanged: (value) {
-                      _startDate = value!.start;
-                      _endDate = value.end;
-                    
-                  }
+                onChanged: (value) {
+                  _startDate = value!.start;
+                  _endDate = value.end;
+                }
                 // onSaved: (value) {
                 //   // setState(() {
                 //   //   myDateRange = value!;
@@ -558,12 +561,12 @@ Container _buildBottomSheetChangeDates(BuildContext context) {
               color: PrimaryColor,
               height: 150,
               onPressed: () {
-                  changeDates(globals.createplan_id,_startDate,_endDate).then((value) =>
-                     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => TravelPlanView()))
-                     );
-                },
-             
+                changeDates(globals.createplan_id, _startDate, _endDate).then(
+                    (value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TravelPlanView())));
+              },
             ),
           ],
         ),

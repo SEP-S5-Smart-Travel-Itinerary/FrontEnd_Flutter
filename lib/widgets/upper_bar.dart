@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/widgets/color_badge.dart';
+import '../controller/book_ctrl.dart';
 
 class UpperBar extends StatelessWidget {
   final String type;
   final String weather;
   final String location;
   final String avgVisit;
+  final String location_id;
 
-  const UpperBar({
-    this.type = "ATTRACTION",
-    this.weather = 'sunny',
-    this.location = "Nuwara Eliya",
-    this.avgVisit = 'Avg visit time: 2hrs',
-  });
+  const UpperBar(
+      {this.type = "ATTRACTION",
+      this.weather = 'sunny',
+      this.location = "Nuwara Eliya",
+      this.avgVisit = 'Avg visit time: 2hrs',
+      required this.location_id});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,9 @@ class UpperBar extends StatelessWidget {
           ),
           Spacer(),
           IconButton(
-            onPressed: null,
+            onPressed: () {
+              addBookmark(location_id);
+            },
             icon: Icon(Icons.bookmark_add),
             color: Colors.black,
             iconSize: 35,

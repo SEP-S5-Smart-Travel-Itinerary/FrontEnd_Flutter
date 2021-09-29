@@ -38,7 +38,7 @@ class Bookmarks extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) => LocationCard(
                   title: locList[index].name,
                   location: "", //'Victorial Park of Nuwara Eliya',
-                  rating: locList[index].rating,
+                  rating: 4,
                   locationId: locList[index].place_id
                   //imageUrl:"",
                   ),

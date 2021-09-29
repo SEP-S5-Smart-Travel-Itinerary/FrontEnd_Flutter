@@ -8,6 +8,13 @@ class LocationCardSmall extends StatefulWidget {
   final String locationName;
   final String locationId;
 
+  // NetworkImage getImage(photoReference) {
+  //   print("photo ref " + photoReference);
+  //   final url =
+  //       "https://maps.googleapis.com/maps/api/place/photo?photo_reference=$photoReference&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4";
+  //   return NetworkImage(url);
+  // }
+
   const LocationCardSmall(
       {this.imageUrl =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
@@ -45,6 +52,8 @@ class _LocationCardSmallState extends State<LocationCardSmall> {
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
                   image: NetworkImage(widget.imageUrl), fit: BoxFit.cover)),
+          // image: DecorationImage(image: NetworkImage(widget.imageUrl)),
+
           child: Column(
             children: [
               Spacer(),

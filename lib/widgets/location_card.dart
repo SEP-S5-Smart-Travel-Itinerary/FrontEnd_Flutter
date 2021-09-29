@@ -19,7 +19,7 @@ class LocationCard extends StatefulWidget {
       required this.title,
       required this.locationId,
       required this.location,
-      required this.rating});
+      this.rating = 4});
 
   @override
   State<LocationCard> createState() => _LocationCardState();
