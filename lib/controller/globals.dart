@@ -11,3 +11,4 @@ int InitialBudget=0;
   DateTime EndDate=DateTime.now();
   String startdatestring="";
   String enddatestring="";
+  String password="";
