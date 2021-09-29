@@ -176,6 +176,8 @@ Future deletePlan(String? plan_id) async {
 
   var response = await http
       .post(url, body: {"plan_id":plan_id});
+
+globals.Name="This Plan has been Deleted";
   
 }
 //-------------------------------------------------------------------------------------------------
