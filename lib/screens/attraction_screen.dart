@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/models/location_data.dart';
+import 'package:frontend_flutter/widgets/add_reviews_form.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
+import 'package:frontend_flutter/widgets/reviews_view.dart';
 import 'package:frontend_flutter/widgets/upper_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
@@ -69,7 +71,43 @@ class _AttractionState extends State<Attraction> {
                   this.widget.description,
                   style: TextStyle(color: Colors.black.withOpacity(0.7)),
                 )),
-
+              ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddReviews(loc_id:widget.locationId)));
+              },
+              child: Container(
+                  height: 50,
+                  child: Center(
+                      child: const Text(
+                    'Add Review',
+                    style: TextStyle(fontSize: 18),
+                  ))),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+            ),
+            SizedBox(height: 25.0,),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ReviewView(title:widget.locationId)));
+              },
+              child: Container(
+                  height: 50,
+                  child: Center(
+                      child: const Text(
+                    'See Reviews',
+                    style: TextStyle(fontSize: 18),
+                  ))),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.purple,
+              ),
+            ),
             // map location section
 
             // Container(
@@ -83,21 +121,21 @@ class _AttractionState extends State<Attraction> {
             //   ),
             // ),
 
-            SizedBox(
-              height: 150.0,
-              child: ListView.builder(
-                physics: ClampingScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 10),
-                scrollDirection: Axis.horizontal,
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int index) =>
-                    LocationCardSmall(
-                  locationId: 'ssdsdsdsd',
-                  locationName: 'Victoria Park',
-                ),
-              ),
-            ),
+            // SizedBox(
+            //   height: 150.0,
+            //   child: ListView.builder(
+            //     physics: ClampingScrollPhysics(),
+            //     shrinkWrap: true,
+            //     padding: EdgeInsets.only(left: 10),
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: 15,
+            //     itemBuilder: (BuildContext context, int index) =>
+            //         LocationCardSmall(
+            //       locationId: 'ssdsdsdsd',
+            //       locationName: 'Victoria Park',
+            //     ),
+            //   ),
+            // ),
             // Expanded(child: ReviewSection()),
 
             //submit a review section
@@ -107,4 +145,10 @@ class _AttractionState extends State<Attraction> {
           ],
         ));
   }
+  // addLocations(String? location_id, String? plan_id) async {
+  //   var url = Uri.parse("http://localhost:3000/itinerary/addlocation");
+
+  //   var response = await http
+  //       .post(url, body: {"location_id": location_id, "plan_id": plan_id});
+  // }
 }
