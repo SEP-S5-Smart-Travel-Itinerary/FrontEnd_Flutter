@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
+import 'package:frontend_flutter/controller/location_controller.dart';
 import 'package:frontend_flutter/models/location_data.dart';
+import 'package:frontend_flutter/models/location_data_initial.dart';
+import 'package:frontend_flutter/screens/places_screen3.dart';
 import 'package:frontend_flutter/screens/travel_plan_view.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
 import 'package:frontend_flutter/widgets/upper_bar.dart';
@@ -105,21 +108,77 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
             //   ),
             // ),
 
-            SizedBox(
-              height: 150.0,
-              child: ListView.builder(
-                physics: ClampingScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.only(left: 10),
-                scrollDirection: Axis.horizontal,
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int index) =>
-                    LocationCardSmall(
-                  locationId: 'ssdsdsdsd',
-                  locationName: 'Victoria Park',
+            // SizedBox(
+            //   height: 150.0,
+            //   child: ListView.builder(
+            //     physics: ClampingScrollPhysics(),
+            //     shrinkWrap: true,
+            //     padding: EdgeInsets.only(left: 10),
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: 15,
+            //     itemBuilder: (BuildContext context, int index) =>
+            //         LocationCardSmall(
+            //       locationId: 'ssdsdsdsd',
+            //       locationName: 'Victoria Park',
+            //     ),
+            //   ),
+            // ),
+
+
+                SizedBox(
+                height: 120.0,
+                child: FutureBuilder(
+                  future: fetchSuggestions(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      List<LocationDataInit> loc_list = snapshot.data;
+                      return ListView.builder(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: loc_list.length,
+                        padding: EdgeInsets.only(left: 10),
+                        scrollDirection: Axis.horizontal,
+                        // itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            LocationCardSmall(
+                          locationId: loc_list[index].place_id,
+                          locationName: loc_list[index].name,
+                          // imageUrl: loc_list[index].imagelink!,
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text("$snapshot.error");
+                    }
+                   
+
+                    return CircularProgressIndicator();
+                  },
                 ),
               ),
-            ),
+
+                Container(
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                child: ElevatedButton(
+                  style:
+                      ElevatedButton.styleFrom(primary: SecondaryColorDarkGrey),
+                  onPressed: () {
+                    Navigator.push(
+                        context, PlaceScreen3(title: 'Suggestions with highest ratings'));
+                  },
+                  child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: Row(children: [
+                        Spacer(),
+                        Text('View all suggestions'),
+                        Spacer(),
+                        Icon(Icons.arrow_forward)
+                      ])),
+                ),
+              ),
+
             // Expanded(child: ReviewSection()),
 
             //submit a review section
