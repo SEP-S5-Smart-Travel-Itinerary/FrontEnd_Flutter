@@ -3,7 +3,7 @@ import 'assets/colors.dart';
 
 import 'screens/home_screen.dart';
 import 'screens/bookmarks_screen.dart';
-import 'screens/notifications_screen.dart';
+import 'screens/flight_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/travel_plans_screen.dart';
 
@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
                 width: MediaQuery.of(context).size.width * 0.1,
               ),
               IconButton(
-                  icon: BottomIcon(path: "icons/bell_icon.png"),
+                  icon: BottomIcon(path: "icons/airport.png"),
                   onPressed: () {
                     setState(() {
                       _selectedPage.jumpToPage(2);
@@ -71,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
         children: <Widget>[
           Home(),
           Bookmarks(),
-          Notifications(),
+          FlightDetails(),
           Settings(),
           TravelPlan(),
         ],

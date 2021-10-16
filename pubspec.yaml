@@ -45,6 +45,8 @@ dependencies:
 
   geolocator: ^7.6.0
 
+  flutter_datetime_picker: ^1.5.1
+
   # hive database
   hive: ^2.0.4
   hive_flutter: ^1.0.0
@@ -100,6 +102,8 @@ flutter:
     - icons/heart_half.png
     - icons/heart_border.png
     - icons/logout.png
+    - icons/airport.png
+    
 
 
 
