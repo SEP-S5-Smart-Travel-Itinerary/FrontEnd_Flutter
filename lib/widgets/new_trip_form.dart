@@ -201,7 +201,7 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => AddFriendsDialog(text:"")));
+                          builder: (context) => AddFriendsDialog(text: "")));
                   // print(_name);
                   // print(_budget);
                   // print(_startDate);
