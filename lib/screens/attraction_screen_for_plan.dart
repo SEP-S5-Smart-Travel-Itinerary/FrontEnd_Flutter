@@ -13,6 +13,8 @@ import 'package:frontend_flutter/widgets/review_section.dart';
 import '../controller/globals.dart' as globals;
 import 'package:http/http.dart' as http;
 
+import 'package:time_range/time_range.dart';
+
 class AttractionForPlan extends StatefulWidget {
   final String locationId;
   final String? name;
@@ -32,6 +34,9 @@ class AttractionForPlan extends StatefulWidget {
 }
 
 class _AttractionForPlanState extends State<AttractionForPlan> {
+  TimeOfDay? startTime;
+  TimeOfDay? endTime;
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -54,78 +59,118 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
             ),
           ),
         ),
-        body: Column(
-          children: [
-            Container(
-              height: 200,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.imageLink),
-                      fit: BoxFit.cover)),
-            ),
-
-            UpperBar(
-              location_id: widget.locationId,
-            ),
-            //description
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
-                child: Text(
-                  this.widget.description,
-                  style: TextStyle(color: Colors.black.withOpacity(0.7)),
-                )),
-            ElevatedButton(
-              onPressed: () {
-                addLocations(widget.locationId, globals.createplan_id).then(
-                    (value) => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TravelPlanView())));
-              },
-              child: Container(
-                  height: 50,
-                  child: Center(
-                      child: const Text(
-                    'Add This Location to the plan',
-                    style: TextStyle(fontSize: 18),
-                  ))),
-              style: ElevatedButton.styleFrom(
-                primary: PrimaryColor,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 200,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                        image: NetworkImage(widget.imageLink),
+                        fit: BoxFit.cover)),
               ),
-            ),
-            // map location section
 
-            // Container(
-            //   height: 300,
-            //   child: GoogleMap(
-            //     initialCameraPosition: _kGooglePlex,
-            //     mapType: MapType.satellite,
-            //     onMapCreated: (GoogleMapController controller) {
-            //       _controller.complete(controller);
-            //     },
-            //   ),
-            // ),
+              UpperBar(
+                location_id: widget.locationId,
+              ),
+              //description
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+                  child: Text(
+                    this.widget.description,
+                    style: TextStyle(color: Colors.black.withOpacity(0.7)),
+                  )),
 
-            // SizedBox(
-            //   height: 150.0,
-            //   child: ListView.builder(
-            //     physics: ClampingScrollPhysics(),
-            //     shrinkWrap: true,
-            //     padding: EdgeInsets.only(left: 10),
-            //     scrollDirection: Axis.horizontal,
-            //     itemCount: 15,
-            //     itemBuilder: (BuildContext context, int index) =>
-            //         LocationCardSmall(
-            //       locationId: 'ssdsdsdsd',
-            //       locationName: 'Victoria Park',
-            //     ),
-            //   ),
-            // ),
+              TimeRange(
+                  fromTitle: Text(
+                    'From',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  toTitle: Text(
+                    'To',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  titlePadding: 20,
+                  textStyle: TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black87),
+                  activeTextStyle: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                  backgroundColor: Colors.transparent,
+                  firstTime: TimeOfDay(hour: 6, minute: 00),
+                  lastTime: TimeOfDay(hour: 23, minute: 00),
+                  timeStep: 30,
+                  timeBlock: 30,
+                  onRangeCompleted: (range) {
+                    setState(() {
+                      startTime = range!.start;
+                      endTime = range.end;
+                    });
+                  }),
 
+              SizedBox(
+                height: 10,
+              ),
 
-                SizedBox(
+              ElevatedButton(
+                onPressed: () {
+                  addLocations(
+                          widget.locationId,
+                          globals.createplan_id,
+                          widget.name!,
+                          widget.imageLink,
+                          startTime.toString(),
+                          endTime.toString())
+                      .then((value) => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TravelPlanView())));
+                },
+                child: Container(
+                    height: 50,
+                    child: Center(
+                        child: const Text(
+                      'Add This Location to the plan',
+                      style: TextStyle(fontSize: 18),
+                    ))),
+                style: ElevatedButton.styleFrom(
+                  primary: PrimaryColor,
+                ),
+              ),
+              // map location section
+
+              // Container(
+              //   height: 300,
+              //   child: GoogleMap(
+              //     initialCameraPosition: _kGooglePlex,
+              //     mapType: MapType.satellite,
+              //     onMapCreated: (GoogleMapController controller) {
+              //       _controller.complete(controller);
+              //     },
+              //   ),
+              // ),
+
+              // SizedBox(
+              //   height: 150.0,
+              //   child: ListView.builder(
+              //     physics: ClampingScrollPhysics(),
+              //     shrinkWrap: true,
+              //     padding: EdgeInsets.only(left: 10),
+              //     scrollDirection: Axis.horizontal,
+              //     itemCount: 15,
+              //     itemBuilder: (BuildContext context, int index) =>
+              //         LocationCardSmall(
+              //       locationId: 'ssdsdsdsd',
+              //       locationName: 'Victoria Park',
+              //     ),
+              //   ),
+              // ),
+              SizedBox(
+                height: 20,
+              ),
+
+              SizedBox(
                 height: 120.0,
                 child: FutureBuilder(
                   future: fetchSuggestions(),
@@ -151,21 +196,22 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                       print(snapshot.error);
                       return Text("$snapshot.error");
                     }
-                   
 
                     return CircularProgressIndicator();
                   },
                 ),
               ),
 
-                Container(
+              Container(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 child: ElevatedButton(
                   style:
                       ElevatedButton.styleFrom(primary: SecondaryColorDarkGrey),
                   onPressed: () {
                     Navigator.push(
-                        context, PlaceScreen3(title: 'Suggestions with highest ratings'));
+                        context,
+                        PlaceScreen3(
+                            title: 'Suggestions with highest ratings'));
                   },
                   child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 5),
@@ -179,20 +225,31 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                 ),
               ),
 
-            // Expanded(child: ReviewSection()),
+              // Expanded(child: ReviewSection()),
 
-            //submit a review section
-            // Expanded(
-            //   child: Column(),
-            // )
-          ],
+              //submit a review section
+              // Expanded(
+              //   child: Column(),
+              // )
+            ],
+          ),
         ));
   }
 
-  addLocations(String? location_id, String? plan_id) async {
+  addLocations(String? location_id, String? plan_id, String name,
+      String imageLink, String startTime, String endTime) async {
+    print("start time " + startTime);
+    print("end time " + endTime);
+
     var url = Uri.parse("http://localhost:3000/itinerary/addlocation");
 
-    var response = await http
-        .post(url, body: {"location_id": location_id, "plan_id": plan_id});
+    var response = await http.post(url, body: {
+      "location_id": location_id,
+      "location_name": name,
+      "location_image": imageLink,
+      "location" "plan_id": plan_id,
+      "start_time": startTime,
+      "end_time": endTime
+    });
   }
 }

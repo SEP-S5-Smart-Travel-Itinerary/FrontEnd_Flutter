@@ -70,6 +70,8 @@ dependencies:
 
   shimmer: ^2.0.0
 
+  time_range: ^1.0.1
+
  
 
 
