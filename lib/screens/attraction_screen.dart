@@ -71,12 +71,13 @@ class _AttractionState extends State<Attraction> {
                   this.widget.description,
                   style: TextStyle(color: Colors.black.withOpacity(0.7)),
                 )),
-              ElevatedButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddReviews(loc_id:widget.locationId)));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AddReviews(loc_id: widget.locationId)));
               },
               child: Container(
                   height: 50,
@@ -89,13 +90,16 @@ class _AttractionState extends State<Attraction> {
                 primary: Colors.green,
               ),
             ),
-            SizedBox(height: 25.0,),
+            SizedBox(
+              height: 25.0,
+            ),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ReviewView(title:widget.locationId)));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ReviewView(title: widget.locationId)));
               },
               child: Container(
                   height: 50,

@@ -6,14 +6,12 @@ class UpperBar extends StatelessWidget {
   final String type;
   final String weather;
   final String location;
-  final String avgVisit;
   final String location_id;
 
   const UpperBar(
       {this.type = "ATTRACTION",
       this.weather = 'sunny',
       this.location = "Nuwara Eliya",
-      this.avgVisit = 'Avg visit time: 2hrs',
       required this.location_id});
 
   @override
@@ -56,20 +54,6 @@ class UpperBar extends StatelessWidget {
               SizedBox(
                 height: 3,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    avgVisit,
-                    style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 11),
-                  )
-                ],
-              )
             ],
           ),
           Spacer(),
