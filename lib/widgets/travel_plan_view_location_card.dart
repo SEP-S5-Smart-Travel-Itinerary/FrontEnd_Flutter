@@ -14,6 +14,8 @@ class TravelPlanLocationCard extends StatelessWidget {
   final String locationId;
   final double rating;
   final int id;
+  final String start;
+  final String end;
 
   const TravelPlanLocationCard(
       {this.imageUrl =
@@ -22,6 +24,8 @@ class TravelPlanLocationCard extends StatelessWidget {
       required this.location,
       required this.locationId,
       required this.id,
+      required this.start,
+      required this.end,
       required this.rating});
 
   @override
@@ -60,9 +64,9 @@ class TravelPlanLocationCard extends StatelessWidget {
                         )
                       ],
                     ),
-                    // Row(
-                    //   children: [Text('Nuwara Eliya, Sri Lanka')],
-                    // ),
+                    Row(
+                      children: [Text(start),Text(" to "),Text(end)],
+                    ),
                     Row(
                       children: [
                         LocationBadge(bannerType: "attraction"),

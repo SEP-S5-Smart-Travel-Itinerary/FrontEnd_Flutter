@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/plan_controller.dart';
 import 'package:frontend_flutter/models/book_init.dart';
+import 'package:frontend_flutter/models/plann_data.dart';
 import 'package:frontend_flutter/models/travel_plan.dart';
 import 'package:frontend_flutter/screens/home_screen.dart';
 import '../main_screen.dart';
@@ -208,8 +209,10 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
                         if (snapshot.hasData) {
-                          List<BookDataInit> locList = snapshot.data;
-                          //print(locList[0].rating);
+                          List<PlannDataInit> locList = snapshot.data;
+                          print("hsgkjhAKJHkhklK");
+                          print(locList.length);
+                          print(locList);
                           return ListView.builder(
                             physics: ClampingScrollPhysics(),
                             shrinkWrap: true,
@@ -224,6 +227,8 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                               rating: 4,
                               id: index + 1,
                               locationId: locList[index].place_id,
+                              start: locList[index].startTime,
+                              end:locList[index].endTime,
                               //imageUrl:"",
                             ),
                           );
