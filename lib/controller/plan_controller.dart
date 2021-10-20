@@ -5,6 +5,7 @@ import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/location_data.dart';
 import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:frontend_flutter/models/plandetail_init.dart';
+import 'package:frontend_flutter/models/plann_data.dart';
 import 'package:frontend_flutter/widgets/add_friends_form.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:http/http.dart' as http;
@@ -245,7 +246,7 @@ Future<LocationData> getLocationdetails(String place_id) async {
   }
 }
 
-Future<List<BookDataInit>> fetchPlanLocationList() async {
+Future<List<PlannDataInit>> fetchPlanLocationList() async {
   //print("gajk");
   var url = Uri.parse("http://localhost:3000/itinerary/planlocations");
 
@@ -254,6 +255,6 @@ Future<List<BookDataInit>> fetchPlanLocationList() async {
   List jsonResponse = json.decode(response.body)["message"];
   //print(jsonResponse);
   return jsonResponse
-      .map((location) => new BookDataInit.fromJson(location))
+      .map((location) => new PlannDataInit.fromJson(location))
       .toList();
 }

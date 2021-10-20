@@ -118,8 +118,6 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                   addLocations(
                           widget.locationId,
                           globals.createplan_id,
-                          widget.name!,
-                          widget.imageLink,
                           startTime.toString(),
                           endTime.toString())
                       .then((value) => Navigator.push(
@@ -236,8 +234,7 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
         ));
   }
 
-  addLocations(String? location_id, String? plan_id, String name,
-      String imageLink, String startTime, String endTime) async {
+  addLocations(String? location_id, String? plan_id,String startTime, String endTime) async {
     print("start time " + startTime);
     print("end time " + endTime);
 
@@ -245,11 +242,9 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
 
     var response = await http.post(url, body: {
       "location_id": location_id,
-      "location_name": name,
-      "location_image": imageLink,
-      "location" "plan_id": plan_id,
-      "start_time": startTime,
-      "end_time": endTime
+      "plan_id": plan_id,
+      "start": startTime,
+      "end": endTime
     });
   }
 }
