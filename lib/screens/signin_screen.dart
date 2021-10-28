@@ -7,6 +7,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'signup_screen.dart';
 import '../main_screen.dart';
+import '../controller/user_controller.dart';
 import '../services/authentication_service.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   String email = "";
   String password = "";
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   bool _isKeyboardOpen = false;
 
@@ -129,7 +130,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
                     child: Form(
-                      key: formkey,
+                      key: _formkey,
                       child: Column(children: [
                         TextFormField(
                           initialValue: '',
@@ -195,10 +196,11 @@ class _SignInScreenState extends State<SignInScreen> {
                             imagePath: 'icons/email_icon.png',
                             color: Colors.black,
                             onPressed: () {
-                              signin(email, password).whenComplete(() =>
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => MainScreen())));
+                              if (_formkey.currentState!.validate()) {
+                                signIn(email, password, context);
+                              } else {
+                                print("not ok");
+                              }
                             }),
                       ]),
                     ),
