@@ -117,3 +117,42 @@ Future signUp(email, password, context) async {
         fontSize: 16.0);
   }
 }
+
+Future signIn(email, password, context) async {
+  final response = await http.post(
+    Uri.parse('http://localhost:3000/user/signin'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode({"email": email, "password": password}),
+  );
+
+  Map jsonResponse = json.decode(response.body);
+
+  if (response.statusCode == 200) {
+    if (jsonResponse["sucess"] == 1) {
+      globals.currentUser = jsonResponse["data"]["Email"];
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MainScreen()));
+    } else {
+      String jsonResponse = json.decode(response.body)["message"];
+      Fluttertoast.showToast(
+          msg: jsonResponse,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: PrimaryColor,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  } else {
+    Fluttertoast.showToast(
+        msg: "Connection Error Occured. Try Again Later",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: PrimaryColor,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+}
