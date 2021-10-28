@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import '../widgets/rounded_button_with_icon.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/assets/font_size.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../services/authentication_service.dart';
+import '../controller/user_controller.dart';
 
 import 'signin_screen.dart';
 import '../main_screen.dart';
@@ -18,7 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isKeyboardOpen = false;
   String email = "";
   String password = "";
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   void initState() {
     super.initState();
@@ -128,15 +130,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ],
                     ),
                     child: Form(
-                      key: formkey,
+                      key: _formkey,
                       child: Column(children: [
                         TextFormField(
                           initialValue: '',
                           validator: (_val) {
                             if (_val == "") {
                               return "Email cannot be empty";
-                            } else {
+                            } else if (RegExp(
+                                    r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                .hasMatch(_val!)) {
                               return null;
+                            } else {
+                              return "Enter valid Email";
                             }
                           },
                           onChanged: (val) {
@@ -162,7 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           initialValue: '',
                           validator: (_val) {
                             if (_val == "") {
-                              return "Email cannot be empty";
+                              return "Password cannot be empty";
                             } else {
                               return null;
                             }
@@ -191,6 +197,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           text: 'Sign up with Email',
                           imagePath: 'icons/email_icon.png',
                           color: Colors.black,
+                          onPressed: () {
+                            if (_formkey.currentState!.validate()) {
+                              signUp(email, password, context);
+                            } else {
+                              print("not ok");
+                            }
+                          },
+
                           // onPressed: () => signUp(email, password).whenComplete(
                           //     () => Navigator.of(context).pushReplacement(
                           //         MaterialPageRoute(
@@ -213,6 +227,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     child: Text("Already a member ? Sign in here",
                         style: TextStyle(
+                          fontWeight: FontWeight.w500,
                           color: PrimaryColor,
                         )),
                   )

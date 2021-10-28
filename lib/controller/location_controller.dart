@@ -46,7 +46,7 @@ Future<List<LocationDataInit>> fetchNearbyAccommodations() async {
   var response = await http
       .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
   if (response.statusCode == 200) {
-    print("sucess called");
+    // print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
     return jsonResponse
@@ -65,7 +65,7 @@ Future<List<LocationDataInit>> fetchSuggestions() async {
   var response = await http
       .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
   if (response.statusCode == 200) {
-    print("sucess called");
+    // print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
     return jsonResponse
@@ -89,8 +89,8 @@ Future<List<LocationDataInit>> fetchAttractionsByCategory() async {
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-    print("---------------recommended locations--------------");
-    print(jsonResponse);
+    // print("---------------recommended locations--------------");
+    // print(jsonResponse);
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();
