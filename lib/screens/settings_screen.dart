@@ -7,6 +7,7 @@ import 'package:frontend_flutter/widgets/rounded_button_without_icon.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:frontend_flutter/widgets/rounded_button_with_icon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/authentication_service.dart';
 import 'package:frontend_flutter/controller/globals.dart' as globals;
 
@@ -69,15 +70,13 @@ class _SettingsState extends State<Settings> {
                     color: SecondaryColorDarkGrey),
               ),
               SizedBox(
-              width: 10,
-            ),
-               IconButton(
-              icon: Icon(Icons.edit),
-              onPressed: () => showModalBottomSheet(
-                  context: context, builder: (ctx) => _buildBottomSheet(ctx)),
-            ),
-            
-              
+                width: 10,
+              ),
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () => showModalBottomSheet(
+                    context: context, builder: (ctx) => _buildBottomSheet(ctx)),
+              ),
               SizedBox(
                 height: 50,
               ),
@@ -103,9 +102,13 @@ class _SettingsState extends State<Settings> {
                 text: 'Logout',
                 imagePath: "icons/logout.png",
                 color: Colors.red.withOpacity(0.8),
-                onPressed: () => signOutUser().whenComplete(() =>
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => SignInScreen()))),
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('token', "");
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => SignInScreen()));
+                },
               ),
               SizedBox(
                 height: 20,
@@ -116,6 +119,7 @@ class _SettingsState extends State<Settings> {
         )));
   }
 }
+
 // modal bottom sheet for options
 Container _buildBottomSheet(BuildContext context) {
   return Container(
@@ -143,7 +147,6 @@ Container _buildBottomSheet(BuildContext context) {
             SizedBox(
               height: 20,
             ),
-           
             RoundedButton(
               text: "Change Password",
               color: PrimaryColor,
@@ -153,15 +156,13 @@ Container _buildBottomSheet(BuildContext context) {
                   context: context,
                   builder: (ctx) => _buildBottomSheetChangePassword(ctx)),
             ),
-           
-           
-          
           ],
         ),
       ),
     ),
   );
 }
+
 //change plan name
 Container _buildBottomSheetChangeUsername(BuildContext context) {
   String? new_username;
@@ -187,12 +188,10 @@ Container _buildBottomSheetChangeUsername(BuildContext context) {
                     Radius.circular(5),
                   ),
                 ),
-                
               ),
               onChanged: (String? value) {
-                   new_username = value;
-                
-                },
+                new_username = value;
+              },
             ),
             SizedBox(
               height: 20,
@@ -202,12 +201,11 @@ Container _buildBottomSheetChangeUsername(BuildContext context) {
               color: PrimaryColor,
               height: 150,
               onPressed: () {
-                  changeUsername(new_username).then((value) =>
-                     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Settings()))
-                     );
-        //          
-                },
+                changeUsername(new_username).then((value) => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Settings())));
+                //
+              },
             ),
           ],
         ),
@@ -215,6 +213,7 @@ Container _buildBottomSheetChangeUsername(BuildContext context) {
     ),
   );
 }
+
 //change plan name
 Container _buildBottomSheetChangePassword(BuildContext context) {
   String? new_password;
@@ -240,12 +239,10 @@ Container _buildBottomSheetChangePassword(BuildContext context) {
                     Radius.circular(5),
                   ),
                 ),
-                
               ),
               onChanged: (String? value) {
-                   new_password = value;
-                
-                },
+                new_password = value;
+              },
             ),
             SizedBox(
               height: 20,
@@ -255,11 +252,10 @@ Container _buildBottomSheetChangePassword(BuildContext context) {
               color: PrimaryColor,
               height: 150,
               onPressed: () {
-                  changePassword(new_password).then((value) =>
-                     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Settings()))
-                     );
-                },
+                changePassword(new_password).then((value) => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Settings())));
+              },
             ),
           ],
         ),
