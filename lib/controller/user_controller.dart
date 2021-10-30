@@ -6,6 +6,7 @@ import 'package:frontend_flutter/main_screen.dart';
 import 'package:http/http.dart' as http;
 import '../screens/user_preference_screen.dart';
 import 'globals.dart' as globals;
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future addPreferences(cat, context) async {
   print(cat);
@@ -69,6 +70,8 @@ Future changePassword(new_password) async {
   }
 }
 
+// signup function
+
 Future signUp(email, password, context) async {
   final split = email.split('@');
   final Map<int, String> values = {
@@ -91,9 +94,17 @@ Future signUp(email, password, context) async {
       print("succesfully registered");
       print(jsonResponse["data"]["Email"]);
       globals.currentUser = jsonResponse["data"]["Email"];
-      // print("gloabal user " + globals.currentUser);
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UserPreference()));
+
+      // set token
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', jsonResponse["token"]);
+
+      String? token = prefs.getString("token");
+
+      if (token != "") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => UserPreference()));
+      }
     } else {
       String jsonResponse = json.decode(response.body)["message"];
       print(jsonResponse);
@@ -132,8 +143,18 @@ Future signIn(email, password, context) async {
   if (response.statusCode == 200) {
     if (jsonResponse["sucess"] == 1) {
       globals.currentUser = jsonResponse["data"]["Email"];
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => MainScreen()));
+
+      // set token
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', jsonResponse["token"]);
+
+      String? token = prefs.getString("token");
+      print("THis is jwt");
+      print(token);
+      if (token != "") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MainScreen()));
+      }
     } else {
       String jsonResponse = json.decode(response.body)["message"];
       Fluttertoast.showToast(

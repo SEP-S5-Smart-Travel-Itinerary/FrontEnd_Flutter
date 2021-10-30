@@ -72,6 +72,8 @@ dependencies:
 
   time_range: ^1.0.1
 
+  shared_preferences: ^2.0.8
+
  
 
 
