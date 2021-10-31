@@ -15,9 +15,11 @@ class Attraction extends StatefulWidget {
   final String? name;
   final String imageLink;
   final String description;
+  //final String photo;
 
   const Attraction(
       {required this.locationId,
+      //required this.photo,
       this.name = "Victorial Park 123",
       this.imageLink =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
@@ -59,7 +61,7 @@ class _AttractionState extends State<Attraction> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   image: DecorationImage(
-                      image: NetworkImage(widget.imageLink),
+                      image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageLink}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
                       fit: BoxFit.cover)),
             ),
 

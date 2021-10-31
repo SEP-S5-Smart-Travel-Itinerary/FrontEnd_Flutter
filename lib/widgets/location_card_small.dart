@@ -7,6 +7,7 @@ class LocationCardSmall extends StatefulWidget {
   final String imageUrl;
   final String locationName;
   final String locationId;
+  //final String photo;
 
   // NetworkImage getImage(photoReference) {
   //   print("photo ref " + photoReference);
@@ -19,6 +20,7 @@ class LocationCardSmall extends StatefulWidget {
       {this.imageUrl =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       required this.locationName,
+      //required this.photo,
       required this.locationId});
 
   @override
@@ -40,6 +42,7 @@ class _LocationCardSmallState extends State<LocationCardSmall> {
                       locationId: widget.locationId,
                       name: a.name,
                       imageLink: widget.imageUrl,
+                      //photo:widget.photo,
                     )));
       },
       child: Card(
@@ -51,7 +54,7 @@ class _LocationCardSmallState extends State<LocationCardSmall> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
-                  image: NetworkImage(widget.imageUrl), fit: BoxFit.cover)),
+                 image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'), fit: BoxFit.cover)),
           // image: DecorationImage(image: NetworkImage(widget.imageUrl)),
 
           child: Column(

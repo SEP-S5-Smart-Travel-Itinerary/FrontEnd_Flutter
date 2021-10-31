@@ -68,7 +68,7 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     image: DecorationImage(
-                        image: NetworkImage(widget.imageLink),
+                        image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageLink}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
                         fit: BoxFit.cover)),
               ),
 
@@ -176,17 +176,27 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
                       List<LocationDataInit> loc_list = snapshot.data;
+                      List<LocationDataInit> list = [];
+                      for(var i = 0; i < loc_list.length; i++){
+                        print(loc_list[i].imagelink);
+                        if(loc_list[i].imagelink!=null){
+                          print("hjk");
+                              list.add(loc_list[i]);
+                        }
+                          }
                       return ListView.builder(
                         physics: ClampingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: loc_list.length,
+                        itemCount: list.length,
                         padding: EdgeInsets.only(left: 10),
                         scrollDirection: Axis.horizontal,
                         // itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) =>
                             LocationCardSmall(
-                          locationId: loc_list[index].place_id,
-                          locationName: loc_list[index].name,
+                          locationId: list[index].place_id,
+                          locationName: list[index].name,
+                          imageUrl:list[index].imagelink[0]["photo_reference"]
+                          //photo:list[index].imagelink[0]["photo_reference"],
                           // imageUrl: loc_list[index].imagelink!,
                         ),
                       );

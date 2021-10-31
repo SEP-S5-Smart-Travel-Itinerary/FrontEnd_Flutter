@@ -3,7 +3,7 @@ class BookDataInit {
   List type;
   double? rating;
   String place_id;
-  Object? imagelink;
+  var imagelink;
 
   BookDataInit(
       {required this.name,

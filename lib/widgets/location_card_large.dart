@@ -10,13 +10,15 @@ class LocationCardLarge extends StatefulWidget {
   final String locationId;
   final String description;
   final double rating;
+  final String photo;
   const LocationCardLarge(
       {required this.locationId,
       this.imageUrl =
-          'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
+          'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=Aap_uEA7vb0DDYVJWEaX3O-AtYp77AaswQKSGtDaimt3gt7QCNpdjp1BkdM6acJ96xTec3tsV_ZJNL_JP-lqsVxydG3nh739RE_hepOOL05tfJh2_ranjMadb3VoBYFvF0ma6S24qZ6QJUuV6sSRrhCskSBP5C1myCzsebztMfGvm7ij3gZT&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4',
       required this.locationName,
       this.description =
           'orem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
+          required this.photo,
       required this.rating});
 
   @override
@@ -37,7 +39,8 @@ class _LocationCardLargeState extends State<LocationCardLarge> {
                 builder: (context) => Attraction(
                       locationId: widget.locationId,
                       name: a.name,
-                      imageLink: widget.imageUrl,
+                      imageLink: widget.photo,
+                      //photo:widget.photo,
                     )));
       },
       child: Card(
@@ -49,7 +52,8 @@ class _LocationCardLargeState extends State<LocationCardLarge> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
-                  image: NetworkImage(widget.imageUrl), fit: BoxFit.cover)),
+                  image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.photo}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'), fit: BoxFit.cover)),
+                  //image:NetworkImage(widget.imageUrl),fit: BoxFit.cover)),
           child: Column(
             children: [
               Spacer(),

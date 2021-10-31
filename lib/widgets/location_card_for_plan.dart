@@ -59,7 +59,7 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5)),
                     image: DecorationImage(
-                        image: NetworkImage(widget.imageUrl),
+                        image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
                         fit: BoxFit.cover)),
               ),
               Container(

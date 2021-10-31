@@ -123,7 +123,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                       topRight: Radius.circular(5),
                       bottomRight: Radius.circular(5)),
                   image: DecorationImage(
-                      image: NetworkImage(imageUrl), fit: BoxFit.cover)),
+                      image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'), fit: BoxFit.cover)),
             ),
           ],
         ),
