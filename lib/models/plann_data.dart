@@ -3,7 +3,7 @@ class PlannDataInit {
   List type;
   double? rating;
   String place_id;
-  Object? imagelink;
+  var imagelink;
   String startTime;
   String endTime;
   String latitude;

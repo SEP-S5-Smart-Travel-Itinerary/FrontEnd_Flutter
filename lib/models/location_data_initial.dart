@@ -7,7 +7,7 @@ class LocationDataInit {
   List type;
   double? rating;
   String place_id;
-  Object? imagelink;
+  var imagelink;
 
   LocationDataInit(
       {required this.name,
@@ -17,13 +17,18 @@ class LocationDataInit {
       this.imagelink});
 
   factory LocationDataInit.fromJson(Map<String, dynamic> json) {
+    //print(json['imagelink']);
+    var list=[];
+    if(json['imagelink']!=null){
+      list=json['imagelink'];
+      
+    }
+    
     return LocationDataInit(
         name: json['name'],
         type: json['type'],
         rating: json['rating'],
         place_id: json['place_id'],
-        imagelink: (json['imagelink'] != null)
-            ? json['imagelink'][0]['photo_reference']
-            : json['imagelink']);
+        imagelink: json['imagelink']);
   }
 }

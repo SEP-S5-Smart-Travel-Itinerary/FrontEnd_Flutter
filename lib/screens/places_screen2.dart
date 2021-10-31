@@ -34,19 +34,28 @@ class PlaceScreen2 extends MaterialPageRoute<void> {
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.hasData) {
                   List<LocationDataInit> loc_list = snapshot.data;
+                  List<LocationDataInit> list = [];
+                      for(var i = 0; i < loc_list.length; i++){
+                        print(loc_list[i].imagelink);
+                        if(loc_list[i].imagelink!=null){
+                          print("hjk");
+                              list.add(loc_list[i]);
+                        }
+                          }
                   return ListView.builder(
                     physics: ClampingScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: loc_list.length,
+                    itemCount: list.length,
                     padding: EdgeInsets.only(left: 10, top: 20),
                     // scrollDirection: Axis.horizontal,
                     // itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) =>
                         LocationCard(
-                      title: loc_list[index].name,
+                      title: list[index].name,
                       location: '',
                       rating: 4,
-                      locationId: loc_list[index].place_id,
+                      locationId: list[index].place_id,
+                      imageUrl:list[index].imagelink[0]["photo_reference"],
                       // rating: loc_list[index].rating,
                     ),
                   );

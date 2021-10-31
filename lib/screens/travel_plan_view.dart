@@ -209,27 +209,33 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                       builder: (BuildContext context,
                           AsyncSnapshot<dynamic> snapshot) {
                         if (snapshot.hasData) {
-                          List<PlannDataInit> locList = snapshot.data;
-                          print("hsgkjhAKJHkhklK");
-                          print(locList.length);
-                          print(locList);
+                          List<PlannDataInit> loc_list = snapshot.data;
+                          List<PlannDataInit> list = [];
+                      for(var i = 0; i < loc_list.length; i++){
+                        print(loc_list[i].imagelink);
+                        if(loc_list[i].imagelink!=null){
+                          print("hjk");
+                              list.add(loc_list[i]);
+                        }
+                          }
+                          
                           return ListView.builder(
                             physics: ClampingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: locList.length,
+                            itemCount: list.length,
                             padding: EdgeInsets.only(left: 10, top: 15),
                             //scrollDirection: Axis.horizontal,
                             // itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, int index) =>
                                 TravelPlanLocationCard(
-                              title: locList[index].name,
+                              title: list[index].name,
                               location: "", //'Victorial Park of Nuwara Eliya',
                               rating: 4,
                               id: index + 1,
-                              locationId: locList[index].place_id,
-                              start: locList[index].startTime,
-                              end:locList[index].endTime,
-                              //imageUrl:"",
+                              locationId: list[index].place_id,
+                              start: list[index].startTime,
+                              end:list[index].endTime,
+                              imageUrl:list[index].imagelink[0]["photo_reference"],
                             ),
                           );
                         } else if (snapshot.hasError) {

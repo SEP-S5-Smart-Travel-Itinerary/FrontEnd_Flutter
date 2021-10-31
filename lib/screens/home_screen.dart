@@ -137,20 +137,37 @@ class _HomeState extends State<Home> {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
                       List<LocationDataInit> loc_list = snapshot.data;
+                      print("hahj");
+                      print(loc_list[3].imagelink[0]["photo_reference"]);
+                      print("hahj");
+                      print(loc_list.length);
+                      List<LocationDataInit> list = [];
+                      for(var i = 0; i < loc_list.length; i++){
+                        print(loc_list[i].imagelink);
+                        if(loc_list[i].imagelink!=null){
+                          print("hjk");
+                              list.add(loc_list[i]);
+                        }
+                          }
+                      //     print("hahj");
+                      // print(loc_list[0].imagelink[0]["photo_reference"]);
+                      // print("hahj");
+                      print(list.length);
                       return ListView.builder(
                         physics: ClampingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: loc_list.length,
+                        itemCount: list.length,
                         padding: EdgeInsets.only(left: 10),
                         scrollDirection: Axis.horizontal,
                         // itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) =>
-                            LocationCardLarge(
-                          locationName: loc_list[index].name,
-                          locationId: loc_list[index].place_id,
+                        LocationCardLarge(
+                          locationName: list[index].name,
+                          locationId: list[index].place_id,
                           description:
                               "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
                           rating: 4,
+                          photo:list[index].imagelink[0]["photo_reference"]
                           // rating: loc_list[index].rating,
                         ),
                       );
@@ -210,18 +227,30 @@ class _HomeState extends State<Home> {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
                       List<LocationDataInit> loc_list = snapshot.data;
+
+                      List<LocationDataInit> list = [];
+                      for(var i = 0; i < loc_list.length; i++){
+                        print(loc_list[i].imagelink);
+                        if(loc_list[i].imagelink!=null){
+                          print("hjk");
+                              list.add(loc_list[i]);
+                        }
+                          }
+
+
                       return ListView.builder(
                         physics: ClampingScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: loc_list.length,
+                        itemCount: list.length,
                         padding: EdgeInsets.only(left: 10),
                         scrollDirection: Axis.horizontal,
                         // itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) =>
                             LocationCardSmall(
-                          locationId: loc_list[index].place_id,
-                          locationName: loc_list[index].name,
-                          // imageUrl: loc_list[index].imagelink!,
+                          locationId: list[index].place_id,
+                          locationName: list[index].name,
+                          //photo:list[index].imagelink[0]["photo_reference"]
+                          imageUrl: list[index].imagelink[0]["photo_reference"],
                         ),
                       );
                     } else if (snapshot.hasError) {
