@@ -5,6 +5,7 @@ import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/plann_data.dart';
 import 'package:frontend_flutter/models/travel_plan.dart';
 import 'package:frontend_flutter/screens/home_screen.dart';
+import 'package:frontend_flutter/widgets/add_friends_form.dart';
 import '../main_screen.dart';
 import '../widgets/travel_plan_view_location_card.dart';
 import '../widgets/travel_plan_transport_card.dart';
@@ -94,7 +95,19 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                 )
                               ],
                             ),
+                            
                           ),
+                          // TextButton(
+                          //       onPressed: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           new MaterialPageRoute(
+                          //               builder: (context) => AddFriendsDialog(text: "")));
+                          //       },
+                          //       child: Text(
+                          //         'add a member',
+                          //         style: TextStyle(color: Colors.red),
+                          //       )),
                           Container(
                             padding: EdgeInsets.all(2),
                             decoration: BoxDecoration(
@@ -146,10 +159,17 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                              child: Row(
-                                  //children: [Text('Nevada  '), Text('Paris')],
-                                  )),
+                          TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) => AddFriendsDialog(text: "")));
+                                },
+                                child: Text(
+                                  'add a member',
+                                  style: TextStyle(color: Colors.red),
+                                )),
                           Container(
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
@@ -178,6 +198,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.normal),
                                     ),
+                                    
                                   ],
                                 ),
                               ],
@@ -229,8 +250,8 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                             itemBuilder: (BuildContext context, int index) =>
                                 TravelPlanLocationCard(
                               title: list[index].name,
-                              location: "", //'Victorial Park of Nuwara Eliya',
-                              rating: 4,
+                              location: list[index].type[0], //'Victorial Park of Nuwara Eliya',
+                              rating: list[index].rating??4,
                               id: index + 1,
                               locationId: list[index].place_id,
                               start: list[index].startTime,

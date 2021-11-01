@@ -7,6 +7,8 @@ class LocationCardSmall extends StatefulWidget {
   final String imageUrl;
   final String locationName;
   final String locationId;
+  final String description;
+  final double rating;
   //final String photo;
 
   // NetworkImage getImage(photoReference) {
@@ -20,6 +22,9 @@ class LocationCardSmall extends StatefulWidget {
       {this.imageUrl =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       required this.locationName,
+      this.description =
+          'orem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
+          this.rating=4,
       //required this.photo,
       required this.locationId});
 
@@ -42,6 +47,8 @@ class _LocationCardSmallState extends State<LocationCardSmall> {
                       locationId: widget.locationId,
                       name: a.name,
                       imageLink: widget.imageUrl,
+                      description:widget.description,
+                      rating:widget.rating,
                       //photo:widget.photo,
                     )));
       },

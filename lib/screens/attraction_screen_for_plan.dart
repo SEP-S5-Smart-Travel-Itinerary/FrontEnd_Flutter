@@ -20,9 +20,11 @@ class AttractionForPlan extends StatefulWidget {
   final String? name;
   final String imageLink;
   final String description;
+  final double rating;
 
   const AttractionForPlan(
       {required this.locationId,
+      this.rating=4,
       this.name = "Victorial Park 123",
       this.imageLink =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
@@ -72,16 +74,18 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                         fit: BoxFit.cover)),
               ),
 
-              UpperBar(
-                location_id: widget.locationId,
-              ),
+              UpperBar(location_id: widget.locationId,
+                      type:this.widget.description,
+                      location:widget.rating
+                      ),
               //description
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
-                  child: Text(
-                    this.widget.description,
-                    style: TextStyle(color: Colors.black.withOpacity(0.7)),
-                  )),
+                padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+                child: Text(
+                  //this.widget.description,
+                  "${widget.name!} is a very picturesque area. This area is frequented by tourists and belongs to the ${this.widget.description} category. This place is easily accessible and there are many Accoomadations around ${widget.name!}",
+                  style: TextStyle(color: Colors.black),
+                )),
 
               TimeRange(
                   fromTitle: Text(
@@ -195,7 +199,10 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                             LocationCardSmall(
                           locationId: list[index].place_id,
                           locationName: list[index].name,
-                          imageUrl:list[index].imagelink[0]["photo_reference"]
+                          imageUrl:list[index].imagelink[0]["photo_reference"],
+                          description:
+                              list[index].type[0],
+                          rating: list[index].rating??4,
                           //photo:list[index].imagelink[0]["photo_reference"],
                           // imageUrl: loc_list[index].imagelink!,
                         ),

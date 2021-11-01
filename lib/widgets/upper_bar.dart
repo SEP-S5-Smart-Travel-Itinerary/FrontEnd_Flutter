@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/widgets/color_badge.dart';
+import 'package:frontend_flutter/widgets/star_rating_bar.dart';
 import '../controller/book_ctrl.dart';
 
 class UpperBar extends StatelessWidget {
   final String type;
   final String weather;
-  final String location;
+  final double location;
   final String location_id;
 
   const UpperBar(
       {this.type = "ATTRACTION",
       this.weather = 'sunny',
-      this.location = "Nuwara Eliya",
+      this.location = 4,
       required this.location_id});
 
   @override
@@ -33,23 +34,23 @@ class UpperBar extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                Text(type),
+                //Text(type),
               ]),
               SizedBox(
                 height: 3,
               ),
               Row(children: [
-                Icon(
-                  Icons.location_pin,
-                  size: 20,
+                Text(
+                  "rating",
+                  style: TextStyle(fontWeight: FontWeight.w300),
                 ),
                 SizedBox(
                   width: 5,
                 ),
-                Text(
-                  location,
-                  style: TextStyle(fontWeight: FontWeight.w300),
-                ),
+                 StarRatingBar(
+                      ratings: location,
+                    )
+                
               ]),
               SizedBox(
                 height: 3,

@@ -165,10 +165,9 @@ class _HomeState extends State<Home> {
                           locationName: list[index].name,
                           locationId: list[index].place_id,
                           description:
-                              "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-                          rating: 4,
-                          photo:list[index].imagelink[0]["photo_reference"]
-                          // rating: loc_list[index].rating,
+                              list[index].type[0],
+                          rating: list[index].rating??4,
+                          photo:list[index].imagelink[0]["photo_reference"],
                         ),
                       );
                     } else if (snapshot.hasError) {
@@ -249,6 +248,9 @@ class _HomeState extends State<Home> {
                             LocationCardSmall(
                           locationId: list[index].place_id,
                           locationName: list[index].name,
+                          description:
+                              list[index].type[0],
+                          rating: list[index].rating??4,
                           //photo:list[index].imagelink[0]["photo_reference"]
                           imageUrl: list[index].imagelink[0]["photo_reference"],
                         ),
