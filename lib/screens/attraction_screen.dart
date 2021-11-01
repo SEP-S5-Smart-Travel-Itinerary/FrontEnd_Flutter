@@ -15,12 +15,14 @@ class Attraction extends StatefulWidget {
   final String? name;
   final String imageLink;
   final String description;
+  final double rating;
   //final String photo;
 
   const Attraction(
       {required this.locationId,
       //required this.photo,
       this.name = "Victorial Park 123",
+      this.rating=4,
       this.imageLink =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
       this.description =
@@ -65,14 +67,21 @@ class _AttractionState extends State<Attraction> {
                       fit: BoxFit.cover)),
             ),
 
-            UpperBar(location_id: widget.locationId),
+            UpperBar(location_id: widget.locationId,
+                      type:this.widget.description,
+                      location:widget.rating
+                      ),
             //description
             Container(
                 padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
                 child: Text(
-                  this.widget.description,
-                  style: TextStyle(color: Colors.black.withOpacity(0.7)),
+                  //this.widget.description,
+                  "${widget.name!} is a very picturesque area. This area is frequented by tourists and belongs to the ${this.widget.description} category. This place is easily accessible and there are many Accoomadations around ${widget.name!}",
+                  style: TextStyle(color: Colors.black),
                 )),
+                // Row(
+                //       children: [Text("rating: "),Text(widget.rating.toString())],
+                //     ),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(

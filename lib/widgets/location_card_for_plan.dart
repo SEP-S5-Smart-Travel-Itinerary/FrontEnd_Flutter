@@ -41,6 +41,8 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                       locationId: widget.locationId,
                       name: a.name,
                       imageLink: widget.imageUrl,
+                      description:widget.location,
+                      rating:widget.rating,
                     )));
       },
       child: Card(
@@ -82,7 +84,7 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                         height: 2,
                       ),
                       Text(
-                        widget.location,
+                        "",
                         style: TextStyle(
                             fontSize: 13, color: SecondaryColorDarkGrey),
                       )
@@ -103,7 +105,7 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                     children: [
                       // Badge
                       LocationBadge(
-                        bannerType: "HOTEL",
+                        bannerType: widget.location,
                       ),
 
                       //Ratings

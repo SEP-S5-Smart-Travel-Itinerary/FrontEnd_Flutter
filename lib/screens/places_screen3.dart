@@ -38,8 +38,8 @@ class PlaceScreen3 extends MaterialPageRoute<void> {
                     itemBuilder: (BuildContext context, int index) =>
                         LocationCard(
                       title: list[index].name,
-                      location: '',
-                      rating: 4,
+                      location: list[index].type[0],
+                      rating: list[index].rating??4,
                       locationId: list[index].place_id,
                       imageUrl:list[index].imagelink[0]["photo_reference"]
                       // rating: loc_list[index].rating,

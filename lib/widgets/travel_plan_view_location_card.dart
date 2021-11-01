@@ -69,7 +69,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        LocationBadge(bannerType: "attraction"),
+                        LocationBadge(bannerType: location),
                         SizedBox(
                           width: 10,
                         ),

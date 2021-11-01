@@ -40,6 +40,8 @@ class _LocationCardLargeState extends State<LocationCardLarge> {
                       locationId: widget.locationId,
                       name: a.name,
                       imageLink: widget.photo,
+                      description:widget.description,
+                      rating:widget.rating,
                       //photo:widget.photo,
                     )));
       },
@@ -89,7 +91,7 @@ class _LocationCardLargeState extends State<LocationCardLarge> {
                       height: 2,
                     ),
                     StarRatingBar(
-                      ratings: 2.5,
+                      ratings: widget.rating,
                     )
                   ],
                 ),
