@@ -16,7 +16,7 @@ class AddReviews extends StatefulWidget {
 
 class _AddReviewsState extends State<AddReviews> {
   List<String> _friends = [];
-  String? _title;
+  String _title="anonymous";
   String? _description;
 
   @override
@@ -24,7 +24,7 @@ class _AddReviewsState extends State<AddReviews> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: PrimaryColor,
-          title: Text('Plan a new trip'),
+          title: Text('Add reviews'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
@@ -48,7 +48,7 @@ class _AddReviewsState extends State<AddReviews> {
                   prefixIcon: Icon(Icons.account_balance_wallet_outlined),
                   filled: true,
                   fillColor: SecondayColorBlue,
-                  labelText: 'Add title',
+                  labelText: 'Add your name or you can leave this as anonymous',
                   labelStyle: TextStyle(color: PrimaryColor),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -65,7 +65,7 @@ class _AddReviewsState extends State<AddReviews> {
                 ),
                 onChanged: (String? value) {
                   setState(() {
-                    this._title = value;
+                    this._title = value!;
                    
                   });
                    
@@ -115,7 +115,7 @@ class _AddReviewsState extends State<AddReviews> {
 
               ElevatedButton(
                 onPressed: () {
-                 addreview(_title!,_description!,widget.loc_id); 
+                 addreview(_title,_description!,widget.loc_id); 
                     
                 },
                 child: Container(
