@@ -5,6 +5,7 @@ import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/plan_controller.dart';
 import 'package:frontend_flutter/screens/travel_plan_view.dart';
 import 'package:http/http.dart' as http;
+import 'package:frontend_flutter/controller/globals.dart' as globals;
 
 class AddFriendsDialog extends StatefulWidget {
   final String text;
@@ -18,6 +19,7 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
   List<String> _friends = [];
   String? _name;
   bool result=false;
+  bool result2=false;
   String touser="";
 
   @override
@@ -87,11 +89,18 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
                     //Addfriends(_friends);
                     userSearch(_name!).then((value) =>{
                       if(result){
+                        memberSearch(_name!).then((value) =>{
+                          if(result2){
                       Addfriends(_friends),
                       //touserText("Successfully Added").then((value) =>
                      Navigator.push(
         context, new MaterialPageRoute(builder: (context) => AddFriendsDialog(text:"Successfully Added")))
-                     
+                        }
+                        else{
+                          Navigator.push(
+        context, new MaterialPageRoute(builder: (context) => AddFriendsDialog(text:"Input user is alreay exist in the plan")))
+                        }
+                        })
                     }
                     else{
                       //touserText("Input user haven't Registerd Star Trips").then((value) =>
@@ -148,6 +157,20 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
     // print(jsonResponse);
     
         result = json.decode(response.body)["success"];
+        //print (result);
+      
+  
+  }
+  memberSearch(String value) async {
+    var url = Uri.parse("http://localhost:3000/itinerary/searchmembers");
+
+  var response = await http
+      .post(url, body: {"plan_id":globals.createplan_id,"username": value});
+    print("sucess called");
+    //List jsonResponse = json.decode(response.body)["data"];
+    // print(jsonResponse);
+    
+        result2 = json.decode(response.body)["success"];
         //print (result);
       
   
