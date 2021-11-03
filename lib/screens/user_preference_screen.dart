@@ -14,17 +14,17 @@ class UserPreference extends StatefulWidget {
 
 class _UserPreferenceState extends State<UserPreference> {
   List<String> options = [
-    'Point of interest',
-    'Town square',
-    'Place of worship',
-    'Natural feature',
-    'Locality',
-    'Landmark',
-    'Health',
-    'Food',
-    'Neighborhood',
-    'Country',
-    'Continent',
+    'point_of_interest',
+    'town_square',
+    'place_of_worship',
+    'natural_feature',
+    'locality',
+    'landmark',
+    'health',
+    'food',
+    'neighborhood',
+    'country',
+    'continent',
   ];
 
   List<String> selectedChoices = [];
