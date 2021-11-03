@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:http/http.dart' as http;
+import 'globals.dart' as globals;
 
 Future<List<BookDataInit>> fetchBookmarks() async {
   //print("gajk");
   var url =
       Uri.parse("https://septravelplanner.herokuapp.com/user/getbookmarks");
 
-  var response = await http.post(url, body: {"email": "malithi_abc@gmail.com"});
+  var response = await http.post(url, body: {"email": globals.currentUserEmail});
   print("bookmarked locations");
   print(response.body);
   List jsonResponse = json.decode(response.body)["message"];
@@ -26,7 +27,7 @@ Future addBookmark(String location_id) async {
     },
     body: jsonEncode({
       "location_id": location_id,
-      "email": "malithi_abc@gmail.com",
+      "email": globals.currentUserEmail,
     }),
   );
 
