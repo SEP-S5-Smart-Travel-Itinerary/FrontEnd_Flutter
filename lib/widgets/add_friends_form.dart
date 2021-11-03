@@ -175,7 +175,8 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
   }
 
   memberSearch(String value) async {
-    var url = Uri.parse("http://localhost:3000/itinerary/searchmembers");
+    var url = Uri.parse(
+        "https://septravelplanner.herokuapp.com/itinerary/searchmembers");
 
     var response = await http
         .post(url, body: {"plan_id": globals.createplan_id, "username": value});
