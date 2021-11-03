@@ -32,7 +32,7 @@ Future<List<LocationDataInit>> fetchNearbyRestaurants() async {
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-
+    print(jsonResponse);
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();

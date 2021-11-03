@@ -6,13 +6,13 @@ import '../controller/book_ctrl.dart';
 class UpperBar extends StatelessWidget {
   final String type;
   final String weather;
-  final double location;
+  final rating;
   final String location_id;
 
   const UpperBar(
       {this.type = "ATTRACTION",
       this.weather = 'sunny',
-      this.location = 4,
+      this.rating = 4,
       required this.location_id});
 
   @override
@@ -48,7 +48,7 @@ class UpperBar extends StatelessWidget {
                   width: 5,
                 ),
                 StarRatingBar(
-                  ratings: location,
+                  ratings: rating,
                 )
               ]),
               SizedBox(

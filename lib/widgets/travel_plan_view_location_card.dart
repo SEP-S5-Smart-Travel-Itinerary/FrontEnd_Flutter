@@ -12,7 +12,7 @@ class TravelPlanLocationCard extends StatelessWidget {
   final String title;
   final String location;
   final String locationId;
-  final double rating;
+  final rating;
   final int id;
   final String start;
   final String end;
@@ -39,7 +39,7 @@ class TravelPlanLocationCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              height: 80,
+              height: 100,
               width: MediaQuery.of(context).size.width * 0.6,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
@@ -57,15 +57,21 @@ class TravelPlanLocationCard extends StatelessWidget {
                         SizedBox(
                           width: 15,
                         ),
-                        Text(
-                          title,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
                         )
                       ],
                     ),
                     Row(
-                      children: [Text(start), Text(" to "), Text(end)],
+                      children: [
+                        Text(start.substring(10, 15)),
+                        Text(" to "),
+                        Text(end.substring(10, 15))
+                      ],
                     ),
                     Row(
                       children: [

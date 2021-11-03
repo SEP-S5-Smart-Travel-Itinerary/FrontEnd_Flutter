@@ -35,14 +35,6 @@ class _HomeState extends State<Home> {
           logoSize: 30,
           color: SecondayColorBlue,
         ),
-        actions: [
-          CircleAvatar(
-            radius: 25,
-          ),
-          SizedBox(
-            width: 10,
-          )
-        ],
         backgroundColor: PrimaryColor,
       ),
 
