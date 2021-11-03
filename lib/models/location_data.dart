@@ -1,7 +1,7 @@
 class LocationData {
   String? name;
   List<String>? type;
-  double? rating;
+  var rating;
   String? placeId;
   List<Imagelink>? imagelink;
   double? latitude;
