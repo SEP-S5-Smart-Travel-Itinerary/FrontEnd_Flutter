@@ -44,7 +44,8 @@ Future changeUsername(new_username) async {
   );
 
   if (response.statusCode == 200) {
-    print("success");
+    print("success chaing username");
+    globals.currentUserUsername = new_username;
   } else {
     throw Exception('Failed to update username.');
   }

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/user_controller.dart';
+import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/rounded_button_without_icon.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -53,30 +54,43 @@ class _SettingsState extends State<Settings> {
               SizedBox(
                 height: 30,
               ),
-              CircleAvatar(
-                radius: 70,
-                backgroundImage: NetworkImage(
-                    "https://upload.wikimedia.org/wikipedia/commons/8/85/Elon_Musk_Royal_Society_%28crop1%29.jpg"),
-                backgroundColor: Colors.transparent,
-              ),
-              IconButton(
-                  icon: const Icon(Icons.photo),
-                  onPressed: () async => _pickImageFromGallery()),
+              // CircleAvatar(
+              //   radius: 70,
+              //   backgroundImage: NetworkImage(
+              //       "https://upload.wikimedia.org/wikipedia/commons/8/85/Elon_Musk_Royal_Society_%28crop1%29.jpg"),
+              //   backgroundColor: Colors.transparent,
+              // ),
+              // IconButton(
+              //     icon: const Icon(Icons.photo),
+              //     onPressed: () async => _pickImageFromGallery()),
               Text(
-                name,
+                "Welcome to  ",
                 style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: SecondaryColorDarkGrey),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w300,
+                    color: PrimaryColor),
               ),
+              SizedBox(
+                height: 15,
+              ),
+              Logo(logoSize: 40),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                "Hi " + name + " ! ",
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
+                    color: PrimaryColor),
+              ),
+
               SizedBox(
                 width: 10,
               ),
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () => showModalBottomSheet(
-                    context: context, builder: (ctx) => _buildBottomSheet(ctx)),
-              ),
+
+              Divider(),
+
               SizedBox(
                 height: 50,
               ),
@@ -98,6 +112,20 @@ class _SettingsState extends State<Settings> {
               SizedBox(
                 height: 15,
               ),
+              RoundedButton(
+                text: "Edit User Details",
+                color: PrimaryColor,
+                onPressed: () => showModalBottomSheet(
+                    context: context, builder: (ctx) => _buildBottomSheet(ctx)),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+
+              Divider(),
+              SizedBox(
+                height: 50,
+              ),
               LoginButton(
                 text: 'Logout',
                 imagePath: "icons/logout.png",
@@ -117,7 +145,6 @@ class _SettingsState extends State<Settings> {
               SizedBox(
                 height: 20,
               ),
-              Divider(),
             ],
           ),
         )));
@@ -169,6 +196,7 @@ Container _buildBottomSheet(BuildContext context) {
 
 //change plan name
 Container _buildBottomSheetChangeUsername(BuildContext context) {
+  GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
   String? new_username;
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
@@ -180,38 +208,53 @@ Container _buildBottomSheetChangeUsername(BuildContext context) {
     child: Center(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              initialValue: '',
-              // controller: this._emailController,
-              decoration: InputDecoration(
-                labelText: 'New Username',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
+        child: Form(
+          key: _formkey1,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: '',
+                // controller: this._emailController,
+                decoration: InputDecoration(
+                  labelText: 'New Username',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                   ),
                 ),
+                validator: (_val) {
+                  if (_val == "") {
+                    return "username cannot be empty";
+                  } else {
+                    return null;
+                  }
+                },
+                onChanged: (String? value) {
+                  new_username = value;
+                },
               ),
-              onChanged: (String? value) {
-                new_username = value;
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            RoundedButton(
-              text: "Change Username",
-              color: PrimaryColor,
-              height: 150,
-              onPressed: () {
-                changeUsername(new_username).then((value) => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Settings())));
-                //
-              },
-            ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              RoundedButton(
+                text: "Change Username",
+                color: PrimaryColor,
+                height: 150,
+                onPressed: () {
+                  if (_formkey1.currentState!.validate()) {
+                    changeUsername(new_username).then((value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Settings())));
+                  } else {
+                    print("not ok");
+                  }
+
+                  //
+                },
+              ),
+            ],
+          ),
         ),
       ),
     ),
@@ -220,6 +263,7 @@ Container _buildBottomSheetChangeUsername(BuildContext context) {
 
 //change plan name
 Container _buildBottomSheetChangePassword(BuildContext context) {
+  GlobalKey<FormState> _formkey2 = GlobalKey<FormState>();
   String? new_password;
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
@@ -231,37 +275,51 @@ Container _buildBottomSheetChangePassword(BuildContext context) {
     child: Center(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              initialValue: '',
-              // controller: this._emailController,
-              decoration: InputDecoration(
-                labelText: 'New Password',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
+        child: Form(
+          key: _formkey2,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: '',
+                // controller: this._emailController,
+                decoration: InputDecoration(
+                  labelText: 'New Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
+                    ),
                   ),
                 ),
+                validator: (_val) {
+                  if (_val == "") {
+                    return "password cannot be empty";
+                  } else {
+                    return null;
+                  }
+                },
+                onChanged: (String? value) {
+                  new_password = value;
+                },
               ),
-              onChanged: (String? value) {
-                new_password = value;
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            RoundedButton(
-              text: "Change Password",
-              color: PrimaryColor,
-              height: 150,
-              onPressed: () {
-                changePassword(new_password).then((value) => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Settings())));
-              },
-            ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+              RoundedButton(
+                text: "Change Password",
+                color: PrimaryColor,
+                height: 150,
+                onPressed: () {
+                  if (_formkey2.currentState!.validate()) {
+                    changePassword(new_password).then((value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Settings())));
+                  } else {
+                    print("not ok");
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     ),

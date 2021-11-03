@@ -98,16 +98,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               //             builder: (context) => MainScreen()))),
                               onPressed: () {},
                             ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            LoginButton(
-                              text: 'Sign In with Facebook',
-                              imagePath: 'icons/facebook_icon.png',
-                              color: Color(0xFF1E4297),
-                              borderColor: Color(0xFF1E4297),
-                              onPressed: () {},
-                            ),
                           ]),
                         ),
                   SizedBox(

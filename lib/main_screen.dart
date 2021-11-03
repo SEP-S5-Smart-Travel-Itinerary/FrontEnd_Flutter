@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'assets/colors.dart';
-
 import 'screens/home_screen.dart';
 import 'screens/bookmarks_screen.dart';
 import 'screens/flight_screen.dart';
