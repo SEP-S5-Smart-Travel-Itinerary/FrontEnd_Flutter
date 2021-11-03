@@ -92,7 +92,7 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
                                     {
                                       Addfriends(_friends),
                                       //touserText("Successfully Added").then((value) =>
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
@@ -102,7 +102,7 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
                                     }
                                   else
                                     {
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
@@ -115,7 +115,7 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
                         else
                           {
                             //touserText("Input user haven't Registerd Star Trips").then((value) =>
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 new MaterialPageRoute(
                                     builder: (context) => AddFriendsDialog(
@@ -138,7 +138,7 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
               ),
               TextButton(
                   onPressed: () {
-                    getPalnDetails().then((value) => Navigator.push(
+                    getPalnDetails().then((value) => Navigator.pushReplacement(
                         context,
                         new MaterialPageRoute(
                             builder: (context) => TravelPlanView())));
