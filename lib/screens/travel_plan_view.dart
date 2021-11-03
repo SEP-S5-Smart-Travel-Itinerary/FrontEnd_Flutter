@@ -54,7 +54,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
             children: [
               Container(
                 padding: EdgeInsets.all(10),
-                height: 110,
+                height: 130,
                 color: SecondayColorBlue,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -95,7 +95,6 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                 )
                               ],
                             ),
-                            
                           ),
                           // TextButton(
                           //       onPressed: () {
@@ -160,16 +159,17 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                                onPressed: () {
-                                  Navigator.push(
+                              onPressed: () {
+                                Navigator.push(
                                     context,
                                     new MaterialPageRoute(
-                                        builder: (context) => AddFriendsDialog(text: "")));
-                                },
-                                child: Text(
-                                  'add a member',
-                                  style: TextStyle(color: Colors.red),
-                                )),
+                                        builder: (context) =>
+                                            AddFriendsDialog(text: "")));
+                              },
+                              child: Text(
+                                'add a member',
+                                style: TextStyle(color: Colors.red),
+                              )),
                           Container(
                             padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
@@ -198,7 +198,6 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.normal),
                                     ),
-                                    
                                   ],
                                 ),
                               ],
@@ -232,14 +231,14 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                         if (snapshot.hasData) {
                           List<PlannDataInit> loc_list = snapshot.data;
                           List<PlannDataInit> list = [];
-                      for(var i = 0; i < loc_list.length; i++){
-                        print(loc_list[i].imagelink);
-                        if(loc_list[i].imagelink!=null){
-                          print("hjk");
+                          for (var i = 0; i < loc_list.length; i++) {
+                            print(loc_list[i].imagelink);
+                            if (loc_list[i].imagelink != null) {
+                              print("hjk");
                               list.add(loc_list[i]);
-                        }
+                            }
                           }
-                          
+
                           return ListView.builder(
                             physics: ClampingScrollPhysics(),
                             shrinkWrap: true,
@@ -250,13 +249,15 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                             itemBuilder: (BuildContext context, int index) =>
                                 TravelPlanLocationCard(
                               title: list[index].name,
-                              location: list[index].type[0], //'Victorial Park of Nuwara Eliya',
-                              rating: list[index].rating??4,
+                              location: list[index]
+                                  .type[0], //'Victorial Park of Nuwara Eliya',
+                              rating: list[index].rating ?? 4,
                               id: index + 1,
                               locationId: list[index].place_id,
                               start: list[index].startTime,
-                              end:list[index].endTime,
-                              imageUrl:list[index].imagelink[0]["photo_reference"],
+                              end: list[index].endTime,
+                              imageUrl: list[index].imagelink[0]
+                                  ["photo_reference"],
                             ),
                           );
                         } else if (snapshot.hasError) {

@@ -10,7 +10,7 @@ class LocationCard extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String location;
-  final double rating;
+  final rating;
   final String locationId;
 
   const LocationCard(
@@ -40,8 +40,8 @@ class _LocationCardState extends State<LocationCard> {
                       locationId: widget.locationId,
                       name: a.name,
                       imageLink: widget.imageUrl,
-                      description:widget.location,
-                      rating:widget.rating,
+                      description: widget.location,
+                      rating: widget.rating,
                     )));
       },
       child: Card(
@@ -60,7 +60,8 @@ class _LocationCardState extends State<LocationCard> {
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5)),
                     image: DecorationImage(
-                        image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
+                        image: NetworkImage(
+                            'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
                         fit: BoxFit.cover)),
               ),
               Container(
@@ -72,12 +73,14 @@ class _LocationCardState extends State<LocationCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: PrimaryColor),
+                      Expanded(
+                        child: Text(
+                          widget.title,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: PrimaryColor),
+                        ),
                       ),
                       SizedBox(
                         height: 2,

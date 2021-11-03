@@ -9,7 +9,7 @@ class LocationCardLarge extends StatefulWidget {
   final String locationName;
   final String locationId;
   final String description;
-  final double rating;
+  final rating;
   final String photo;
   const LocationCardLarge(
       {required this.locationId,
@@ -18,7 +18,7 @@ class LocationCardLarge extends StatefulWidget {
       required this.locationName,
       this.description =
           'orem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
-          required this.photo,
+      required this.photo,
       required this.rating});
 
   @override
@@ -30,9 +30,9 @@ class _LocationCardLargeState extends State<LocationCardLarge> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        print("widget value" + widget.locationId);
+        // print("widget value" + widget.locationId);
         LocationData a = await fetchDetailsofLocations(widget.locationId);
-        print("a received succesfully");
+        // print("a received succesfully");
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -40,8 +40,8 @@ class _LocationCardLargeState extends State<LocationCardLarge> {
                       locationId: widget.locationId,
                       name: a.name,
                       imageLink: widget.photo,
-                      description:widget.description,
-                      rating:widget.rating,
+                      description: widget.description,
+                      rating: widget.rating,
                       //photo:widget.photo,
                     )));
       },
@@ -54,8 +54,10 @@ class _LocationCardLargeState extends State<LocationCardLarge> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               image: DecorationImage(
-                  image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.photo}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'), fit: BoxFit.cover)),
-                  //image:NetworkImage(widget.imageUrl),fit: BoxFit.cover)),
+                  image: NetworkImage(
+                      'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.photo}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
+                  fit: BoxFit.cover)),
+          //image:NetworkImage(widget.imageUrl),fit: BoxFit.cover)),
           child: Column(
             children: [
               Spacer(),

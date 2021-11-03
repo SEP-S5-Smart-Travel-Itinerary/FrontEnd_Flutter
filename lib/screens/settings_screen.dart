@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/user_controller.dart';
+import 'package:frontend_flutter/main_screen.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/rounded_button_without_icon.dart';
 import 'dart:io';
@@ -110,13 +111,34 @@ class _SettingsState extends State<Settings> {
                 ],
               ),
               SizedBox(
+                height: 30,
+              ),
+              // RoundedButton(
+              //   text: "Edit User Details",
+              //   color: PrimaryColor,
+              //   onPressed: () => showModalBottomSheet(
+              //       context: context, builder: (ctx) => _buildBottomSheet(ctx)),
+              // ),
+              RoundedButton(
+                text: "Change Username",
+                color: PrimaryColor,
+                height: 150,
+                onPressed: () => showModalBottomSheet(
+                    // isScrollControlled: true,
+                    context: context,
+                    builder: (ctx) => _buildBottomSheetChangeUsername(ctx)),
+              ),
+              SizedBox(
                 height: 15,
               ),
               RoundedButton(
-                text: "Edit User Details",
+                text: "Change Password",
                 color: PrimaryColor,
+                height: 150,
                 onPressed: () => showModalBottomSheet(
-                    context: context, builder: (ctx) => _buildBottomSheet(ctx)),
+                    // isScrollControlled: true,
+                    context: context,
+                    builder: (ctx) => _buildBottomSheetChangePassword(ctx)),
               ),
               SizedBox(
                 height: 50,
@@ -152,9 +174,33 @@ class _SettingsState extends State<Settings> {
 }
 
 // modal bottom sheet for options
-Container _buildBottomSheet(BuildContext context) {
+// Container _buildBottomSheet(BuildContext context) {
+//   return Container(
+//     height: 350,
+//     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
+//     decoration: BoxDecoration(
+//         border: Border(
+//           top: BorderSide(width: 5, color: PrimaryColor),
+//         ),
+//         color: SecondayColorBlue),
+//     child: Center(
+//       child: Padding(
+//         padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
+//         child: Column(
+//           children: <Widget>[
+//             SizedBox(
+//               height: 20,
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//   );
+// }
+
+Container _buildBottomSheetChangeUsername(BuildContext context) {
+  String? _newUsername;
   return Container(
-    height: 350,
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
     decoration: BoxDecoration(
         border: Border(
@@ -166,26 +212,33 @@ Container _buildBottomSheet(BuildContext context) {
         padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
         child: Column(
           children: <Widget>[
-            RoundedButton(
-              text: "Change Username",
-              color: PrimaryColor,
-              height: 150,
-              onPressed: () => showModalBottomSheet(
-                  // isScrollControlled: true,
-                  context: context,
-                  builder: (ctx) => _buildBottomSheetChangeUsername(ctx)),
+            TextFormField(
+              initialValue: '',
+              // controller: this._emailController,
+              decoration: InputDecoration(
+                labelText: 'New Username',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
+              ),
+              onChanged: (String value) {
+                _newUsername = value;
+              },
             ),
             SizedBox(
               height: 20,
             ),
             RoundedButton(
-              text: "Change Password",
+              text: "Change User Name",
               color: PrimaryColor,
               height: 150,
-              onPressed: () => showModalBottomSheet(
-                  // isScrollControlled: true,
-                  context: context,
-                  builder: (ctx) => _buildBottomSheetChangePassword(ctx)),
+              onPressed: () {
+                changeUsername(_newUsername!).then((value) => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainScreen())));
+              },
             ),
           ],
         ),
@@ -195,76 +248,83 @@ Container _buildBottomSheet(BuildContext context) {
 }
 
 //change plan name
-Container _buildBottomSheetChangeUsername(BuildContext context) {
-  GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
-  String? new_username;
-  return Container(
-    // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
-    decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(width: 5, color: PrimaryColor),
-        ),
-        color: SecondayColorBlue),
-    child: Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
-        child: Form(
-          key: _formkey1,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                initialValue: '',
-                // controller: this._emailController,
-                decoration: InputDecoration(
-                  labelText: 'New Username',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                ),
-                validator: (_val) {
-                  if (_val == "") {
-                    return "username cannot be empty";
-                  } else {
-                    return null;
-                  }
-                },
-                onChanged: (String? value) {
-                  new_username = value;
-                },
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              RoundedButton(
-                text: "Change Username",
-                color: PrimaryColor,
-                height: 150,
-                onPressed: () {
-                  if (_formkey1.currentState!.validate()) {
-                    changeUsername(new_username).then((value) => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Settings())));
-                  } else {
-                    print("not ok");
-                  }
+// Container _buildBottomSheetChangeUsername(BuildContext context) {
+//   String? new_username;
+//   GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
+//   return Container(
+//     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
 
-                  //
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
+//     decoration: BoxDecoration(
+//         border: Border(
+//           top: BorderSide(width: 5, color: PrimaryColor),
+//         ),
+//         color: SecondayColorBlue),
+//     child: Center(
+//       child: Padding(
+//         padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
+//         child: Form(
+//           key: _formkey1,
+//           child: Column(
+//             children: <Widget>[
+//               TextFormField(
+//                 initialValue: '',
+//                 // controller: this._emailController,
+//                 decoration: InputDecoration(
+//                   labelText: 'New Username',
+//                   border: OutlineInputBorder(
+//                     borderRadius: BorderRadius.all(
+//                       Radius.circular(5),
+//                     ),
+//                   ),
+//                 ),
+//                 validator: (_val) {
+//                   if (_val == "") {
+//                     return "username cannot be empty";
+//                   } else {
+//                     return null;
+//                   }
+//                 },
+//                 onChanged: (String value) {
+//                   print(value);
+//                   new_username = value;
+//                   print("new username - " + new_username!);
+//                 },
+//               ),
+//               SizedBox(
+//                 height: 20,
+//               ),
+//               RoundedButton(
+//                 text: "Change Username",
+//                 color: PrimaryColor,
+//                 height: 150,
+//                 onPressed: () {
+//                   print("New user name - " + new_username!);
+//                   // changeUsername(new_username).then((value) => Navigator.push(
+//                   //     context,
+//                   //     MaterialPageRoute(builder: (context) => MainScreen())));
+//                   if (_formkey1.currentState!.validate()) {
+//                     changeUsername(new_username).then((value) => Navigator.push(
+//                         context,
+//                         MaterialPageRoute(builder: (context) => MainScreen())));
+//                   } else {
+//                     print("not ok");
+//                   }
+
+//                   //
+//                 },
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
 //change plan name
 Container _buildBottomSheetChangePassword(BuildContext context) {
   GlobalKey<FormState> _formkey2 = GlobalKey<FormState>();
-  String? new_password;
+  String? new_password = "";
   return Container(
     // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
     decoration: BoxDecoration(

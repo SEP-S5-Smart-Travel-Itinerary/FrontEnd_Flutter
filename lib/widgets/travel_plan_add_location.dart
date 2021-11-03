@@ -61,11 +61,11 @@ class _TravelPlanAddLocationState extends State<TravelPlanAddLocation> {
                   MaterialPageRoute(
                       builder: (context) => SearchScreenForPlan())),
             ),
-            Text(
-              "Nearby Places",
-              style: TextStyle(
-                  fontWeight: FontWeight.w100, color: SecondaryColorDarkGrey),
-            ),
+            // Text(
+            //   "Nearby Places",
+            //   style: TextStyle(
+            //       fontWeight: FontWeight.w100, color: SecondaryColorDarkGrey),
+            // ),
 
             // SizedBox(
             //   height: 120.0,

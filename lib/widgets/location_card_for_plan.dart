@@ -3,7 +3,6 @@ import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/screens/attraction_screen_for_plan.dart';
 import 'package:frontend_flutter/widgets/color_badge.dart';
 import 'package:frontend_flutter/widgets/star_rating_bar.dart';
-import '../screens/attraction_screen.dart';
 import '../models/location_data.dart';
 import '../controller/location_controller.dart';
 
@@ -11,7 +10,7 @@ class LocationCardforPlan extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String location;
-  final double rating;
+  final rating;
   final String locationId;
 
   const LocationCardforPlan(
@@ -41,8 +40,8 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                       locationId: widget.locationId,
                       name: a.name,
                       imageLink: widget.imageUrl,
-                      description:widget.location,
-                      rating:widget.rating,
+                      description: widget.location,
+                      rating: widget.rating,
                     )));
       },
       child: Card(
@@ -61,7 +60,8 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                         topLeft: Radius.circular(5),
                         bottomLeft: Radius.circular(5)),
                     image: DecorationImage(
-                        image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
+                        image: NetworkImage(
+                            'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
                         fit: BoxFit.cover)),
               ),
               Container(

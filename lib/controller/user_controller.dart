@@ -30,7 +30,7 @@ Future addPreferences(cat, context) async {
   }
 }
 
-Future changeUsername(new_username) async {
+Future changeUsername(String new_username) async {
   // print(cat);
   final response = await http.post(
     Uri.parse('https://septravelplanner.herokuapp.com/user/changeusername'),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/plan_controller.dart';
 import 'package:frontend_flutter/screens/travel_plan_view.dart';
+import 'package:frontend_flutter/widgets/reviews_view.dart';
 import 'package:http/http.dart' as http;
 
 class AddReviews extends StatefulWidget {
@@ -139,6 +140,12 @@ class _AddReviewsState extends State<AddReviews> {
       "description": description,
       "loc_id": location_id
     });
+    if (response.statusCode == 200) {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ReviewView(title: widget.loc_id)));
+    }
     print("sucess called");
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);

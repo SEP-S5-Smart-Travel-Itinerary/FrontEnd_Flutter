@@ -20,7 +20,7 @@ class AttractionForPlan extends StatefulWidget {
   final String? name;
   final String imageLink;
   final String description;
-  final double rating;
+  final rating;
 
   const AttractionForPlan(
       {required this.locationId,
@@ -78,7 +78,7 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
               UpperBar(
                   location_id: widget.locationId,
                   type: this.widget.description,
-                  location: widget.rating),
+                  rating: widget.rating),
               //description
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),

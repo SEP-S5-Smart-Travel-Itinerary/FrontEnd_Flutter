@@ -11,10 +11,10 @@ class ReviewCard extends StatefulWidget {
   final String title;
   final String location;
 
-  const ReviewCard(
-      {required this.title,
-      required this.location,
-      });
+  const ReviewCard({
+    required this.title,
+    required this.location,
+  });
 
   @override
   State<ReviewCard> createState() => _ReviewCardState();
@@ -29,40 +29,63 @@ class _ReviewCardState extends State<ReviewCard> {
         child: Container(
           color: SecondayColorBlue,
           height: 80,
+          width: MediaQuery.of(context).size.width * 0.8,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: 100,
                 width: MediaQuery.of(context).size.width * 0.05,
               ),
               Container(
-                height: 80,
+                height: 100,
                 //width: MediaQuery.of(context).size.width * 0.5,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 2.0),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: PrimaryColor),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: PrimaryColor,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            widget.title,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: PrimaryColor),
+                          ),
+                        ],
                       ),
                       SizedBox(
-                        height: 2,
+                        height: 5,
                       ),
-                      Text(
-                        widget.location,
-                        style: TextStyle(
-                            fontSize: 13, color: SecondaryColorDarkGrey),
-                      )
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.comment,
+                            color: PrimaryColor,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            widget.location,
+                            style: TextStyle(
+                                fontSize: 13, color: SecondaryColorDarkGrey),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ),
-              
             ],
           ),
         ),
