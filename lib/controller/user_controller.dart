@@ -38,7 +38,7 @@ Future changeUsername(new_username) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "email": "hashani@gmail.com",
+      "email": globals.currentUserEmail,
       "new_username": new_username,
     }),
   );
@@ -58,7 +58,7 @@ Future changePassword(new_password) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "email": "hashani@gmail.com",
+      "email": globals.currentUserEmail,
       "new_password": new_password,
     }),
   );
