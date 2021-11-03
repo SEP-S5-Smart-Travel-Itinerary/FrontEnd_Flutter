@@ -47,10 +47,9 @@ class UpperBar extends StatelessWidget {
                 SizedBox(
                   width: 5,
                 ),
-                 StarRatingBar(
-                      ratings: location,
-                    )
-                
+                StarRatingBar(
+                  ratings: location,
+                )
               ]),
               SizedBox(
                 height: 3,
@@ -60,7 +59,7 @@ class UpperBar extends StatelessWidget {
           Spacer(),
           IconButton(
             onPressed: () {
-              addBookmark(location_id);
+              addBookmark(location_id, context);
             },
             icon: Icon(Icons.bookmark_add),
             color: Colors.black,
