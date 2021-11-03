@@ -8,8 +8,7 @@ import 'package:http/http.dart' as http;
 
 class AddFriendsDialog extends StatefulWidget {
   final String text;
-  const AddFriendsDialog(
-      {required this.text});
+  const AddFriendsDialog({required this.text});
   @override
   _AddFriendsDialogState createState() => _AddFriendsDialogState();
 }
@@ -17,8 +16,8 @@ class AddFriendsDialog extends StatefulWidget {
 class _AddFriendsDialogState extends State<AddFriendsDialog> {
   List<String> _friends = [];
   String? _name;
-  bool result=false;
-  String touser="";
+  bool result = false;
+  String touser = "";
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +66,9 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
                 onChanged: (String? value) {
                   setState(() {
                     this._name = value;
-                   
                   });
-                   
                 },
-                
+
                 // validator: _validateName,
               ),
 
@@ -82,27 +79,32 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
               ElevatedButton(
                 onPressed: () {
                   _friends.add(_name!);
-                    print(_friends);
-                    print(widget.text);
-                    //Addfriends(_friends);
-                    userSearch(_name!).then((value) =>{
-                      if(result){
-                      Addfriends(_friends),
-                      //touserText("Successfully Added").then((value) =>
-                     Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => AddFriendsDialog(text:"Successfully Added")))
-                     
-                    }
-                    else{
-                      //touserText("Input user haven't Registerd Star Trips").then((value) =>
-                     Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => AddFriendsDialog(text:"Input user haven't Registerd Star Trips")))
-                     
-                    }
-                    }
-                    );
-                    //print(result);
-                    
+                  print(_friends);
+                  print(widget.text);
+                  //Addfriends(_friends);
+                  userSearch(_name!).then((value) => {
+                        if (result)
+                          {
+                            Addfriends(_friends),
+                            //touserText("Successfully Added").then((value) =>
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => AddFriendsDialog(
+                                        text: "Successfully Added")))
+                          }
+                        else
+                          {
+                            //touserText("Input user haven't Registerd Star Trips").then((value) =>
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => AddFriendsDialog(
+                                        text:
+                                            "Input user haven't Registerd Star Trips")))
+                          }
+                      });
+                  //print(result);
                 },
                 child: Container(
                     height: 50,
@@ -117,40 +119,39 @@ class _AddFriendsDialogState extends State<AddFriendsDialog> {
               ),
               TextButton(
                   onPressed: () {
-                    getPalnDetails().then((value) =>
-                     Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => TravelPlanView()))
-                     );
-        //             Navigator.push(
-        // context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
+                    getPalnDetails().then((value) => Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => TravelPlanView())));
+                    //             Navigator.push(
+                    // context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
                   },
                   child: Text(
                     'Go to the Plan',
                     style: TextStyle(color: PrimaryColor),
                   )),
-                  
-                  Text(widget.text,
-                  style: TextStyle(color: Colors.purple,
-                  fontWeight: FontWeight. bold),
-                  textAlign: TextAlign.center,
-                  ),
+
+              Text(
+                widget.text,
+                style: TextStyle(
+                    color: Colors.purple, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ));
   }
-  userSearch(String value) async {
-    var url = Uri.parse("http://localhost:3000/user/SearchUser");
 
-  var response = await http
-      .post(url, body: {"username": value});
+  userSearch(String value) async {
+    var url =
+        Uri.parse("https://septravelplanner.herokuapp.com/user/SearchUser");
+
+    var response = await http.post(url, body: {"username": value});
     print("sucess called");
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
-    
-        result = json.decode(response.body)["success"];
-        //print (result);
-      
-  
+
+    result = json.decode(response.body)["success"];
+    //print (result);
   }
-  
 }

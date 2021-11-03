@@ -24,7 +24,7 @@ class AttractionForPlan extends StatefulWidget {
 
   const AttractionForPlan(
       {required this.locationId,
-      this.rating=4,
+      this.rating = 4,
       this.name = "Victorial Park 123",
       this.imageLink =
           'https://images.unsplash.com/photo-1610017810004-a6f3c531df34?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1934&q=80',
@@ -70,22 +70,23 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     image: DecorationImage(
-                        image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageLink}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
+                        image: NetworkImage(
+                            'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageLink}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
                         fit: BoxFit.cover)),
               ),
 
-              UpperBar(location_id: widget.locationId,
-                      type:this.widget.description,
-                      location:widget.rating
-                      ),
+              UpperBar(
+                  location_id: widget.locationId,
+                  type: this.widget.description,
+                  location: widget.rating),
               //description
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
-                child: Text(
-                  //this.widget.description,
-                  "${widget.name!} is a very picturesque area. This area is frequented by tourists and belongs to the ${this.widget.description} category. This place is easily accessible and there are many Accoomadations around ${widget.name!}",
-                  style: TextStyle(color: Colors.black),
-                )),
+                  padding: EdgeInsets.symmetric(horizontal: 17, vertical: 10),
+                  child: Text(
+                    //this.widget.description,
+                    "${widget.name!} is a very picturesque area. This area is frequented by tourists and belongs to the ${this.widget.description} category. This place is easily accessible and there are many Accoomadations around ${widget.name!}",
+                    style: TextStyle(color: Colors.black),
+                  )),
 
               TimeRange(
                   fromTitle: Text(
@@ -119,11 +120,8 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
 
               ElevatedButton(
                 onPressed: () {
-                  addLocations(
-                          widget.locationId,
-                          globals.createplan_id,
-                          startTime.toString(),
-                          endTime.toString())
+                  addLocations(widget.locationId, globals.createplan_id,
+                          startTime.toString(), endTime.toString())
                       .then((value) => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -181,13 +179,13 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                     if (snapshot.hasData) {
                       List<LocationDataInit> loc_list = snapshot.data;
                       List<LocationDataInit> list = [];
-                      for(var i = 0; i < loc_list.length; i++){
+                      for (var i = 0; i < loc_list.length; i++) {
                         print(loc_list[i].imagelink);
-                        if(loc_list[i].imagelink!=null){
+                        if (loc_list[i].imagelink != null) {
                           print("hjk");
-                              list.add(loc_list[i]);
+                          list.add(loc_list[i]);
                         }
-                          }
+                      }
                       return ListView.builder(
                         physics: ClampingScrollPhysics(),
                         shrinkWrap: true,
@@ -199,10 +197,9 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                             LocationCardSmall(
                           locationId: list[index].place_id,
                           locationName: list[index].name,
-                          imageUrl:list[index].imagelink[0]["photo_reference"],
-                          description:
-                              list[index].type[0],
-                          rating: list[index].rating??4,
+                          imageUrl: list[index].imagelink[0]["photo_reference"],
+                          description: list[index].type[0],
+                          rating: list[index].rating ?? 4,
                           //photo:list[index].imagelink[0]["photo_reference"],
                           // imageUrl: loc_list[index].imagelink!,
                         ),
@@ -251,11 +248,13 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
         ));
   }
 
-  addLocations(String? location_id, String? plan_id,String startTime, String endTime) async {
+  addLocations(String? location_id, String? plan_id, String startTime,
+      String endTime) async {
     print("start time " + startTime);
     print("end time " + endTime);
 
-    var url = Uri.parse("http://localhost:3000/itinerary/addlocation");
+    var url = Uri.parse(
+        "https://septravelplanner.herokuapp.com/itinerary/addlocation");
 
     var response = await http.post(url, body: {
       "location_id": location_id,

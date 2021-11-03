@@ -1,7 +1,7 @@
 class BookDataInit {
   String name;
   List type;
-  double? rating;
+  var rating;
   String place_id;
   var imagelink;
 

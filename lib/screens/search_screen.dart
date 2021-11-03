@@ -53,54 +53,53 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    autoCompleteSearch(value);
-                  } else {
-                    if (predictions.length > 0 && mounted) {
-                      setState(() {
-                        predictions = [];
-                      });
-                    }
+                if (value.isNotEmpty) {
+                  autoCompleteSearch(value);
+                } else {
+                  if (predictions.length > 0 && mounted) {
+                    setState(() {
+                      predictions = [];
+                    });
                   }
-                },
+                }
+              },
             ),
             Expanded(
-                child: ListView.builder(
-                  itemCount: predictions.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        child: Icon(
-                          Icons.pin_drop,
-                          color: Colors.white,
-                        ),
+              child: ListView.builder(
+                itemCount: predictions.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      child: Icon(
+                        Icons.pin_drop,
+                        color: Colors.white,
                       ),
-                      title: Text(predictions[index]),
-                      onTap: () {
-                        Navigator.push(
-                        context, searchPlaceScreen2(title: predictions[index]));
-                      },
-                    );
-                  },
-                ),
+                    ),
+                    title: Text(predictions[index]),
+                    onTap: () {
+                      Navigator.push(context,
+                          searchPlaceScreen2(title: predictions[index]));
+                    },
+                  );
+                },
               ),
+            ),
           ],
         ),
       )),
     );
   }
-  void autoCompleteSearch(String value) async {
-    var url = Uri.parse("http://localhost:3000/apiuser/auto");
 
-  var response = await http
-      .post(url, body: {"place": value});
+  void autoCompleteSearch(String value) async {
+    var url = Uri.parse("https://septravelplanner.herokuapp.com/apiuser/auto");
+
+    var response = await http.post(url, body: {"place": value});
     print("sucess called");
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
     setState(() {
-        predictions = json.decode(response.body)["data"];
-        print (predictions);
-      });
-  
+      predictions = json.decode(response.body)["data"];
+      print(predictions);
+    });
   }
 }
