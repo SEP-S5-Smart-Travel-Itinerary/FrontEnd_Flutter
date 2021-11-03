@@ -105,15 +105,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         builder: (context) => MainScreen()));
                               },
                             ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            LoginButton(
-                                text: 'Sign up with Facebook',
-                                imagePath: 'icons/facebook_icon.png',
-                                color: Color(0xFF1E4297),
-                                borderColor: Color(0xFF1E4297),
-                                onPressed: () {}),
                           ]),
                         ),
                   SizedBox(
