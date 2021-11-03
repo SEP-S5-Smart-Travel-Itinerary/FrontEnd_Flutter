@@ -38,13 +38,14 @@ Future changeUsername(new_username) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "email": "hashani@gmail.com",
+      "email": globals.currentUserEmail,
       "new_username": new_username,
     }),
   );
 
   if (response.statusCode == 200) {
-    print("success");
+    print("success chaing username");
+    globals.currentUserUsername = new_username;
   } else {
     throw Exception('Failed to update username.');
   }
@@ -58,7 +59,7 @@ Future changePassword(new_password) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "email": "hashani@gmail.com",
+      "email": globals.currentUserEmail,
       "new_password": new_password,
     }),
   );
