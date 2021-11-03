@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/user_controller.dart';
 import 'package:frontend_flutter/main_screen.dart';
+import 'package:frontend_flutter/widgets/changeName.dart';
+import 'package:frontend_flutter/widgets/changePassword.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/rounded_button_without_icon.dart';
 import 'dart:io';
@@ -123,10 +125,13 @@ class _SettingsState extends State<Settings> {
                 text: "Change Username",
                 color: PrimaryColor,
                 height: 150,
-                onPressed: () => showModalBottomSheet(
-                    // isScrollControlled: true,
-                    context: context,
-                    builder: (ctx) => _buildBottomSheetChangeUsername(ctx)),
+                onPressed: () {
+
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => ChangeName(text: "")));
+                },
               ),
               SizedBox(
                 height: 15,
@@ -135,10 +140,13 @@ class _SettingsState extends State<Settings> {
                 text: "Change Password",
                 color: PrimaryColor,
                 height: 150,
-                onPressed: () => showModalBottomSheet(
-                    // isScrollControlled: true,
-                    context: context,
-                    builder: (ctx) => _buildBottomSheetChangePassword(ctx)),
+                onPressed: () {
+
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => ChangePwd(text: "")));
+                },
               ),
               SizedBox(
                 height: 50,
