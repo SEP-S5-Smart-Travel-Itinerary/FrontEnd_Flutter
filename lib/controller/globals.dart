@@ -13,4 +13,7 @@ String startdatestring = "";
 String enddatestring = "";
 String password = "";
 
-String currentUser = "";
+// current user details
+String currentUserID = "";
+String currentUserEmail = "";
+String currentUserUsername = "";

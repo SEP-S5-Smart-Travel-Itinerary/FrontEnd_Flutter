@@ -23,8 +23,8 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   File? _imageFile;
   final _picker = ImagePicker();
-  final String name = 'Pasan madushan';
-  final String email = 'pasan.18@cse.mrt.ac.lk';
+  final String name = globals.currentUserUsername;
+  final String email = globals.currentUserEmail;
   final bool notify = true;
 
   Future<void> _pickImageFromGallery() async {
@@ -106,6 +106,10 @@ class _SettingsState extends State<Settings> {
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   await prefs.setString('token', "");
+                  globals.currentUserEmail = "";
+                  globals.currentUserID = "";
+                  globals.currentUserUsername = "";
+
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => SignInScreen()));
                 },

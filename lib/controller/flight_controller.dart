@@ -9,7 +9,8 @@ Future<FlightData> getFlightRates(
   print(
       origin + " - " + destination + " - " + date + " - " + adults.toString());
 
-  var url = Uri.parse("http://localhost:3000/apiuser/flightofffers");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/apiuser/flightofffers");
 
   var response = await http.post(url, body: {
     "origin": origin,

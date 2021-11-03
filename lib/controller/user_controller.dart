@@ -11,12 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future addPreferences(cat, context) async {
   print(cat);
   final response = await http.post(
-    Uri.parse('http://localhost:3000/user/addpreferences'),
+    Uri.parse('https://septravelplanner.herokuapp.com/user/addpreferences'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "email": globals.currentUser,
+      "email": globals.currentUserEmail,
       "categories": cat,
     }),
   );
@@ -33,7 +33,7 @@ Future addPreferences(cat, context) async {
 Future changeUsername(new_username) async {
   // print(cat);
   final response = await http.post(
-    Uri.parse('http://localhost:3000/user/changeusername'),
+    Uri.parse('https://septravelplanner.herokuapp.com/user/changeusername'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -53,7 +53,7 @@ Future changeUsername(new_username) async {
 Future changePassword(new_password) async {
   // print(cat);
   final response = await http.post(
-    Uri.parse('http://localhost:3000/user/changepassword'),
+    Uri.parse('https://septravelplanner.herokuapp.com/user/changepassword'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -80,7 +80,7 @@ Future signUp(email, password, context) async {
   var uName = values[0];
 
   final response = await http.post(
-    Uri.parse('http://localhost:3000/user/signup'),
+    Uri.parse('https://septravelplanner.herokuapp.com/user/signup'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -93,7 +93,9 @@ Future signUp(email, password, context) async {
     if (jsonResponse["sucess"] == 1) {
       print("succesfully registered");
       print(jsonResponse["data"]["Email"]);
-      globals.currentUser = jsonResponse["data"]["Email"];
+      globals.currentUserEmail = jsonResponse["data"]["Email"];
+      globals.currentUserID = jsonResponse["data"]["_id"];
+      globals.currentUserUsername = jsonResponse["data"]["Username"];
 
       // set token
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -130,19 +132,23 @@ Future signUp(email, password, context) async {
 }
 
 Future signIn(email, password, context) async {
+  print("clicked");
   final response = await http.post(
-    Uri.parse('http://localhost:3000/user/signin'),
+    Uri.parse('https://septravelplanner.herokuapp.com/user/signin'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({"email": email, "password": password}),
   );
-
+  print("response received");
   Map jsonResponse = json.decode(response.body);
+  print(jsonResponse);
 
   if (response.statusCode == 200) {
     if (jsonResponse["sucess"] == 1) {
-      globals.currentUser = jsonResponse["data"]["Email"];
+      globals.currentUserEmail = jsonResponse["data"]["Email"];
+      globals.currentUserID = jsonResponse["data"]["_id"];
+      globals.currentUserUsername = jsonResponse["data"]["Username"];
 
       // set token
       SharedPreferences prefs = await SharedPreferences.getInstance();

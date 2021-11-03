@@ -35,6 +35,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     });
   }
 
+  // // google sign in function
+  // Future googleSignIn() async {
+
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,10 +97,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: Colors.white,
                               fontColor: PrimaryColor,
                               borderColor: Colors.black.withOpacity(0.2),
-                              onPressed: () => signInWithGoogle().whenComplete(
-                                  () => Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => MainScreen()))),
+                              onPressed: () async {
+                                final user = await GoogleSignInApi.login();
+                                print(user);
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) => MainScreen()));
+                              },
                             ),
                             SizedBox(
                               height: 15,
@@ -104,7 +112,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 text: 'Sign up with Facebook',
                                 imagePath: 'icons/facebook_icon.png',
                                 color: Color(0xFF1E4297),
-                                borderColor: Color(0xFF1E4297)),
+                                borderColor: Color(0xFF1E4297),
+                                onPressed: () {}),
                           ]),
                         ),
                   SizedBox(
