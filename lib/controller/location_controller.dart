@@ -85,7 +85,7 @@ Future<List<LocationDataInit>> fetchSuggestions() async {
 //fetch attractions by user preference
 Future<List<LocationDataInit>> fetchAttractionsByCategory() async {
   var url = Uri.parse(
-      "http://localhost:3000/user/searchpref");
+      "https://septravelplanner.herokuapp.com/user/searchpref");
 
   var response = await http.post(url, body: {
     "username": globals.currentUserEmail
