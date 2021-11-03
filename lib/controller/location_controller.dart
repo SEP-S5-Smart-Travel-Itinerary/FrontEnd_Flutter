@@ -2,6 +2,7 @@ import 'dart:convert';
 import '../models/location_data_initial.dart';
 import '../models/location_data.dart';
 import 'package:http/http.dart' as http;
+import 'globals.dart' as globals;
 
 // fetch nearby locations
 Future<List<LocationDataInit>> fetchNearbyAttractions() async {
@@ -84,19 +85,28 @@ Future<List<LocationDataInit>> fetchSuggestions() async {
 //fetch attractions by user preference
 Future<List<LocationDataInit>> fetchAttractionsByCategory() async {
   var url = Uri.parse(
-      "https://septravelplanner.herokuapp.com/apiuser/locationsbycategory");
+      "http://localhost:3000/user/searchpref");
 
   var response = await http.post(url, body: {
+    "username": globals.currentUserEmail
+  });
+  List jsonResponse = json.decode(response.body)["message"];
+  
+  jsonResponse.add("natural_feature");
+  var url2 = Uri.parse(
+      "https://septravelplanner.herokuapp.com/apiuser/locationsbycategory");
+
+  var response2 = await http.post(url2, body: {
     "latitude": "6.053519",
     "longitude": "80.220978",
-    "type": "natural_feature"
+    "type": jsonResponse[0]
   });
-  if (response.statusCode == 200) {
+  if (response2.statusCode == 200) {
     print("sucess called");
-    List jsonResponse = json.decode(response.body)["data"];
+    List jsonResponse2 = json.decode(response2.body)["data"];
     // print("---------------recommended locations--------------");
     // print(jsonResponse);
-    return jsonResponse
+    return jsonResponse2
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();
   } else {
