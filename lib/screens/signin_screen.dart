@@ -92,19 +92,22 @@ class _SignInScreenState extends State<SignInScreen> {
                               color: Colors.white,
                               fontColor: PrimaryColor,
                               borderColor: Colors.black.withOpacity(0.2),
-                              onPressed: () => signInWithGoogle().whenComplete(
-                                  () => Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => MainScreen()))),
+                              // onPressed: () => signInWithGoogle().whenComplete(
+                              //     () => Navigator.of(context).pushReplacement(
+                              //         MaterialPageRoute(
+                              //             builder: (context) => MainScreen()))),
+                              onPressed: () {},
                             ),
                             SizedBox(
                               height: 15,
                             ),
                             LoginButton(
-                                text: 'Sign In with Facebook',
-                                imagePath: 'icons/facebook_icon.png',
-                                color: Color(0xFF1E4297),
-                                borderColor: Color(0xFF1E4297)),
+                              text: 'Sign In with Facebook',
+                              imagePath: 'icons/facebook_icon.png',
+                              color: Color(0xFF1E4297),
+                              borderColor: Color(0xFF1E4297),
+                              onPressed: () {},
+                            ),
                           ]),
                         ),
                   SizedBox(

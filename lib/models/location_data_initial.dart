@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class LocationDataInit {
   String name;
   List type;
-  double? rating;
+  var rating;
   String place_id;
   var imagelink;
 
@@ -18,12 +18,11 @@ class LocationDataInit {
 
   factory LocationDataInit.fromJson(Map<String, dynamic> json) {
     //print(json['imagelink']);
-    var list=[];
-    if(json['imagelink']!=null){
-      list=json['imagelink'];
-      
+    var list = [];
+    if (json['imagelink'] != null) {
+      list = json['imagelink'];
     }
-    
+
     return LocationDataInit(
         name: json['name'],
         type: json['type'],

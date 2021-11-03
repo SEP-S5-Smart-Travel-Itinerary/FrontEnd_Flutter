@@ -142,13 +142,13 @@ class _HomeState extends State<Home> {
                       print("hahj");
                       print(loc_list.length);
                       List<LocationDataInit> list = [];
-                      for(var i = 0; i < loc_list.length; i++){
+                      for (var i = 0; i < loc_list.length; i++) {
                         print(loc_list[i].imagelink);
-                        if(loc_list[i].imagelink!=null){
+                        if (loc_list[i].imagelink != null) {
                           print("hjk");
-                              list.add(loc_list[i]);
+                          list.add(loc_list[i]);
                         }
-                          }
+                      }
                       //     print("hahj");
                       // print(loc_list[0].imagelink[0]["photo_reference"]);
                       // print("hahj");
@@ -161,13 +161,12 @@ class _HomeState extends State<Home> {
                         scrollDirection: Axis.horizontal,
                         // itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) =>
-                        LocationCardLarge(
+                            LocationCardLarge(
                           locationName: list[index].name,
                           locationId: list[index].place_id,
-                          description:
-                              list[index].type[0],
-                          rating: list[index].rating??4,
-                          photo:list[index].imagelink[0]["photo_reference"],
+                          description: list[index].type[0],
+                          rating: list[index].rating ?? 4,
+                          photo: list[index].imagelink[0]["photo_reference"],
                         ),
                       );
                     } else if (snapshot.hasError) {
@@ -228,14 +227,13 @@ class _HomeState extends State<Home> {
                       List<LocationDataInit> loc_list = snapshot.data;
 
                       List<LocationDataInit> list = [];
-                      for(var i = 0; i < loc_list.length; i++){
+                      for (var i = 0; i < loc_list.length; i++) {
                         print(loc_list[i].imagelink);
-                        if(loc_list[i].imagelink!=null){
+                        if (loc_list[i].imagelink != null) {
                           print("hjk");
-                              list.add(loc_list[i]);
+                          list.add(loc_list[i]);
                         }
-                          }
-
+                      }
 
                       return ListView.builder(
                         physics: ClampingScrollPhysics(),
@@ -248,9 +246,8 @@ class _HomeState extends State<Home> {
                             LocationCardSmall(
                           locationId: list[index].place_id,
                           locationName: list[index].name,
-                          description:
-                              list[index].type[0],
-                          rating: list[index].rating??4,
+                          description: list[index].type[0],
+                          rating: list[index].rating ?? 4,
                           //photo:list[index].imagelink[0]["photo_reference"]
                           imageUrl: list[index].imagelink[0]["photo_reference"],
                         ),

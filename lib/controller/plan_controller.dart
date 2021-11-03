@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/location_data.dart';
@@ -31,7 +31,7 @@ Future<PlanDataInit> createItin(
       time: DateTime.parse(newDate.toString()));
 
   final response = await http.post(
-    Uri.parse('http://localhost:3000/itinerary/createitin'),
+    Uri.parse('https://septravelplanner.herokuapp.com/itinerary/createitin'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -48,7 +48,7 @@ Future<PlanDataInit> createItin(
 
 //adding planing person
   var addfds = await http.post(
-    Uri.parse('http://localhost:3000/itinerary/addmembers'),
+    Uri.parse('https://septravelplanner.herokuapp.com/itinerary/addmembers'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -86,7 +86,7 @@ Future Addfriends(List<String> friends) async {
   // if (search.statusCode == 200) {
   print("success");
   final response = await http.post(
-    Uri.parse('http://localhost:3000/itinerary/addmembers'),
+    Uri.parse('https://septravelplanner.herokuapp.com/itinerary/addmembers'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -123,7 +123,8 @@ Future Addfriends(List<String> friends) async {
 
 Future<List<PlanDetailInit>> getPalns() async {
   //print("gajk");
-  var url = Uri.parse("http://localhost:3000/itinerary/getallitin");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/itinerary/getallitin");
 
   var response =
       await http.post(url, body: {"user_id": "malithi_abc@gmail.com"});
@@ -137,7 +138,8 @@ Future<List<PlanDetailInit>> getPalns() async {
 
 Future getPalnDetails() async {
   //print("gajk");
-  var url = Uri.parse("http://localhost:3000/itinerary/alldetails");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/itinerary/alldetails");
 
   var response = await http.post(url, body: {"plan_id": globals.createplan_id});
   //print(response.body);
@@ -168,7 +170,8 @@ Future getPalnDetails() async {
 
 Future changeName(String? new_name, String? plan_id) async {
   //print("gajk");
-  var url = Uri.parse("http://localhost:3000/itinerary/changeplanname");
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/itinerary/changeplanname");
 
   var response =
       await http.post(url, body: {"new_name": new_name, "plan_id": plan_id});
@@ -179,7 +182,8 @@ Future changeName(String? new_name, String? plan_id) async {
 //------------------------------------------------------------------------------------
 //delete plan
 Future deletePlan(String? plan_id) async {
-  var url = Uri.parse("http://localhost:3000/itinerary/deleteitin");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/itinerary/deleteitin");
 
   var response = await http.post(url, body: {"plan_id": plan_id});
 
@@ -196,7 +200,7 @@ Future editBudget(int? new_budget, String? plan_id) async {
   //     .post(url, body: {"new_budget": new_budget,"plan_id":plan_id});
   //print(response.body);
   final response = await http.post(
-    Uri.parse('http://localhost:3000/itinerary/editbudget'),
+    Uri.parse('https://septravelplanner.herokuapp.com/itinerary/editbudget'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -212,7 +216,8 @@ Future editBudget(int? new_budget, String? plan_id) async {
 //--------------------------------------------------------------------------------
 Future changeDates(
     String? plan_id, DateTime? newstartDate, DateTime? newendDate) async {
-  var url = Uri.parse("http://localhost:3000/itinerary/changedates");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/itinerary/changedates");
 
   var response = await http.post(url, body: {
     "plan_id": plan_id,
@@ -229,7 +234,7 @@ Future changeDates(
 }
 
 Future<LocationData> getLocationdetails(String place_id) async {
-  var url = Uri.parse("http://localhost:3000/apiuser/details");
+  var url = Uri.parse("https://septravelplanner.herokuapp.com/apiuser/details");
 
   var response =
       await http.post(url, body: {"place_id": "ChIJQ9yCmWtZ4joRNu1evW41NTo"});
@@ -248,7 +253,8 @@ Future<LocationData> getLocationdetails(String place_id) async {
 
 Future<List<PlannDataInit>> fetchPlanLocationList() async {
   //print("gajk");
-  var url = Uri.parse("http://localhost:3000/itinerary/planlocations");
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/itinerary/planlocations");
 
   var response = await http.post(url, body: {"plan_id": globals.createplan_id});
   //print(response.body);

@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 
 // fetch nearby locations
 Future<List<LocationDataInit>> fetchNearbyAttractions() async {
-  var url = Uri.parse("http://localhost:3000/apiuser/nearbyattractions");
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/apiuser/nearbyattractions");
 
   var response = await http
       .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
@@ -23,7 +24,8 @@ Future<List<LocationDataInit>> fetchNearbyAttractions() async {
 //--------------------------------------------------------------------------------------
 
 Future<List<LocationDataInit>> fetchNearbyRestaurants() async {
-  var url = Uri.parse("http://localhost:3000/apiuser/nearbyrestaurants");
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/apiuser/nearbyrestaurants");
 
   var response = await http
       .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
@@ -41,7 +43,8 @@ Future<List<LocationDataInit>> fetchNearbyRestaurants() async {
 
 //---------------------------------------------------------------------------------------
 Future<List<LocationDataInit>> fetchNearbyAccommodations() async {
-  var url = Uri.parse("http://localhost:3000/apiuser/nearbyaccommodations");
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/apiuser/nearbyaccommodations");
 
   var response = await http
       .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
@@ -60,7 +63,8 @@ Future<List<LocationDataInit>> fetchNearbyAccommodations() async {
 //---------------------------------------------------------------------------------------
 //nearby locations with good ratings
 Future<List<LocationDataInit>> fetchSuggestions() async {
-  var url = Uri.parse("http://localhost:3000/apiuser/suggestedlocations");
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/apiuser/suggestedlocations");
 
   var response = await http
       .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
@@ -79,7 +83,8 @@ Future<List<LocationDataInit>> fetchSuggestions() async {
 //---------------------------------------------------------------------------------------
 //fetch attractions by user preference
 Future<List<LocationDataInit>> fetchAttractionsByCategory() async {
-  var url = Uri.parse("http://localhost:3000/apiuser/locationsbycategory");
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/apiuser/locationsbycategory");
 
   var response = await http.post(url, body: {
     "latitude": "6.053519",
@@ -102,7 +107,8 @@ Future<List<LocationDataInit>> fetchAttractionsByCategory() async {
 //---------------------------------------------------------------------------------------------------
 //get travel mode between two locations
 Future<String> fetchTravelmode() async {
-  var url = Uri.parse("http://localhost:3000/apiuser/travelmode");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/apiuser/travelmode");
   var response = await http.post(url, body: {
     "originlatitude": "40.6655101",
     "originlongitude": "-73.89188969999998",
@@ -121,7 +127,8 @@ Future<String> fetchTravelmode() async {
 //----------------------------------------------------------------------------------------------
 //get taxi fare between two locations
 Future<double> fetchTaxiFare() async {
-  var url = Uri.parse("http://localhost:3000/apiuser/gettaxifare");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/apiuser/gettaxifare");
   var response = await http.post(url, body: {
     "originlatitude": "40.6655101",
     "originlongitude": "-73.89188969999998",
@@ -143,7 +150,7 @@ Future fetchDetailsofLocations(String placeId) async {
   print("connected to the server");
   print(placeId);
 
-  var url = Uri.parse("http://localhost:3000/apiuser/details");
+  var url = Uri.parse("https://septravelplanner.herokuapp.com/apiuser/details");
 
   var response = await http.post(url, body: {"place_id": placeId});
   // print(response.body);
@@ -160,7 +167,8 @@ Future fetchDetailsofLocations(String placeId) async {
 }
 
 Future<List<LocationDataInit>> fetchLocations(String? name) async {
-  var url = Uri.parse("http://localhost:3000/apiuser/locations");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/apiuser/locations");
 
   var response = await http.post(url, body: {"place": name});
   if (response.statusCode == 200) {

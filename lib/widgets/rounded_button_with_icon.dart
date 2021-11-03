@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LoginButton extends StatelessWidget {
   final String text;
   final String imagePath;
-  final Function? onPressed;
+  final Function onPressed;
   final Color color;
   final Color fontColor;
   final Color borderColor;
@@ -11,7 +11,7 @@ class LoginButton extends StatelessWidget {
   const LoginButton(
       {required this.text,
       required this.imagePath,
-      this.onPressed,
+      required this.onPressed,
       required this.color,
       this.fontColor = Colors.white,
       this.borderColor = Colors.transparent});
@@ -43,7 +43,7 @@ class LoginButton extends StatelessWidget {
             primary: Colors.white,
             textStyle: const TextStyle(fontSize: 18),
           ),
-          onPressed: () => onPressed!(),
+          onPressed: () => onPressed(),
           child: SizedBox(
             child: Row(
               children: [

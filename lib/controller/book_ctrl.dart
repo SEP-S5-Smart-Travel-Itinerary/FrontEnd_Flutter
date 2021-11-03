@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 
 Future<List<BookDataInit>> fetchBookmarks() async {
   //print("gajk");
-  var url = Uri.parse("http://localhost:3000/user/getbookmarks");
+  var url =
+      Uri.parse("https://septravelplanner.herokuapp.com/user/getbookmarks");
 
   var response = await http.post(url, body: {"email": "malithi_abc@gmail.com"});
   print("bookmarked locations");
@@ -19,7 +20,7 @@ Future<List<BookDataInit>> fetchBookmarks() async {
 
 Future addBookmark(String location_id) async {
   final response = await http.post(
-    Uri.parse('http://localhost:3000/user/addbookmark'),
+    Uri.parse('https://septravelplanner.herokuapp.com/user/addbookmark'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
