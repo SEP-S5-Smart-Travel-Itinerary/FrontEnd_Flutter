@@ -53,7 +53,7 @@ Future<PlanDataInit> createItin(
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode({
-      "members": ["malithi_abc@gmail.com"],
+      "members": [globals.currentUserEmail],
       "plan_id": globals.createplan_id,
     }),
   );
@@ -127,7 +127,7 @@ Future<List<PlanDetailInit>> getPalns() async {
       Uri.parse("https://septravelplanner.herokuapp.com/itinerary/getallitin");
 
   var response =
-      await http.post(url, body: {"user_id": "malithi_abc@gmail.com"});
+      await http.post(url, body: {"user_id": globals.currentUserEmail});
   //print(response.body);
   List jsonResponse = json.decode(response.body)["message"];
   //print(jsonResponse);

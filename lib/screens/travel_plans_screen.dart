@@ -30,7 +30,7 @@ class _TravelPlanState extends State<TravelPlan> {
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.hasData) {
                 List<PlanDetailInit> locList = snapshot.data;
-                print(locList[0].plan_id);
+                //print(locList[0].plan_id);
                 return ListView.builder(
                   physics: ClampingScrollPhysics(),
                   shrinkWrap: true,
