@@ -8,15 +8,14 @@ import 'package:http/http.dart' as http;
 
 class AddReviews extends StatefulWidget {
   final String loc_id;
-  const AddReviews(
-      {required this.loc_id});
+  const AddReviews({required this.loc_id});
   @override
   _AddReviewsState createState() => _AddReviewsState();
 }
 
 class _AddReviewsState extends State<AddReviews> {
   List<String> _friends = [];
-  String _title="anonymous";
+  String _title = "anonymous";
   String? _description;
 
   @override
@@ -66,14 +65,14 @@ class _AddReviewsState extends State<AddReviews> {
                 onChanged: (String? value) {
                   setState(() {
                     this._title = value!;
-                   
                   });
-                   
                 },
-                
+
                 // validator: _validateName,
               ),
-              SizedBox(height: 25.0,),
+              SizedBox(
+                height: 25.0,
+              ),
 
               TextFormField(
                 cursorColor: PrimaryColor,
@@ -101,11 +100,9 @@ class _AddReviewsState extends State<AddReviews> {
                 onChanged: (String? value) {
                   setState(() {
                     this._description = value;
-                   
                   });
-                   
                 },
-                
+
                 // validator: _validateName,
               ),
 
@@ -115,8 +112,7 @@ class _AddReviewsState extends State<AddReviews> {
 
               ElevatedButton(
                 onPressed: () {
-                 addreview(_title,_description!,widget.loc_id); 
-                    
+                  addreview(_title, _description!, widget.loc_id);
                 },
                 child: Container(
                     height: 50,
@@ -129,21 +125,22 @@ class _AddReviewsState extends State<AddReviews> {
                   primary: PrimaryColor,
                 ),
               ),
-              
             ],
           ),
         ));
   }
-  addreview(String title,String description,String location_id) async {
-    var url = Uri.parse("http://localhost:3000/review/addreview");
 
-  var response = await http
-      .post(url, body: {"title": title,"description": description,"loc_id": location_id});
+  addreview(String title, String description, String location_id) async {
+    var url =
+        Uri.parse("https://septravelplanner.herokuapp.com/review/addreview");
+
+    var response = await http.post(url, body: {
+      "title": title,
+      "description": description,
+      "loc_id": location_id
+    });
     print("sucess called");
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
-      
-  
   }
-  
 }

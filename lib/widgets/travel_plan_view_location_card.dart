@@ -65,7 +65,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                       ],
                     ),
                     Row(
-                      children: [Text(start),Text(" to "),Text(end)],
+                      children: [Text(start), Text(" to "), Text(end)],
                     ),
                     Row(
                       children: [
@@ -74,17 +74,18 @@ class TravelPlanLocationCard extends StatelessWidget {
                           width: 10,
                         ),
                         TextButton(
-                  onPressed: () {
-                    RemoveLocation(locationId).then((value) =>
-                     Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => TravelPlanView()))
-                     );
-                  },
-                  child: Text(
-                    'Delete location',
-                    style: TextStyle(color: Colors.red),
-                  )),
-                  
+                            onPressed: () {
+                              RemoveLocation(locationId).then((value) =>
+                                  Navigator.push(
+                                      context,
+                                      new MaterialPageRoute(
+                                          builder: (context) =>
+                                              TravelPlanView())));
+                            },
+                            child: Text(
+                              'Delete location',
+                              style: TextStyle(color: Colors.red),
+                            )),
                       ],
                     )
                   ],
@@ -123,22 +124,24 @@ class TravelPlanLocationCard extends StatelessWidget {
                       topRight: Radius.circular(5),
                       bottomRight: Radius.circular(5)),
                   image: DecorationImage(
-                      image: NetworkImage('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'), fit: BoxFit.cover)),
+                      image: NetworkImage(
+                          'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
+                      fit: BoxFit.cover)),
             ),
           ],
         ),
       ),
     );
   }
-  RemoveLocation(String value) async {
-    var url = Uri.parse("http://localhost:3000/itinerary/removelocation");
 
-  var response = await http
-      .post(url, body: {"location_id": value,"plan_id":globals.createplan_id});
+  RemoveLocation(String value) async {
+    var url = Uri.parse(
+        "https://septravelplanner.herokuapp.com/itinerary/removelocation");
+
+    var response = await http.post(url,
+        body: {"location_id": value, "plan_id": globals.createplan_id});
     print("sucess called");
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
-    
-  
   }
 }

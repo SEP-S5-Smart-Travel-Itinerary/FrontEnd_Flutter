@@ -91,7 +91,7 @@ class _SearchScreenForPlanState extends State<SearchScreenForPlan> {
   }
 
   void autoCompleteSearch(String value) async {
-    var url = Uri.parse("http://localhost:3000/apiuser/auto");
+    var url = Uri.parse("https://septravelplanner.herokuapp.com/apiuser/auto");
 
     var response = await http.post(url, body: {"place": value});
     print("sucess called");
