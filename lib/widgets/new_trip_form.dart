@@ -15,6 +15,7 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
   int? _budget;
   DateTime? _startDate;
   DateTime? _endDate;
+  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,64 +27,26 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const SizedBox(height: 30.0),
-              // Name texfield
-              Text(
-                'Name the tour',
-                style: TextStyle(color: PrimaryColor),
-              ),
-              SizedBox(height: 5),
-              TextFormField(
-                cursorColor: PrimaryColor,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.trip_origin),
-                  filled: true,
-                  fillColor: SecondayColorBlue,
-                  labelText: 'Trip Name',
-                  labelStyle: TextStyle(color: PrimaryColor),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
+          child: Form(
+            key: _formkey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                const SizedBox(height: 30.0),
+                // Name texfield
+                Text(
+                  'Name the tour',
+                  style: TextStyle(color: PrimaryColor),
                 ),
-                onChanged: (String? value) {
-                  setState(() {
-                    this._name = value;
-                  });
-                },
-              ),
-
-              const SizedBox(height: 24.0),
-
-              // date range
-              Text(
-                'Select the dates of the trip',
-                style: TextStyle(color: PrimaryColor),
-              ),
-
-              DateRangeField(
-                  firstDate: DateTime(2020),
-                  enabled: true,
-                  initialValue: DateTimeRange(
-                      start: DateTime.now(),
-                      end: DateTime.now().add(Duration(days: 5))),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.date_range),
+                SizedBox(height: 5),
+                TextFormField(
+                  cursorColor: PrimaryColor,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.trip_origin),
                     filled: true,
                     fillColor: SecondayColorBlue,
-                    labelText: 'Trip Dates',
+                    labelText: 'Trip Name',
                     labelStyle: TextStyle(color: PrimaryColor),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
@@ -98,127 +61,150 @@ class _FullScreenDialogState extends State<FullScreenDialog> {
                       borderSide: BorderSide(color: PrimaryColor, width: 2),
                     ),
                   ),
-                  validator: (value) {
-                    if (value!.start.isBefore(DateTime.now())) {
-                      return 'Please enter a later start date';
+                  validator: (_val) {
+                    if (_val == "") {
+                      return "Name cannot be empty";
+                    } else {
+                      return null;
                     }
-                    return null;
                   },
-                  onChanged: (value) {
+                  onChanged: (String? value) {
                     setState(() {
-                      _startDate = value!.start;
-                      _endDate = value.end;
+                      this._name = value;
                     });
-                  }),
+                  },
+                ),
 
-              const SizedBox(height: 15.0),
+                const SizedBox(height: 24.0),
 
-              Text(
-                'Enter the travel budget',
-                style: TextStyle(color: PrimaryColor),
-              ),
-              SizedBox(height: 5),
+                // date range
+                Text(
+                  'Select the dates of the trip',
+                  style: TextStyle(color: PrimaryColor),
+                ),
 
-              // Budget texfield
-              TextFormField(
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                cursorColor: PrimaryColor,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-                  filled: true,
-                  fillColor: SecondayColorBlue,
-                  labelText: 'Travel Budget (optional)',
-                  labelStyle: TextStyle(color: PrimaryColor),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
+                DateRangeField(
+                    firstDate: DateTime(2020),
+                    enabled: true,
+                    initialValue: DateTimeRange(
+                        start: DateTime.now(),
+                        end: DateTime.now().add(Duration(days: 5))),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.date_range),
+                      filled: true,
+                      fillColor: SecondayColorBlue,
+                      labelText: 'Trip Dates',
+                      labelStyle: TextStyle(color: PrimaryColor),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        borderSide: BorderSide(color: PrimaryColor, width: 2),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        borderSide: BorderSide(color: PrimaryColor, width: 2),
+                      ),
                     ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
+                    validator: (value) {
+                      if (value!.start.isBefore(DateTime.now())) {
+                        return 'Please enter a later start date';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _startDate = value!.start;
+                        _endDate = value.end;
+                      });
+                    }),
+
+                const SizedBox(height: 15.0),
+
+                Text(
+                  'Enter the travel budget',
+                  style: TextStyle(color: PrimaryColor),
+                ),
+                SizedBox(height: 5),
+
+                // Budget texfield
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  cursorColor: PrimaryColor,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.account_balance_wallet_outlined),
+                    filled: true,
+                    fillColor: SecondayColorBlue,
+                    labelText: 'Travel Budget',
+                    labelStyle: TextStyle(color: PrimaryColor),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      borderSide: BorderSide(color: PrimaryColor, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      borderSide: BorderSide(color: PrimaryColor, width: 2),
+                    ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
+                  validator: (_val) {
+                    if (_val == "") {
+                      return "Travel budget cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (String value) {
+                    setState(() {
+                      this._budget = int.parse(value);
+                    });
+                  },
+                  // validator: _validateName,
+                ),
+
+                SizedBox(
+                  height: 45,
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formkey.currentState!.validate()) {
+                      createItin(_name, _budget, _startDate, _endDate);
+                      Navigator.pushReplacement(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) =>
+                                  AddFriendsDialog(text: "")));
+                    } else {
+                      print("not ok");
+                    }
+
+                    // print(_name);
+                    // print(_budget);
+                    // print(_startDate);
+                    // print(_endDate);
+                  },
+                  child: Container(
+                      height: 50,
+                      child: Center(
+                          child: const Text(
+                        'Start Planning',
+                        style: TextStyle(fontSize: 18),
+                      ))),
+                  style: ElevatedButton.styleFrom(
+                    primary: PrimaryColor,
                   ),
                 ),
-                onChanged: (String value) {
-                  setState(() {
-                    this._budget = int.parse(value);
-                  });
-                },
-                // validator: _validateName,
-              ),
-
-              const SizedBox(height: 24.0),
-
-              Text(
-                'Add Countries',
-                style: TextStyle(color: PrimaryColor),
-              ),
-              SizedBox(height: 5),
-
-              // Add countries
-              TextFormField(
-                cursorColor: PrimaryColor,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-                  filled: true,
-                  fillColor: SecondayColorBlue,
-                  labelText: 'Add Countries',
-                  labelStyle: TextStyle(color: PrimaryColor),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
-                ),
-                onChanged: (String? value) {
-                  // this._budget = value;
-                  // print('name=$_budget');
-                },
-                // validator: _validateName,
-              ),
-
-              SizedBox(
-                height: 24,
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  createItin(_name, _budget, _startDate, _endDate);
-
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => AddFriendsDialog(text: "")));
-                  // print(_name);
-                  // print(_budget);
-                  // print(_startDate);
-                  // print(_endDate);
-                },
-                child: Container(
-                    height: 50,
-                    child: Center(
-                        child: const Text(
-                      'Start Planning',
-                      style: TextStyle(fontSize: 18),
-                    ))),
-                style: ElevatedButton.styleFrom(
-                  primary: PrimaryColor,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ));
   }
