@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend_flutter/models/flight_det.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -200,7 +201,14 @@ class _FlightDetailsState extends State<FlightDetails> {
               ElevatedButton(
                 onPressed: () async {
                   if (_origin == _destination) {
-                    print("same");
+                    Fluttertoast.showToast(
+                        msg: "Origin & Destination are same",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: PrimaryColor,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
                     return;
                   } else {
                     var result = await getFlightRates(_origin, _destination,
@@ -235,12 +243,18 @@ class _FlightDetailsState extends State<FlightDetails> {
               ),
 
               Container(
-                color: Colors.red,
                 padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(color: PrimaryColor),
+                  color: SecondayColorBlue,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Flight Rates'),
+                    Text(
+                      'Flight Rate',
+                      style: TextStyle(color: SecondaryColorDarkGrey),
+                    ),
                     Text(_amount + " " + _currency)
                   ],
                 ),
