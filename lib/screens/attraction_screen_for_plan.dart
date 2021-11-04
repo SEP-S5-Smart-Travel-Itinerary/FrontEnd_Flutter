@@ -190,14 +190,13 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
               ListTile(
                 title: const Text('Select travel media'),
                 trailing: DropdownButton<String>(
-                  value: _media,
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      setState(() => _media = newValue);
-                    }
-                  },
-                  items: this._dropDownMenuItems,
-                ),
+                    value: _media,
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() => _media = newValue);
+                      }
+                    },
+                    items: this._dropDownMenuItems),
               ),
 
               const SizedBox(height: 24.0),
@@ -376,6 +375,9 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
       "start": startTime,
       "end": endTime
     });
+
+    print(globals.Locations);
+    print(globals.Locations.length);
 
     var url2 = Uri.parse(
         "https://septravelplanner.herokuapp.com/itinerary/addtravelmedia");
