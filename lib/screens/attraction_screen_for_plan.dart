@@ -7,6 +7,7 @@ import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:frontend_flutter/screens/places_screen3.dart';
 import 'package:frontend_flutter/screens/travel_plan_view.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
+import 'package:frontend_flutter/widgets/rounded_button_without_icon.dart';
 import 'package:frontend_flutter/widgets/upper_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
@@ -15,6 +16,7 @@ import '../controller/globals.dart' as globals;
 import 'package:http/http.dart' as http;
 
 import 'package:time_range/time_range.dart';
+import '../services/local_notification_manager.dart';
 
 class AttractionForPlan extends StatefulWidget {
   final String locationId;
@@ -39,6 +41,25 @@ class AttractionForPlan extends StatefulWidget {
 class _AttractionForPlanState extends State<AttractionForPlan> {
   TimeOfDay? startTime;
   TimeOfDay? endTime;
+
+  String date = "";
+
+  DateTime selectedDate = DateTime.now();
+
+  NotificationService _notifications = NotificationService();
+
+  _selectDate(BuildContext context) async {
+    final DateTime? selected = await showDatePicker(
+      context: context,
+      initialDate: globals.StartDate,
+      firstDate: globals.StartDate,
+      lastDate: globals.EndDate,
+    );
+    if (selected != null && selected != selectedDate)
+      setState(() {
+        selectedDate = selected;
+      });
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +110,17 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                     style: TextStyle(color: Colors.black),
                   )),
 
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: RoundedButton(
+                  text: "Pick a date",
+                  color: PrimaryColor,
+                  onPressed: () {
+                    _selectDate(context);
+                  },
+                ),
+              ),
+
               TimeRange(
                   fromTitle: Text(
                     'From',
@@ -122,8 +154,12 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
               ElevatedButton(
                 onPressed: () {
                   if (startTime != null && endTime != null) {
-                    addLocations(widget.locationId, globals.createplan_id,
-                            startTime.toString(), endTime.toString())
+                    addLocations(
+                            widget.locationId,
+                            globals.createplan_id,
+                            startTime.toString(),
+                            endTime.toString(),
+                            selectedDate)
                         .then((value) => Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -261,9 +297,22 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
   }
 
   addLocations(String? location_id, String? plan_id, String startTime,
-      String endTime) async {
-    print("start time " + startTime);
+      String endTime, DateTime selectedDate) async {
+    print("start time " + startTime.substring(10, 15));
     print("end time " + endTime);
+    print("start date " + selectedDate.toString());
+
+    var starttime = startTime.substring(10, 15);
+    var starthour = starttime.substring(0, 2);
+    var startmin = starttime.substring(3, 5);
+
+    var date2 = new DateTime(selectedDate.year, selectedDate.month,
+        selectedDate.day, int.parse(starthour), int.parse(startmin) - 30);
+
+    _notifications.scheduleNotifications(
+        title: "Visit next location",
+        body: "visit ${widget.name} in 30 minutes",
+        time: date2);
 
     var url = Uri.parse(
         "https://septravelplanner.herokuapp.com/itinerary/addlocation");
