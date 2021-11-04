@@ -260,6 +260,8 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                               locationId: list[index].place_id,
                               start: list[index].startTime,
                               end: list[index].endTime,
+                              lat: list[index].latitude,
+                              lon: list[index].longitude,
                               imageUrl: list[index].imagelink[0]
                                   ["photo_reference"],
                             ),
