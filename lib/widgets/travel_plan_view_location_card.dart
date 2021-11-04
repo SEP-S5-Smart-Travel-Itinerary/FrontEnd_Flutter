@@ -33,18 +33,17 @@ class TravelPlanLocationCard extends StatefulWidget {
       required this.lat,
       required this.lon,
       required this.rating});
-      @override
+  @override
   _TravelPlanLocationCardState createState() => _TravelPlanLocationCardState();
 }
 
 class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
-  String? weather = "colud";
+  String? weather = "cloud";
   @override
-    void initState() {
+  void initState() {
     super.initState();
-   GetWeather(widget.lat,widget.lon);
-  } 
-
+    GetWeather(widget.lat, widget.lon);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +51,12 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
       elevation: 5,
       child: Container(
         color: SecondayColorBlue,
-        height: 100,
+        height: 120,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width * 0.6,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(15, 5, 0, 5),
@@ -79,7 +78,7 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
                           child: Text(
                             widget.title,
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         )
                       ],
@@ -93,7 +92,7 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
                     ),
                     Row(
                       children: [
-                        Text("current weather : "),
+                        Expanded(child: Text("current weather : ")),
                         Text(weather!)
                       ],
                     ),
@@ -106,8 +105,8 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
                           ),
                           TextButton(
                               onPressed: () {
-                                RemoveLocation(widget.locationId).then((value) =>
-                                    Navigator.push(
+                                RemoveLocation(widget.locationId).then(
+                                    (value) => Navigator.push(
                                         context,
                                         new MaterialPageRoute(
                                             builder: (context) =>
@@ -149,7 +148,7 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
             //   ),
             // ),
             Container(
-              height: 100,
+              height: 120,
               width: MediaQuery.of(context).size.width * 0.2,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -177,17 +176,18 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
     // print(jsonResponse);
   }
 
-  GetWeather(String latt,String lonn) async {
-    var url = Uri.parse(
-        "https://septravelplanner.herokuapp.com/apiuser/weather");
+  GetWeather(String latt, String lonn) async {
+    var url =
+        Uri.parse("https://septravelplanner.herokuapp.com/apiuser/weather");
 
-    var response = await http.post(url,
-        body: {"latitude": latt, "longitude": lonn});
-        var jsres = json.decode(response.body)["data"];
-        //weather=jsres[0]["description"];
-        setState(() {
-        weather = jsres[0]["description"];;
-      });
+    var response =
+        await http.post(url, body: {"latitude": latt, "longitude": lonn});
+    var jsres = json.decode(response.body)["data"];
+    //weather=jsres[0]["description"];
+    setState(() {
+      weather = jsres[0]["description"];
+      ;
+    });
     print(weather);
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
