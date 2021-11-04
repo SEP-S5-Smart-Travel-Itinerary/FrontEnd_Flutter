@@ -77,7 +77,7 @@ class _SearchScreenForPlanState extends State<SearchScreenForPlan> {
                     ),
                     title: Text(predictions[index]),
                     onTap: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context, planPlaceScreen2(title: predictions[index]));
                     },
                   );

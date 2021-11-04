@@ -33,7 +33,7 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
         print("widget value" + widget.locationId);
         LocationData a = await fetchDetailsofLocations(widget.locationId);
         print("a received succesfully");
-        Navigator.push(
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => AttractionForPlan(
