@@ -73,12 +73,14 @@ class _LocationCardforPlanState extends State<LocationCardforPlan> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        widget.title,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: PrimaryColor),
+                      Expanded(
+                        child: Text(
+                          widget.title,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: PrimaryColor),
+                        ),
                       ),
                       SizedBox(
                         height: 2,
