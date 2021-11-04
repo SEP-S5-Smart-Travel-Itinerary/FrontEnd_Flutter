@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/screens/travel_plan_view.dart';
@@ -7,7 +9,7 @@ import 'package:frontend_flutter/widgets/color_badge.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend_flutter/controller/globals.dart' as globals;
 
-class TravelPlanLocationCard extends StatelessWidget {
+class TravelPlanLocationCard extends StatefulWidget {
   final String imageUrl;
   final String title;
   final String location;
@@ -16,6 +18,8 @@ class TravelPlanLocationCard extends StatelessWidget {
   final int id;
   final String start;
   final String end;
+  final String lat;
+  final String lon;
 
   const TravelPlanLocationCard(
       {this.imageUrl =
@@ -26,7 +30,21 @@ class TravelPlanLocationCard extends StatelessWidget {
       required this.id,
       required this.start,
       required this.end,
+      required this.lat,
+      required this.lon,
       required this.rating});
+      @override
+  _TravelPlanLocationCardState createState() => _TravelPlanLocationCardState();
+}
+
+class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
+  String? weather = "colud";
+  @override
+    void initState() {
+    super.initState();
+   GetWeather(widget.lat,widget.lon);
+  } 
+
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +68,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          id.toString(),
+                          widget.id.toString(),
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
@@ -59,7 +77,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            title,
+                            widget.title,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
@@ -68,21 +86,27 @@ class TravelPlanLocationCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text(start.substring(10, 15)),
+                        Text(widget.start.substring(10, 15)),
                         Text(" to "),
-                        Text(end.substring(10, 15))
+                        Text(widget.end.substring(10, 15))
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text("current weather : "),
+                        Text(weather!)
                       ],
                     ),
                     Expanded(
                       child: Row(
                         children: [
-                          LocationBadge(bannerType: location),
+                          LocationBadge(bannerType: widget.location),
                           SizedBox(
                             width: 10,
                           ),
                           TextButton(
                               onPressed: () {
-                                RemoveLocation(locationId).then((value) =>
+                                RemoveLocation(widget.locationId).then((value) =>
                                     Navigator.push(
                                         context,
                                         new MaterialPageRoute(
@@ -133,7 +157,7 @@ class TravelPlanLocationCard extends StatelessWidget {
                       bottomRight: Radius.circular(5)),
                   image: DecorationImage(
                       image: NetworkImage(
-                          'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
+                          'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${widget.imageUrl}&key=AIzaSyB06HS2ON1-5EI_JRK4_xlDM4McoEs-aO4'),
                       fit: BoxFit.cover)),
             ),
           ],
@@ -149,6 +173,22 @@ class TravelPlanLocationCard extends StatelessWidget {
     var response = await http.post(url,
         body: {"location_id": value, "plan_id": globals.createplan_id});
     print("sucess called");
+    //List jsonResponse = json.decode(response.body)["data"];
+    // print(jsonResponse);
+  }
+
+  GetWeather(String latt,String lonn) async {
+    var url = Uri.parse(
+        "https://septravelplanner.herokuapp.com/apiuser/weather");
+
+    var response = await http.post(url,
+        body: {"latitude": latt, "longitude": lonn});
+        var jsres = json.decode(response.body)["data"];
+        //weather=jsres[0]["description"];
+        setState(() {
+        weather = jsres[0]["description"];;
+      });
+    print(weather);
     //List jsonResponse = json.decode(response.body)["data"];
     // print(jsonResponse);
   }
