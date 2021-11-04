@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/plan_controller.dart';
 import 'package:frontend_flutter/models/book_init.dart';
@@ -6,6 +7,9 @@ import 'package:frontend_flutter/models/plann_data.dart';
 import 'package:frontend_flutter/models/travel_plan.dart';
 import 'package:frontend_flutter/screens/home_screen.dart';
 import 'package:frontend_flutter/widgets/add_friends_form.dart';
+import 'package:frontend_flutter/widgets/change_plan_budget.dart';
+import 'package:frontend_flutter/widgets/change_plan_name.dart';
+import 'package:frontend_flutter/widgets/change_travel_dates.dart';
 import '../main_screen.dart';
 import '../widgets/travel_plan_view_location_card.dart';
 import '../widgets/travel_plan_transport_card.dart';
@@ -160,7 +164,7 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                         children: [
                           TextButton(
                               onPressed: () {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                     context,
                                     new MaterialPageRoute(
                                         builder: (context) =>
@@ -301,34 +305,26 @@ Container _buildBottomSheet(BuildContext context) {
               text: "Change Plan Name",
               color: PrimaryColor,
               height: 150,
-              onPressed: () => showModalBottomSheet(
-                  // isScrollControlled: true,
-                  context: context,
-                  builder: (ctx) => _buildBottomSheetChangeName(ctx)),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => ChangePlanName(text: "")));
+              },
             ),
             SizedBox(
               height: 20,
             ),
-            // RoundedButton(
-            //   text: "Edit Travel Locations",
-            //   color: PrimaryColor,
-            //   height: 150,
-            //   onPressed: () => showModalBottomSheet(
-            //       // isScrollControlled: true,
-            //       context: context,
-            //       builder: (ctx) => _buildBottomSheetChangeName(ctx)),
-            // ),
-            // SizedBox(
-            //   height: 20,
-            // ),
             RoundedButton(
               text: "Edit Travel Budget",
               color: PrimaryColor,
               height: 150,
-              onPressed: () => showModalBottomSheet(
-                  // isScrollControlled: true,
-                  context: context,
-                  builder: (ctx) => _buildBottomSheetChangeBudget(ctx)),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => ChangePlanBudget(text: "")));
+              },
             ),
             SizedBox(
               height: 20,
@@ -337,10 +333,12 @@ Container _buildBottomSheet(BuildContext context) {
               text: "Edit Travel Dates",
               color: PrimaryColor,
               height: 150,
-              onPressed: () => showModalBottomSheet(
-                  // isScrollControlled: true,
-                  context: context,
-                  builder: (ctx) => _buildBottomSheetChangeDates(ctx)),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => ChangePlanDates(text: "")));
+              },
             ),
             SizedBox(
               height: 20,
@@ -353,118 +351,6 @@ Container _buildBottomSheet(BuildContext context) {
                   context: context,
                   builder: (ctx) => _buildBottomSheetDeletePlan(ctx)),
             )
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-//change plan name
-Container _buildBottomSheetChangeName(BuildContext context) {
-  String? _name;
-  return Container(
-    // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
-    decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(width: 5, color: PrimaryColor),
-        ),
-        color: SecondayColorBlue),
-    child: Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              initialValue: '',
-              // controller: this._emailController,
-              decoration: InputDecoration(
-                labelText: 'Plan Name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                ),
-              ),
-              onChanged: (String? value) {
-                _name = value;
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            RoundedButton(
-              text: "Change Plan Name",
-              color: PrimaryColor,
-              height: 150,
-              onPressed: () {
-                changeName(_name, globals.createplan_id).then((value) =>
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TravelPlanView())));
-                //           Navigator.push(
-                // context, new MaterialPageRoute(builder: (context) => TravelPlanView()));
-                // print(_name);
-                // print(_budget);
-                // print(_startDate);
-                // print(_endDate);
-              },
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-// Edit travel budget
-Container _buildBottomSheetChangeBudget(BuildContext context) {
-  int? _budget;
-  return Container(
-    // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
-    decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(width: 5, color: PrimaryColor),
-        ),
-        color: SecondayColorBlue),
-    child: Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              initialValue: '',
-              // controller: this._emailController,
-              decoration: InputDecoration(
-                labelText: 'Travel Budget',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                ),
-              ),
-              onChanged: (String value) {
-                _budget = int.parse(value);
-              },
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            RoundedButton(
-              text: "Change Travel Budget",
-              color: PrimaryColor,
-              height: 150,
-              onPressed: () {
-                print(_budget);
-                editBudget(_budget, globals.createplan_id).then((value) =>
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TravelPlanView())));
-                //
-              },
-            ),
           ],
         ),
       ),
@@ -503,7 +389,7 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               height: 150,
               onPressed: () {
                 deletePlan(globals.createplan_id).then((value) =>
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => TravelPlanView())));
@@ -519,86 +405,6 @@ Container _buildBottomSheetDeletePlan(BuildContext context) {
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => TravelPlanView()));
-              },
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-// Edit travel dates
-Container _buildBottomSheetChangeDates(BuildContext context) {
-  DateTime? _startDate;
-  DateTime? _endDate;
-  return Container(
-    height: 350,
-    // padding: const EdgeInsets.fromLTRB(8, top, right, bottom)
-    decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(width: 5, color: PrimaryColor),
-        ),
-        color: SecondayColorBlue),
-    child: Center(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(40, 35, 40, 50),
-        child: Column(
-          children: <Widget>[
-            DateRangeField(
-                firstDate: DateTime(2020),
-                enabled: true,
-                initialValue: DateTimeRange(
-                    start: DateTime.now(),
-                    end: DateTime.now().add(Duration(days: 5))),
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.date_range),
-                  filled: true,
-                  fillColor: SecondayColorBlue,
-                  labelText: 'Trip Dates',
-                  labelStyle: TextStyle(color: PrimaryColor),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
-                ),
-                validator: (value) {
-                  if (value!.start.isBefore(DateTime.now())) {
-                    return 'Please enter a later start date';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  _startDate = value!.start;
-                  _endDate = value.end;
-                }
-                // onSaved: (value) {
-                //   // setState(() {
-                //   //   myDateRange = value!;
-                //   // });
-                // }
-                ),
-            SizedBox(
-              height: 20,
-            ),
-            RoundedButton(
-              text: "Edit Travel Dates",
-              color: PrimaryColor,
-              height: 150,
-              onPressed: () {
-                changeDates(globals.createplan_id, _startDate, _endDate).then(
-                    (value) => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TravelPlanView())));
               },
             ),
           ],
