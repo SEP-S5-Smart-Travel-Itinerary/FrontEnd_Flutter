@@ -227,7 +227,21 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                     SizedBox(
                       height: 10,
                     ),
+
+                    // travel plan add location
                     TravelPlanAddLocation(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Divider(),
+
+                    // travel plan travel locations
+
+                    Text(
+                      'Travelling Locations',
+                      style: TextStyle(color: PrimaryColor),
+                    ),
+
                     FutureBuilder(
                       future: fetchPlanLocationList(),
                       builder: (BuildContext context,
@@ -274,11 +288,56 @@ class _TravelPlanViewState extends State<TravelPlanView> {
                         return CircularProgressIndicator();
                       },
                     ),
-                    TravelPlanTransportCard(
-                      time: "5",
-                      media: "Car",
-                      distance: 100,
+
+                    SizedBox(
+                      height: 20,
                     ),
+                    Divider(),
+
+                    // travel plan transport details
+                    Text(
+                      'Transportation Mode',
+                      style: TextStyle(color: PrimaryColor),
+                    ),
+
+                    FutureBuilder(
+                      future: fetchTransportModes(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.hasData) {
+                          List loc_list = snapshot.data;
+                          List list2 = [];
+                          for (var i = 1; i < loc_list.length; i++) {
+                            list2.add(loc_list[i]);
+                          }
+                          print("tp list " + list2.toString());
+
+                          return ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: list2.length,
+                            padding: EdgeInsets.only(left: 10, top: 15),
+                            itemBuilder: (BuildContext context, int index) =>
+                                TravelPlanTransportCard(
+                              starting: index + 1,
+                              ending: index + 2,
+                              mode: list2[index],
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          print(snapshot.error);
+                          //return Text("$snapshot.error");
+                          return Text("No Transport Modes");
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
+
+                    // TravelPlanTransportCard(
+                    //   starting: "1",
+                    //   ending: "2",
+                    //   mode: "Walk",
+                    // ),
                   ],
                 ),
               )

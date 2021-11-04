@@ -1,15 +1,8 @@
 import 'dart:convert';
-// import 'dart:html';
-import 'package:flutter/material.dart';
-import 'package:frontend_flutter/models/book_init.dart';
 import 'package:frontend_flutter/models/location_data.dart';
-import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:frontend_flutter/models/plandetail_init.dart';
 import 'package:frontend_flutter/models/plann_data.dart';
-import 'package:frontend_flutter/widgets/add_friends_form.dart';
-import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:http/http.dart' as http;
-
 import '../models/plan_data_init.dart';
 import 'globals.dart' as globals;
 import 'package:intl/intl.dart';
@@ -263,4 +256,16 @@ Future<List<PlannDataInit>> fetchPlanLocationList() async {
   return jsonResponse
       .map((location) => new PlannDataInit.fromJson(location))
       .toList();
+}
+
+Future fetchTransportModes() async {
+  var url = Uri.parse(
+      "https://septravelplanner.herokuapp.com/itinerary/gettravelmedia");
+
+  var response = await http.post(url, body: {"plan_id": globals.createplan_id});
+  //print(response.body);
+  List jsonResponse = json.decode(response.body)["message"];
+  // print("this is transport json ");
+  // print(jsonResponse);
+  return jsonResponse;
 }
