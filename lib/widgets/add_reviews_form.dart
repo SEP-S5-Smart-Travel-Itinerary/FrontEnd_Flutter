@@ -18,6 +18,7 @@ class _AddReviewsState extends State<AddReviews> {
   List<String> _friends = [];
   String _title = "anonymous";
   String? _description;
+  GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,104 +30,119 @@ class _AddReviewsState extends State<AddReviews> {
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const SizedBox(height: 30.0),
-
-              Text(
-                'Add Reviews',
-                style: TextStyle(color: PrimaryColor),
-              ),
-              SizedBox(height: 5),
-
-              // Add countries
-              TextFormField(
-                cursorColor: PrimaryColor,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-                  filled: true,
-                  fillColor: SecondayColorBlue,
-                  labelText: 'Add your name or you can leave this as anonymous',
-                  labelStyle: TextStyle(color: PrimaryColor),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
+          child: Form(
+            key: _formkey1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                const SizedBox(height: 30.0),
+          
+                Text(
+                  'Add Reviews',
+                  style: TextStyle(color: PrimaryColor),
+                ),
+                SizedBox(height: 5),
+          
+                // Add countries
+                TextFormField(
+                  cursorColor: PrimaryColor,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.account_balance_wallet_outlined),
+                    filled: true,
+                    fillColor: SecondayColorBlue,
+                    labelText: 'Add your name or you can leave this as anonymous',
+                    labelStyle: TextStyle(color: PrimaryColor),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      borderSide: BorderSide(color: PrimaryColor, width: 2),
                     ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      borderSide: BorderSide(color: PrimaryColor, width: 2),
+                    ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
+                  
+                  onChanged: (String? value) {
+                    setState(() {
+                      this._title = value!;
+                    });
+                  },
+          
+                  // validator: _validateName,
+                ),
+                SizedBox(
+                  height: 25.0,
+                ),
+          
+                TextFormField(
+                  cursorColor: PrimaryColor,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.account_balance_wallet_outlined),
+                    filled: true,
+                    fillColor: SecondayColorBlue,
+                    labelText: 'Add Description',
+                    labelStyle: TextStyle(color: PrimaryColor),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      borderSide: BorderSide(color: PrimaryColor, width: 2),
                     ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5),
+                      ),
+                      borderSide: BorderSide(color: PrimaryColor, width: 2),
+                    ),
+                  ),
+                  validator: (_val) {
+                    if (_val == "") {
+                      return "Description cannot be empty";
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (String? value) {
+                    setState(() {
+                      this._description = value;
+                    });
+                  },
+          
+                  // validator: _validateName,
+                ),
+          
+                SizedBox(
+                  height: 30,
+                ),
+          
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formkey1.currentState!.validate()) {
+                    addreview(_title, _description!, widget.loc_id);
+                     } else {
+                      print("not ok");
+                    }
+                  },
+                  child: Container(
+                      height: 50,
+                      child: Center(
+                          child: const Text(
+                        'Add Review',
+                        style: TextStyle(fontSize: 18),
+                      ))),
+                  style: ElevatedButton.styleFrom(
+                    primary: PrimaryColor,
                   ),
                 ),
-                onChanged: (String? value) {
-                  setState(() {
-                    this._title = value!;
-                  });
-                },
-
-                // validator: _validateName,
-              ),
-              SizedBox(
-                height: 25.0,
-              ),
-
-              TextFormField(
-                cursorColor: PrimaryColor,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.account_balance_wallet_outlined),
-                  filled: true,
-                  fillColor: SecondayColorBlue,
-                  labelText: 'Add Description',
-                  labelStyle: TextStyle(color: PrimaryColor),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                    borderSide: BorderSide(color: PrimaryColor, width: 2),
-                  ),
-                ),
-                onChanged: (String? value) {
-                  setState(() {
-                    this._description = value;
-                  });
-                },
-
-                // validator: _validateName,
-              ),
-
-              SizedBox(
-                height: 30,
-              ),
-
-              ElevatedButton(
-                onPressed: () {
-                  addreview(_title, _description!, widget.loc_id);
-                },
-                child: Container(
-                    height: 50,
-                    child: Center(
-                        child: const Text(
-                      'Add Review',
-                      style: TextStyle(fontSize: 18),
-                    ))),
-                style: ElevatedButton.styleFrom(
-                  primary: PrimaryColor,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ));
   }

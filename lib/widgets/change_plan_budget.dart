@@ -90,12 +90,16 @@ class _ChangePlanBudgetState extends State<ChangePlanBudget> {
 
                 ElevatedButton(
                   onPressed: () {
+                    if (_formkey1.currentState!.validate()) {
                     print(_budget);
                     editBudget(_budget, globals.createplan_id).then((value) =>
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => TravelPlanView())));
+                                } else {
+                      print("not ok");
+                    }
                   },
                   child: Container(
                       height: 50,
