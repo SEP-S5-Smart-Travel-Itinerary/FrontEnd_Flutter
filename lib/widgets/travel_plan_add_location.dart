@@ -56,7 +56,7 @@ class _TravelPlanAddLocationState extends State<TravelPlanAddLocation> {
                       BorderSide(color: SecondaryColorDarkGrey, width: 2),
                 ),
               ),
-              onTap: () => Navigator.push(
+              onTap: () => Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => SearchScreenForPlan())),

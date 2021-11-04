@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/controller/location_controller.dart';
 import 'package:frontend_flutter/models/location_data.dart';
@@ -120,12 +121,23 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
 
               ElevatedButton(
                 onPressed: () {
-                  addLocations(widget.locationId, globals.createplan_id,
-                          startTime.toString(), endTime.toString())
-                      .then((value) => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TravelPlanView())));
+                  if (startTime != null && endTime != null) {
+                    addLocations(widget.locationId, globals.createplan_id,
+                            startTime.toString(), endTime.toString())
+                        .then((value) => Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TravelPlanView())));
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Select travel time",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: PrimaryColor,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  }
                 },
                 child: Container(
                     height: 50,

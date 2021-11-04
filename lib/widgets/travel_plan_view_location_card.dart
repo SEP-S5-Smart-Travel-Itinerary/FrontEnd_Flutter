@@ -73,26 +73,28 @@ class TravelPlanLocationCard extends StatelessWidget {
                         Text(end.substring(10, 15))
                       ],
                     ),
-                    Row(
-                      children: [
-                        LocationBadge(bannerType: location),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              RemoveLocation(locationId).then((value) =>
-                                  Navigator.push(
-                                      context,
-                                      new MaterialPageRoute(
-                                          builder: (context) =>
-                                              TravelPlanView())));
-                            },
-                            child: Text(
-                              'Delete location',
-                              style: TextStyle(color: Colors.red),
-                            )),
-                      ],
+                    Expanded(
+                      child: Row(
+                        children: [
+                          LocationBadge(bannerType: location),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                RemoveLocation(locationId).then((value) =>
+                                    Navigator.push(
+                                        context,
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                TravelPlanView())));
+                              },
+                              child: Text(
+                                'Delete location',
+                                style: TextStyle(color: Colors.red),
+                              )),
+                        ],
+                      ),
                     )
                   ],
                 ),
