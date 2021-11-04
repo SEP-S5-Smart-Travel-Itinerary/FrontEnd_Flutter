@@ -44,6 +44,22 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
 
   String date = "";
 
+  String _media = "Walk";
+
+  static const menuItems = <String>[
+    'Taxi',
+    'Walk',
+  ];
+
+  final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
+      .map(
+        (String value) => DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        ),
+      )
+      .toList();
+
   DateTime selectedDate = DateTime.now();
 
   NotificationService _notifications = NotificationService();
@@ -110,6 +126,8 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                     style: TextStyle(color: Colors.black),
                   )),
 
+              Divider(),
+
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: RoundedButton(
@@ -120,6 +138,13 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                   },
                 ),
               ),
+
+              Divider(),
+              SizedBox(
+                height: 20,
+              ),
+
+              Text("Choose Travel Time"),
 
               TimeRange(
                   fromTitle: Text(
@@ -148,8 +173,34 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                   }),
 
               SizedBox(
-                height: 10,
+                height: 15,
               ),
+
+              Divider(),
+              SizedBox(
+                height: 20,
+              ),
+
+              Text(
+                'Select preferred way to get into this location',
+                style: TextStyle(color: PrimaryColor),
+              ),
+              SizedBox(height: 5),
+
+              ListTile(
+                title: const Text('Select travel media'),
+                trailing: DropdownButton<String>(
+                  value: _media,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      setState(() => _media = newValue);
+                    }
+                  },
+                  items: this._dropDownMenuItems,
+                ),
+              ),
+
+              const SizedBox(height: 24.0),
 
               ElevatedButton(
                 onPressed: () {
@@ -159,7 +210,8 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
                             globals.createplan_id,
                             startTime.toString(),
                             endTime.toString(),
-                            selectedDate)
+                            selectedDate,
+                            _media)
                         .then((value) => Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -297,10 +349,11 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
   }
 
   addLocations(String? location_id, String? plan_id, String startTime,
-      String endTime, DateTime selectedDate) async {
+      String endTime, DateTime selectedDate, String media) async {
     print("start time " + startTime.substring(10, 15));
     print("end time " + endTime);
     print("start date " + selectedDate.toString());
+    print(media);
 
     var starttime = startTime.substring(10, 15);
     var starthour = starttime.substring(0, 2);
@@ -323,5 +376,13 @@ class _AttractionForPlanState extends State<AttractionForPlan> {
       "start": startTime,
       "end": endTime
     });
+
+    var url2 = Uri.parse(
+        "https://septravelplanner.herokuapp.com/itinerary/addtravelmedia");
+
+    var response2 = await http
+        .post(url2, body: {"plan_id": plan_id, "travel_media_id": media});
+
+    print(response2);
   }
 }
