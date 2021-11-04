@@ -73,21 +73,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
 
-              //Notification Trigger
-
-              // RaisedButton(
-              //   child: Text('Show Notification'),
-              //   padding: const EdgeInsets.all(10),
-              //   onPressed: () async {
-              //     await _notificationService.scheduleNotifications(
-              //         title: "New Timing",
-              //         body: "Fun not",
-              //         time: DateTime.parse("2021-09-10 00:21:00"));
-              //   },
-              // ),
-
-              //Recommended Locations Section
-
               SizedBox(
                 height: 20,
               ),
@@ -104,23 +89,6 @@ class _HomeState extends State<Home> {
                 height: 10,
               ),
 
-              // SizedBox(
-              //   height: 200.0,
-              //   child: ListView.builder(
-              //     physics: ClampingScrollPhysics(),
-              //     shrinkWrap: true,
-              //     padding: EdgeInsets.only(left: 10),
-              //     scrollDirection: Axis.horizontal,
-              //     itemCount: 15,
-              //     itemBuilder: (BuildContext context, int index) =>
-              //         LocationCardLarge(
-              //       locationName: 'Victoria Park',
-              //       description:
-              //           "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
-              //       rating: 4,
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: 200.0,
                 child: FutureBuilder(
