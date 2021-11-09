@@ -86,11 +86,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       : Container(
                           padding: EdgeInsets.only(left: 25, right: 25),
                           child: Column(children: [
-                            // Image.asset(
-                            //   "icons/2523-loading.gif",
-                            //   height: 200,
-                            //   width: 200,
-                            // )
                             Lottie.network(
                                 'https://assets10.lottiefiles.com/datafiles/AtGF4p7zA8LpP2R/data.json',
                                 height: 200,
