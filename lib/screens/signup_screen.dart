@@ -5,11 +5,10 @@ import '../widgets/rounded_button_with_icon.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/assets/font_size.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import '../services/authentication_service.dart';
 import '../controller/user_controller.dart';
 
 import 'signin_screen.dart';
-import '../main_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -91,11 +90,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       : Container(
                           padding: EdgeInsets.only(left: 25, right: 25),
                           child: Column(children: [
-                            Image.asset(
-                              "icons/2523-loading.gif",
-                              height: 200,
-                              width: 200,
-                            )
+                            Lottie.network(
+                                'https://assets10.lottiefiles.com/datafiles/AtGF4p7zA8LpP2R/data.json',
+                                height: 200,
+                                width: 200)
                           ]),
                         ),
                   SizedBox(
