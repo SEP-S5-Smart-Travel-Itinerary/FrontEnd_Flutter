@@ -12,9 +12,12 @@ Future<FlightData> getFlightRates(
   var url =
       Uri.parse("https://septravelplanner.herokuapp.com/apiuser/flightofffers");
 
+  print(origin.substring(0, 3));
+  print(destination.substring(0, 3));
+
   var response = await http.post(url, body: {
-    "origin": origin,
-    "destination": destination,
+    "origin": origin.substring(0, 3),
+    "destination": destination.substring(0, 3),
     "date": date,
     "adults": adults.toString()
   });
