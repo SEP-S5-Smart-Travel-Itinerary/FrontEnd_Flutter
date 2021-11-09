@@ -1,20 +1,49 @@
 import 'dart:convert';
+import 'package:geolocator/geolocator.dart';
+
 import '../models/location_data_initial.dart';
 import '../models/location_data.dart';
 import 'package:http/http.dart' as http;
 import 'globals.dart' as globals;
 
+Position currentPosition = Position(
+    longitude: 343434,
+    latitude: 343434,
+    timestamp: DateTime(2022),
+    accuracy: 343,
+    altitude: 343,
+    heading: 0.0,
+    speed: 0,
+    speedAccuracy: 0);
+
+getCurrentLocation() async {
+  await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.medium,
+          forceAndroidLocationManager: true)
+      .then((Position position) {
+    currentPosition = position;
+    return position;
+  }).catchError((e) {
+    print(e);
+  });
+}
+
 // fetch nearby locations
 Future<List<LocationDataInit>> fetchNearbyAttractions() async {
+  await getCurrentLocation();
+
   var url = Uri.parse(
       "https://septravelplanner.herokuapp.com/apiuser/nearbyattractions");
 
-  var response = await http
-      .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
+  var response = await http.post(url, body: {
+    "latitude": currentPosition.latitude.toString(),
+    "longitude": currentPosition.longitude.toString()
+  });
+
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-    print(jsonResponse[0]['imagelink'][0]['photo_reference']);
+    // print(jsonResponse[0]['imagelink'][0]['photo_reference']);
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();
@@ -25,15 +54,18 @@ Future<List<LocationDataInit>> fetchNearbyAttractions() async {
 //--------------------------------------------------------------------------------------
 
 Future<List<LocationDataInit>> fetchNearbyRestaurants() async {
+  await getCurrentLocation();
   var url = Uri.parse(
       "https://septravelplanner.herokuapp.com/apiuser/nearbyrestaurants");
 
-  var response = await http
-      .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
+  var response = await http.post(url, body: {
+    "latitude": currentPosition.latitude.toString(),
+    "longitude": currentPosition.longitude.toString()
+  });
   if (response.statusCode == 200) {
     print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
-    print(jsonResponse);
+    // print(jsonResponse);
     return jsonResponse
         .map((location) => new LocationDataInit.fromJson(location))
         .toList();
@@ -44,11 +76,14 @@ Future<List<LocationDataInit>> fetchNearbyRestaurants() async {
 
 //---------------------------------------------------------------------------------------
 Future<List<LocationDataInit>> fetchNearbyAccommodations() async {
+  await getCurrentLocation();
   var url = Uri.parse(
       "https://septravelplanner.herokuapp.com/apiuser/nearbyaccommodations");
 
-  var response = await http
-      .post(url, body: {"latitude": "6.053519", "longitude": "80.220978"});
+  var response = await http.post(url, body: {
+    "latitude": currentPosition.latitude.toString(),
+    "longitude": currentPosition.longitude.toString()
+  });
   if (response.statusCode == 200) {
     // print("sucess called");
     List jsonResponse = json.decode(response.body)["data"];
@@ -84,21 +119,21 @@ Future<List<LocationDataInit>> fetchSuggestions() async {
 //---------------------------------------------------------------------------------------
 //fetch attractions by user preference
 Future<List<LocationDataInit>> fetchAttractionsByCategory() async {
-  var url = Uri.parse(
-      "https://septravelplanner.herokuapp.com/user/searchpref");
+  await getCurrentLocation();
 
-  var response = await http.post(url, body: {
-    "username": globals.currentUserEmail
-  });
+  var url = Uri.parse("https://septravelplanner.herokuapp.com/user/searchpref");
+
+  var response =
+      await http.post(url, body: {"username": globals.currentUserEmail});
   List jsonResponse = json.decode(response.body)["message"];
-  
+
   jsonResponse.add("natural_feature");
   var url2 = Uri.parse(
       "https://septravelplanner.herokuapp.com/apiuser/locationsbycategory");
 
   var response2 = await http.post(url2, body: {
-    "latitude": "6.053519",
-    "longitude": "80.220978",
+    "latitude": currentPosition.latitude.toString(),
+    "longitude": currentPosition.longitude.toString(),
     "type": jsonResponse[0]
   });
   if (response2.statusCode == 200) {

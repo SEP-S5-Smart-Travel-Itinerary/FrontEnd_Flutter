@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/models/location_data_initial.dart';
 import 'package:frontend_flutter/screens/places_screen2.dart';
-import 'package:frontend_flutter/services/local_notification_manager.dart';
 import 'package:frontend_flutter/widgets/logo.dart';
 import 'package:frontend_flutter/widgets/location_card_large.dart';
 import 'package:frontend_flutter/widgets/location_card_small.dart';
-import 'package:shimmer/shimmer.dart';
 import 'places_screen.dart';
 import 'search_screen.dart';
 
 import 'package:geolocator/geolocator.dart';
-import 'package:geocoding/geocoding.dart';
+import '../controller/globals.dart' as globals;
 
 import 'package:frontend_flutter/controller/location_controller.dart';
 
@@ -97,13 +95,13 @@ class _HomeState extends State<Home> {
                       (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                     if (snapshot.hasData) {
                       List<LocationDataInit> loc_list = snapshot.data;
-                      print("hahj");
-                      print(loc_list[3].imagelink[0]["photo_reference"]);
-                      print("hahj");
-                      print(loc_list.length);
+                      // print("hahj");
+                      // print(loc_list[3].imagelink[0]["photo_reference"]);
+                      // print("hahj");
+                      // print(loc_list.length);
                       List<LocationDataInit> list = [];
                       for (var i = 0; i < loc_list.length; i++) {
-                        print(loc_list[i].imagelink);
+                        // print(loc_list[i].imagelink);
                         if (loc_list[i].imagelink != null) {
                           print("hjk");
                           list.add(loc_list[i]);
@@ -188,9 +186,9 @@ class _HomeState extends State<Home> {
 
                       List<LocationDataInit> list = [];
                       for (var i = 0; i < loc_list.length; i++) {
-                        print(loc_list[i].imagelink);
+                        // print(loc_list[i].imagelink);
                         if (loc_list[i].imagelink != null) {
-                          print("hjk");
+                          // print("hjk");
                           list.add(loc_list[i]);
                         }
                       }
@@ -259,23 +257,140 @@ class _HomeState extends State<Home> {
                       ])),
                 ),
               ),
+
+              // nearby restaurants
+
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  'Nearby Restaurants',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: SecondaryColorDarkGrey),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+              SizedBox(
+                height: 180.0,
+                child: FutureBuilder(
+                  future: fetchNearbyRestaurants(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      List<LocationDataInit> loc_list = snapshot.data;
+
+                      List<LocationDataInit> list = [];
+                      for (var i = 0; i < loc_list.length; i++) {
+                        // print(loc_list[i].imagelink);
+                        if (loc_list[i].imagelink != null) {
+                          // print("hjk");
+                          list.add(loc_list[i]);
+                        }
+                      }
+
+                      return ListView.builder(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: list.length,
+                        padding: EdgeInsets.only(left: 10),
+                        scrollDirection: Axis.horizontal,
+                        // itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            LocationCardSmall(
+                          locationId: list[index].place_id,
+                          locationName: list[index].name,
+                          description: list[index].type[0],
+                          rating: list[index].rating ?? 4,
+                          //photo:list[index].imagelink[0]["photo_reference"]
+                          imageUrl: list[index].imagelink[0]["photo_reference"],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text("$snapshot.error");
+                    }
+
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ),
+
+              //nearby accomodation
+
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  'Nearby Accomodations',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      color: SecondaryColorDarkGrey),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+              SizedBox(
+                height: 180.0,
+                child: FutureBuilder(
+                  future: fetchNearbyAccommodations(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.hasData) {
+                      List<LocationDataInit> loc_list = snapshot.data;
+
+                      List<LocationDataInit> list = [];
+                      for (var i = 0; i < loc_list.length; i++) {
+                        // print(loc_list[i].imagelink);
+                        if (loc_list[i].imagelink != null) {
+                          // print("hjk");
+                          list.add(loc_list[i]);
+                        }
+                      }
+
+                      return ListView.builder(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: list.length,
+                        padding: EdgeInsets.only(left: 10),
+                        scrollDirection: Axis.horizontal,
+                        // itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            LocationCardSmall(
+                          locationId: list[index].place_id,
+                          locationName: list[index].name,
+                          description: list[index].type[0],
+                          rating: list[index].rating ?? 4,
+                          //photo:list[index].imagelink[0]["photo_reference"]
+                          imageUrl: list[index].imagelink[0]["photo_reference"],
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      print(snapshot.error);
+                      return Text("$snapshot.error");
+                    }
+
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ),
+
+              SizedBox(
+                height: 40,
+              )
             ],
           ),
         ),
       ),
-
-      //BOTTOM NAVIGATION
-      // bottomNavigationBar: BottomNavBar(),
-
-      // floatingActionButton: showFab
-      //     ? FloatingActionButton(
-      //         backgroundColor: PrimaryColor,
-      //         child: BottomIcon(
-      //           path: "icons/globe_icon.png",
-      //         ),
-      //         onPressed: () {})
-      //     : null,
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
