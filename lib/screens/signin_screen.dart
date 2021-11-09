@@ -6,9 +6,9 @@ import 'package:frontend_flutter/assets/font_size.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'signup_screen.dart';
-import '../main_screen.dart';
+
 import '../controller/user_controller.dart';
-import '../services/authentication_service.dart';
+import 'package:lottie/lottie.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -66,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             Container(
                               padding: EdgeInsets.all(20),
                               child: Text(
-                                'Lorem Ipsum is abcdedffdfd simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy ',
+                                'Travel changes you. As you move through this life and this world, you change things slightly, you leave marks behind, however small. And in return, life — and travel — leaves marks on you.',
                                 style: TextStyle(color: PrimaryColor),
                                 textAlign: TextAlign.center,
                               ),
@@ -86,18 +86,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       : Container(
                           padding: EdgeInsets.only(left: 25, right: 25),
                           child: Column(children: [
-                            LoginButton(
-                              text: 'Sign In with Google',
-                              imagePath: 'icons/google_icon.png',
-                              color: Colors.white,
-                              fontColor: PrimaryColor,
-                              borderColor: Colors.black.withOpacity(0.2),
-                              // onPressed: () => signInWithGoogle().whenComplete(
-                              //     () => Navigator.of(context).pushReplacement(
-                              //         MaterialPageRoute(
-                              //             builder: (context) => MainScreen()))),
-                              onPressed: () {},
-                            ),
+                            Lottie.network(
+                                'https://assets10.lottiefiles.com/datafiles/AtGF4p7zA8LpP2R/data.json',
+                                height: 200,
+                                width: 200)
                           ]),
                         ),
                   SizedBox(

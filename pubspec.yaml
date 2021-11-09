@@ -74,6 +74,8 @@ dependencies:
 
   shared_preferences: ^2.0.8
 
+  lottie: ^1.2.1
+
  
 
 
@@ -107,6 +109,7 @@ flutter:
     - icons/heart_border.png
     - icons/logout.png
     - icons/airport.png
+
     
 
 
