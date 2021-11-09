@@ -387,20 +387,20 @@ Container _buildBottomSheet(BuildContext context) {
                         builder: (context) => ChangePlanBudget(text: "")));
               },
             ),
-            SizedBox(
-              height: 20,
-            ),
-            RoundedButton(
-              text: "Edit Travel Dates",
-              color: PrimaryColor,
-              height: 150,
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => ChangePlanDates(text: "")));
-              },
-            ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // RoundedButton(
+            //   text: "Edit Travel Dates",
+            //   color: PrimaryColor,
+            //   height: 150,
+            //   onPressed: () {
+            //     Navigator.pushReplacement(
+            //         context,
+            //         new MaterialPageRoute(
+            //             builder: (context) => ChangePlanDates(text: "")));
+            //   },
+            // ),
             SizedBox(
               height: 20,
             ),

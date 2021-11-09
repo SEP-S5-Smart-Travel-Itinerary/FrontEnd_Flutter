@@ -15,8 +15,8 @@ class FlightDetails extends StatefulWidget {
 }
 
 class _FlightDetailsState extends State<FlightDetails> {
-  String _origin = "BKK";
-  String _destination = "BKK";
+  String _origin = "BKK (Bankok)";
+  String _destination = "BKK (Bankok)";
   DateTime _travelDate = DateTime.now();
   int _adults = 1;
 
@@ -27,10 +27,16 @@ class _FlightDetailsState extends State<FlightDetails> {
 
   // IATA codes list
   static const menuItems = <String>[
-    'BKK',
-    'PAR',
-    'BFS',
-    'BIL',
+    'BKK (Bankok)',
+    'PAR (Paris)',
+    'BFS (Belfast UK)',
+    'BIL (Bilings USA)',
+    'BER (Berline Germany)',
+    'IXG (Belgaum India)',
+    'PEK (Beijing China)',
+    'BIO (Bilbao Spain)',
+    'BLQ (Bologna Italy)',
+    'CMB (Colombo Sri Lanka)'
   ];
 
   final List<DropdownMenuItem<String>> _dropDownMenuItems = menuItems
@@ -219,8 +225,8 @@ class _FlightDetailsState extends State<FlightDetails> {
                     setState(() {
                       _amount = result.total;
                       _currency = result.currency;
-                      _origin = "BKK";
-                      _destination = "BKK";
+                      _origin = "BKK (Bankok)";
+                      _destination = "BKK (Bankok)";
                       _travelDate = DateTime.now();
                       _adults = 1;
                     });
