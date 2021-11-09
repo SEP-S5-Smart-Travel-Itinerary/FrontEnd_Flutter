@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:frontend_flutter/assets/colors.dart';
 import 'package:frontend_flutter/screens/travel_plan_view.dart';
-import 'package:frontend_flutter/widgets/color_badge.dart';
-import 'package:frontend_flutter/widgets/star_rating_bar.dart';
 import 'package:frontend_flutter/widgets/color_badge.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend_flutter/controller/globals.dart' as globals;
@@ -105,12 +102,13 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
                           ),
                           TextButton(
                               onPressed: () {
-                                RemoveLocation(widget.locationId, widget.id)
-                                    .then((value) => Navigator.push(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                TravelPlanView())));
+                                RemoveLocation(widget.locationId).then((val) =>
+                                    RemoveMedia(widget.id + 1).then((value) =>
+                                        Navigator.pushReplacement(
+                                            context,
+                                            new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TravelPlanView()))));
                               },
                               child: Text(
                                 'Delete location',
@@ -141,19 +139,23 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
     );
   }
 
-  RemoveLocation(String value, int transportId) async {
+  RemoveLocation(String value) async {
     var url = Uri.parse(
         "https://septravelplanner.herokuapp.com/itinerary/removelocation");
 
     var response = await http.post(url,
         body: {"location_id": value, "plan_id": globals.createplan_id});
     print("sucess called");
+  }
 
-    var url2 = Uri.parse(
-        "https://septravelplanner.herokuapp.com/itinerary/removetransport");
+  RemoveMedia(int transportId) async {
+    var url = Uri.parse(
+        "https://septravelplanner.herokuapp.com/itinerary/removemedia");
 
-    var response2 = await http.post(url2,
-        body: {"transport_id": transportId, "plan_id": globals.createplan_id});
+    var response2 = await http.post(url, body: {
+      "transport_id": transportId.toString(),
+      "plan_id": globals.createplan_id
+    });
     print("sucess called");
   }
 
