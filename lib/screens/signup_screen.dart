@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Container(
                               padding: EdgeInsets.all(20),
                               child: Text(
-                                'Lorem Ipsum is abcdedffdfd simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy ',
+                                'Travel changes you. As you move through this life and this world, you change things slightly, you leave marks behind, however small. And in return, life — and travel — leaves marks on you.',
                                 style: TextStyle(color: PrimaryColor),
                                 textAlign: TextAlign.center,
                               ),
@@ -91,20 +91,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       : Container(
                           padding: EdgeInsets.only(left: 25, right: 25),
                           child: Column(children: [
-                            LoginButton(
-                              text: 'Sign up with Google',
-                              imagePath: 'icons/google_icon.png',
-                              color: Colors.white,
-                              fontColor: PrimaryColor,
-                              borderColor: Colors.black.withOpacity(0.2),
-                              onPressed: () async {
-                                final user = await GoogleSignInApi.login();
-                                print(user);
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => MainScreen()));
-                              },
-                            ),
+                            Image.asset(
+                              "icons/2523-loading.gif",
+                              height: 200,
+                              width: 200,
+                            )
                           ]),
                         ),
                   SizedBox(
