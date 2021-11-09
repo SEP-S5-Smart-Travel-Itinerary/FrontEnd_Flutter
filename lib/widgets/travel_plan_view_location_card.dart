@@ -105,8 +105,8 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
                           ),
                           TextButton(
                               onPressed: () {
-                                RemoveLocation(widget.locationId).then(
-                                    (value) => Navigator.push(
+                                RemoveLocation(widget.locationId, widget.id)
+                                    .then((value) => Navigator.push(
                                         context,
                                         new MaterialPageRoute(
                                             builder: (context) =>
@@ -123,30 +123,6 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
                 ),
               ),
             ),
-            // Container(
-            //   padding: EdgeInsets.only(right: 8),
-            //   height: 80,
-            //   width: MediaQuery.of(context).size.width * 0.25,
-            //   // color: Colors.amberAccent,
-            //   child: Padding(
-            //     padding: EdgeInsets.fromLTRB(8, 8, 0, 5),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.end,
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         // Badge
-            //         LocationBadge(
-            //           bannerType: "HOTEL",
-            //         ),
-
-            //         //Ratings
-            //         StarRatingBar(
-            //           ratings: rating,
-            //         )
-            //       ],
-            //     ),
-            //   ),
-            // ),
             Container(
               height: 120,
               width: MediaQuery.of(context).size.width * 0.2,
@@ -165,15 +141,20 @@ class _TravelPlanLocationCardState extends State<TravelPlanLocationCard> {
     );
   }
 
-  RemoveLocation(String value) async {
+  RemoveLocation(String value, int transportId) async {
     var url = Uri.parse(
         "https://septravelplanner.herokuapp.com/itinerary/removelocation");
 
     var response = await http.post(url,
         body: {"location_id": value, "plan_id": globals.createplan_id});
     print("sucess called");
-    //List jsonResponse = json.decode(response.body)["data"];
-    // print(jsonResponse);
+
+    var url2 = Uri.parse(
+        "https://septravelplanner.herokuapp.com/itinerary/removetransport");
+
+    var response2 = await http.post(url2,
+        body: {"transport_id": transportId, "plan_id": globals.createplan_id});
+    print("sucess called");
   }
 
   GetWeather(String latt, String lonn) async {
